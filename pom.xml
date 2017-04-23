@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.dontdrinkandroot</groupId>
+    <artifactId>gitki</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <description>Git based markdown wiki</description>
+    <packaging>war</packaging>
+
+    <developers>
+        <developer>
+            <name>Philip Washington Sorst</name>
+            <url>https://sorst.net</url>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>dontdrinkandroot</name>
+        <url>https://dontdrinkandroot.net</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+
+    <scm>
+        <url>git@github.com:dontdrinkandroot/gitki.java.git</url>
+        <connection>scm:git:git@github.com/dontdrinkandroot/gitki.java.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/dontdrinkandroot/gitki.java.git
+        </developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/dontdrinkandroot/gitki.java/issues</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.javax.servlet-api>3.1.0</version.javax.servlet-api>
+        <version.net.dontdrinkandroot.wicket>0.5.0-SNAPSHOT</version.net.dontdrinkandroot.wicket>
+        <version.com.atlassian.commonmark>0.9.0</version.com.atlassian.commonmark>
+        <version.org.eclipse.jgit>3.5.0.201409260305-r</version.org.eclipse.jgit>
+        <version.org.apache.wicket>7.6.0</version.org.apache.wicket>
+        <!-- Plugins -->
+        <version.org.lesscss.lesscss-maven-plugin>1.7.0.1.1</version.org.lesscss.lesscss-maven-plugin>
+        <version.org.springframework>4.3.2.RELEASE</version.org.springframework>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.lesscss</groupId>
+                <artifactId>lesscss-maven-plugin</artifactId>
+                <version>${version.org.lesscss.lesscss-maven-plugin}</version>
+                <configuration>
+                    <sourceDirectory>src/main/java/net/dontdrinkandroot/gitki/wicket/resource</sourceDirectory>
+                    <outputDirectory>src/main/java/net/dontdrinkandroot/gitki/wicket/resource</outputDirectory>
+                    <compress>true</compress>
+                    <includes>
+                        <include>style.less</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <!-- Make sure HTML files are also copied from main/java -->
+        <resources>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <filtering>false</filtering>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <filtering>false</filtering>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${version.org.springframework}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.dontdrinkandroot</groupId>
+            <artifactId>wicket.bootstrap</artifactId>
+            <version>${version.net.dontdrinkandroot.wicket}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <version>${version.com.atlassian.commonmark}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-tables</artifactId>
+            <version>${version.com.atlassian.commonmark}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>${version.org.eclipse.jgit}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-auth-roles</artifactId>
+            <version>${version.org.apache.wicket}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-spring</artifactId>
+            <version>${version.org.apache.wicket}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${version.javax.servlet-api}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
