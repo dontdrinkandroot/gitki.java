@@ -6,12 +6,28 @@ import net.dontdrinkandroot.wicket.bootstrap.page.BootstrapPage;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 public class DecoratorPage<T> extends BootstrapPage<T>
 {
+    public DecoratorPage()
+    {
+    }
+
+    public DecoratorPage(PageParameters parameters)
+    {
+        super(parameters);
+    }
+
+    public DecoratorPage(IModel<T> model)
+    {
+        super(model);
+    }
+
     @Override
     protected void onInitialize()
     {
