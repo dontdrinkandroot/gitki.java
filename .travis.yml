@@ -1,0 +1,11 @@
+language: java
+
+jdk:
+    - oraclejdk8
+
+cache:
+    directories:
+        - "$HOME/.m2/repository"
+
+script:
+    - mvn -DfailOnServiceError=false clean jacoco:prepare-agent test jacoco:report coveralls:report
