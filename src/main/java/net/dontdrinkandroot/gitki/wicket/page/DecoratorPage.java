@@ -12,8 +12,10 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class DecoratorPage<T> extends BootstrapPage<T>
+public abstract class DecoratorPage<T> extends BootstrapPage<T>
 {
+    private IModel<String> titleModel;
+
     public DecoratorPage()
     {
     }
@@ -50,6 +52,22 @@ public class DecoratorPage<T> extends BootstrapPage<T>
     {
         this.add(new ModalRequestBehavior("modal"));
         WebMarkupContainer modalContainer = new WebMarkupContainer("modal");
+        modalContainer.setOutputMarkupId(true);
         this.add(modalContainer);
     }
+
+    @Override
+    protected Component createPageTitle(String id)
+    {
+        this.titleModel = this.createTitleModel();
+        Label pageTitleLabel = new Label(id, this.titleModel);
+        return pageTitleLabel;
+    }
+
+    public IModel<String> getTitleModel()
+    {
+        return this.titleModel;
+    }
+
+    protected abstract IModel<String> createTitleModel();
 }

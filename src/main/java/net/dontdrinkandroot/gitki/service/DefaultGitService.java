@@ -3,6 +3,7 @@ package net.dontdrinkandroot.gitki.service;
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
@@ -71,5 +72,37 @@ public class DefaultGitService implements GitService
         }
 
         return new DirectoryListing(subDirectories, files);
+    }
+
+    @Override
+    public byte[] getContent(Path path) throws IOException
+    {
+        Path fullPath = this.basePath.resolve(path);
+        if (!Files.exists(fullPath)) {
+            return null;
+        }
+
+        return Files.readAllBytes(fullPath);
+    }
+
+    @Override
+    public String getContentAsString(Path path) throws IOException
+    {
+        byte[] bytes = this.getContent(path);
+        if (null == bytes) {
+            return null;
+        }
+
+        return new String(bytes);
+    }
+
+    @Override
+    public void save(Path path, String content, String commitMessage) throws IOException, GitAPIException
+    {
+        Path fullPath = this.basePath.resolve(path);
+        Files.write(fullPath, content.getBytes());
+        //TODO: Set committer
+        this.git.add().addFilepattern(path.toString()).call();
+        this.git.commit().setMessage(commitMessage).call();
     }
 }
