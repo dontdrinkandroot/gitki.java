@@ -20,7 +20,13 @@ public class RoleAuthorizationStrategy implements IAuthorizationStrategy
     {
         Instantiate instantiateAnnotation = clazz.getAnnotation(Instantiate.class);
         if (null != instantiateAnnotation) {
-            Role role = instantiateAnnotation.role();
+
+            // TODO: Make configurable
+            if (instantiateAnnotation.allowAnonymous()) {
+                return true;
+            }
+
+            Role role = instantiateAnnotation.value();
             return this.hasRole(role);
         }
 

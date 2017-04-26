@@ -29,7 +29,7 @@ public class DirectoryPage extends DecoratorPage<DirectoryPath>
     public DirectoryPage(IModel<DirectoryPath> model)
     {
         super(model);
-        //PageParameterUtils.from(model.getObject(), getPageParameters());
+        PageParameterUtils.from(model.getObject(), this.getPageParameters());
     }
 
     public DirectoryPage(PageParameters parameters)

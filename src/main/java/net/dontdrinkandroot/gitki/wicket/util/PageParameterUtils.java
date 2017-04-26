@@ -24,6 +24,7 @@ public class PageParameterUtils
         for (int i = 0; i < segmentCount; i++) {
             pageParameters.set(i, segmentNames.get(i));
         }
+        pageParameters.set(segmentCount, "");
 
         return pageParameters;
     }
@@ -41,13 +42,16 @@ public class PageParameterUtils
     public static DirectoryPath toDirectoryPath(PageParameters parameters)
     {
         DirectoryPath directoryPath = new DirectoryPath();
-        if (null == parameters) {
+        if (
+                null == parameters
+                        || (parameters.getIndexedCount() == 1 && "".equals(parameters.get(0).toString().trim()))) {
             return directoryPath;
         }
 
         int indexedCount = parameters.getIndexedCount();
-        for (int i = 0; i < indexedCount; i++) {
-            directoryPath = directoryPath.appendDirectoryName(parameters.get(i).toString());
+        for (int i = 0; i < indexedCount - 1; i++) {
+            String name = parameters.get(i).toString();
+            directoryPath = directoryPath.appendDirectoryName(name);
         }
 
         return directoryPath;

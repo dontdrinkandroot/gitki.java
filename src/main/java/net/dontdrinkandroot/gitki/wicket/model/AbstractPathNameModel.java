@@ -17,6 +17,11 @@ public class AbstractPathNameModel extends AbstractChainedModel<AbstractPath, St
     @Override
     public String getObject()
     {
-        return this.getParentObject().getName();
+        AbstractPath path = this.getParentObject();
+        if (path.isRoot()) {
+            return "/";
+        }
+
+        return path.getName();
     }
 }

@@ -49,4 +49,10 @@ public class FilePath extends AbstractPath
         Path parentPath = this.getParent().toPath();
         return parentPath.resolve(this.getName());
     }
+
+    @Override
+    public boolean isRoot()
+    {
+        return false;
+    }
 }

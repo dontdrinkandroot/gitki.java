@@ -31,6 +31,7 @@ public class DirectoryPath extends AbstractPath
         }
     }
 
+    @Override
     public boolean isRoot()
     {
         return null == this.getParent();

@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Inherited
 public @interface Instantiate
 {
-    Role role();
+    Role value();
 
     boolean allowAnonymous() default false;
 }

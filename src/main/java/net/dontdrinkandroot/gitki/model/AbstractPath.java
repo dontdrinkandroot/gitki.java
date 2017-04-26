@@ -21,6 +21,10 @@ public abstract class AbstractPath implements Serializable
 
     protected void setName(String name)
     {
+        if (null == name || "".equals(name.trim())) {
+            throw new IllegalArgumentException("Name must not be empty");
+        }
+
         this.name = name;
     }
 
@@ -35,4 +39,6 @@ public abstract class AbstractPath implements Serializable
     }
 
     public abstract Path toPath();
+
+    public abstract boolean isRoot();
 }
