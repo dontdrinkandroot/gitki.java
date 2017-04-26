@@ -4,7 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -85,5 +87,27 @@ public class DirectoryPath extends AbstractPath
 
         Path parentPath = this.getParent().toPath();
         return parentPath.resolve(this.getName());
+    }
+
+    public List<String> getSegmentNames()
+    {
+        if (this.isRoot()) {
+            return new ArrayList<>();
+        }
+
+        List<String> segmentNames = this.getParent().getSegmentNames();
+        segmentNames.add(this.getName());
+
+        return segmentNames;
+    }
+
+    public static DirectoryPath from(Path path)
+    {
+        Path parent = path.getParent();
+        if (null != parent) {
+            return DirectoryPath.from(parent).appendDirectoryName(path.getFileName().toString());
+        }
+
+        return new DirectoryPath(path.getFileName().toString());
     }
 }

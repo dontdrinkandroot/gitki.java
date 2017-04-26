@@ -9,17 +9,17 @@ import java.util.List;
  */
 public class DirectoryListing implements Serializable
 {
-    private List<Path> subDirectories;
+    private List<DirectoryPath> subDirectories;
 
     private List<Path> files;
 
-    public DirectoryListing(List<Path> subDirectories, List<Path> files)
+    public DirectoryListing(List<DirectoryPath> subDirectories, List<Path> files)
     {
         this.subDirectories = subDirectories;
         this.files = files;
     }
 
-    public List<Path> getSubDirectories()
+    public List<DirectoryPath> getSubDirectories()
     {
         return this.subDirectories;
     }

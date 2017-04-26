@@ -18,4 +18,6 @@ public interface GitService
     String getContentAsString(Path path) throws IOException;
 
     void save(Path path, String content, String commitMessage) throws IOException, GitAPIException;
+
+    void createDirectory(Path path) throws IOException;
 }

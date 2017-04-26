@@ -10,6 +10,7 @@ import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingFilesModel;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingSubDirectoriesModel;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathDirectoryListingModel;
+import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -25,15 +26,16 @@ public class DirectoryPage extends DecoratorPage<DirectoryPath>
     @Inject
     private GitService gitService;
 
+    public DirectoryPage(IModel<DirectoryPath> model)
+    {
+        super(model);
+        //PageParameterUtils.from(model.getObject(), getPageParameters());
+    }
+
     public DirectoryPage(PageParameters parameters)
     {
         super(parameters);
-
-        DirectoryPath path = new DirectoryPath(parameters.get("path").toString());
-        int indexedCount = parameters.getIndexedCount();
-        for (int i = 0; i < indexedCount; i++) {
-            path = path.appendDirectoryName(parameters.get(i).toString());
-        }
+        DirectoryPath path = PageParameterUtils.toDirectoryPath(parameters);
         this.setModel(Model.of(path));
     }
 

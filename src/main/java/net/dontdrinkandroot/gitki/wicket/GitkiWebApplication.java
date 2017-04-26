@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket;
 
 import net.dontdrinkandroot.gitki.wicket.page.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
+import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.resource.ExternalJQueryResourceReference;
 import net.dontdrinkandroot.gitki.wicket.security.RoleAuthorizationStrategy;
 import org.apache.wicket.Component;
@@ -37,8 +38,9 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
         this.getSecuritySettings().setAuthorizationStrategy(new RoleAuthorizationStrategy());
         this.getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
 
-        //this.mount(new DirectoryPageRequestMapper());
-        this.mountPage("browse/directory/#{path}", DirectoryPage.class);
+        //this.mount(new BrowseRequestMapper());
+        //this.mountPage("browse/directory/#{path}", DirectoryPage.class);
+        this.mount(new BrowseRequestMapper());
         this.mountPage("login", SignInPage.class);
     }
 

@@ -1,15 +1,14 @@
 package net.dontdrinkandroot.gitki.wicket.component.modal;
 
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
-import net.dontdrinkandroot.gitki.model.FilePath;
-import net.dontdrinkandroot.gitki.model.FileType;
-import net.dontdrinkandroot.gitki.wicket.page.TextFileEditPage;
+import net.dontdrinkandroot.gitki.service.GitService;
+import net.dontdrinkandroot.gitki.wicket.page.DirectoryPage;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
-import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupSelect;
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.FormModal;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -17,18 +16,20 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import java.util.Arrays;
+import javax.inject.Inject;
+import java.io.IOException;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class CreateFileModal extends FormModal<DirectoryPath>
+public class CreateDirectoryModal extends FormModal<DirectoryPath>
 {
+    @Inject
+    private GitService gitService;
+
     private IModel<String> nameModel;
 
-    private IModel<FileType> fileTypeModel;
-
-    public CreateFileModal(String id, IModel<DirectoryPath> model)
+    public CreateDirectoryModal(String id, IModel<DirectoryPath> model)
     {
         super(id, model);
     }
@@ -36,7 +37,7 @@ public class CreateFileModal extends FormModal<DirectoryPath>
     @Override
     protected IModel<String> createHeadingModel()
     {
-        return Model.of("Create File");
+        return Model.of("Create Directory");
     }
 
     @Override
@@ -45,22 +46,12 @@ public class CreateFileModal extends FormModal<DirectoryPath>
         super.populateFormGroups(formGroupView);
 
         this.nameModel = new Model<>();
-        this.fileTypeModel = new Model<>();
 
         FormGroupInputText formGroupName =
                 new FormGroupInputText(formGroupView.newChildId(), Model.of("Name"), this.nameModel);
         formGroupName.addDefaultAjaxInputValidation();
         formGroupName.setRequired(true);
         formGroupView.add(formGroupName);
-
-        FormGroupSelect<FileType> formGroupFileType =
-                new FormGroupSelect<FileType>(formGroupView.newChildId(), Model.of("Type"), this.fileTypeModel,
-                        Arrays.asList(FileType.values())
-                );
-        formGroupFileType.addAjaxValidation("change");
-        formGroupFileType.setRequired(true);
-        formGroupFileType.setNullValid(false);
-        formGroupView.add(formGroupFileType);
     }
 
     @Override
@@ -82,15 +73,15 @@ public class CreateFileModal extends FormModal<DirectoryPath>
                     {
                         super.onAfterSubmit(target, form);
 
-                        FileType fileType = CreateFileModal.this.fileTypeModel.getObject();
-                        String fullName = CreateFileModal.this.nameModel.getObject() + "." + fileType.getExtension();
-                        FilePath filePath = CreateFileModal.this.getModelObject().appendFileName(fullName);
-                        switch (fileType) {
-                            case MARKDOWN:
-                                break;
-                            case TEXT:
-                                this.setResponsePage(new TextFileEditPage(Model.of(filePath)));
-                                break;
+                        DirectoryPath newPath =
+                                CreateDirectoryModal.this.getModelObject()
+                                        .appendDirectoryName(CreateDirectoryModal.this.nameModel
+                                                .getObject());
+                        try {
+                            CreateDirectoryModal.this.gitService.createDirectory(newPath.toPath());
+                            this.setResponsePage(new DirectoryPage(Model.of(newPath)));
+                        } catch (IOException e) {
+                            throw new WicketRuntimeException(e);
                         }
                     }
                 };

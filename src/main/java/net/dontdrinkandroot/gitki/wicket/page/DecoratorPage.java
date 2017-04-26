@@ -1,15 +1,17 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
 import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.wicket.GitkiWebApplication;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.NavBar;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -44,7 +46,11 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
             @Override
             protected Component createBrand(String id)
             {
-                return new Label(id, "GitKi");
+                BookmarkablePageLink<Void> link =
+                        new BookmarkablePageLink<>(id, GitkiWebApplication.get().getHomePage());
+                link.setBody(Model.of("GitKi"));
+
+                return link;
             }
 
             @Override
