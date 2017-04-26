@@ -11,7 +11,7 @@
             ignore-resource-not-found="true"
     />
 
-    <bean id="wicketApplication" class="net.dontdrinkandroot.gitki.wicket.WebApplication">
+    <bean id="wicketApplication" class="net.dontdrinkandroot.gitki.wicket.GitkiWebApplication">
     </bean>
 
     <bean id="gitService" class="net.dontdrinkandroot.gitki.service.DefaultGitService">

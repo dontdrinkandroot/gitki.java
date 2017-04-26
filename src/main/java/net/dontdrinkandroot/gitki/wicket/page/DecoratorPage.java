@@ -1,18 +1,22 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
+import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.NavBar;
-import net.dontdrinkandroot.wicket.bootstrap.page.BootstrapPage;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public abstract class DecoratorPage<T> extends BootstrapPage<T>
+@Instantiate(role = Role.WATCHER, allowAnonymous = true)
+public abstract class DecoratorPage<T> extends ScaffoldPage<T>
 {
     private IModel<String> titleModel;
 
@@ -42,6 +46,19 @@ public abstract class DecoratorPage<T> extends BootstrapPage<T>
             {
                 return new Label(id, "GitKi");
             }
+
+            @Override
+            protected void populateNavbarLeftItems(RepeatingView itemView)
+            {
+                super.populateNavbarLeftItems(itemView);
+            }
+
+            @Override
+            protected void populateNavbarRightItems(RepeatingView itemView)
+            {
+                super.populateNavbarRightItems(itemView);
+                itemView.add(new UserDropdownItem(itemView.newChildId()));
+            }
         };
         this.add(navBar);
 
@@ -55,19 +72,4 @@ public abstract class DecoratorPage<T> extends BootstrapPage<T>
         modalContainer.setOutputMarkupId(true);
         this.add(modalContainer);
     }
-
-    @Override
-    protected Component createPageTitle(String id)
-    {
-        this.titleModel = this.createTitleModel();
-        Label pageTitleLabel = new Label(id, this.titleModel);
-        return pageTitleLabel;
-    }
-
-    public IModel<String> getTitleModel()
-    {
-        return this.titleModel;
-    }
-
-    protected abstract IModel<String> createTitleModel();
 }

@@ -172,11 +172,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-auth-roles</artifactId>
-            <version>${version.org.apache.wicket}</version>
+            <groupId>net.dontdrinkandroot</groupId>
+            <artifactId>wicket.extras</artifactId>
+            <version>${version.net.dontdrinkandroot.wicket}</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
