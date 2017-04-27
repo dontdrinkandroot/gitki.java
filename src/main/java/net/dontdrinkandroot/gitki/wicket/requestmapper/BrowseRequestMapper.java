@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextFileEditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage;
+import net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage;
 import org.apache.commons.io.FilenameUtils;
@@ -122,6 +123,8 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         switch (extension) {
             case "txt":
                 return TextViewPage.class;
+            case "md":
+                return MarkdownViewPage.class;
             case "jpg":
             case "jpeg":
             case "png":

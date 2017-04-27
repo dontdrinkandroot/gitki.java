@@ -100,8 +100,8 @@
                 <artifactId>lesscss-maven-plugin</artifactId>
                 <version>${version.org.lesscss.lesscss-maven-plugin}</version>
                 <configuration>
-                    <sourceDirectory>src/main/java/net/dontdrinkandroot/gitki/wicket/resource</sourceDirectory>
-                    <outputDirectory>src/main/java/net/dontdrinkandroot/gitki/wicket/resource</outputDirectory>
+                    <sourceDirectory>src/main/webapp/css/</sourceDirectory>
+                    <outputDirectory>src/main/webapp/css/</outputDirectory>
                     <compress>true</compress>
                     <includes>
                         <include>style.less</include>
@@ -150,6 +150,20 @@
             </testResource>
         </testResources>
     </build>
+
+    <repositories>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>oss-sonatype</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <dependencies>
 

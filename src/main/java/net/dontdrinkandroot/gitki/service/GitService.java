@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.User;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -28,5 +29,7 @@ public interface GitService
 
     void commit(User user, String commitMessage) throws GitAPIException;
 
-    Path resolve(Path path);
+    Path resolve(Path path) throws FileNotFoundException;
+
+    Path resolve(Path path, boolean mustExist) throws FileNotFoundException;
 }

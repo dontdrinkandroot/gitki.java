@@ -11,6 +11,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -60,7 +61,8 @@ public class DefaultGitService implements GitService
         if (path.isAbsolute()) {
             throw new RuntimeException("Path must not be absolute");
         }
-        Path directoryPath = this.resolve(path);
+
+        Path directoryPath = this.resolve(path, true);
 
         DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directoryPath);
 
@@ -83,10 +85,7 @@ public class DefaultGitService implements GitService
     @Override
     public byte[] getContent(Path path) throws IOException
     {
-        Path fullPath = this.resolve(path);
-        if (!Files.exists(fullPath)) {
-            return null;
-        }
+        Path fullPath = this.resolve(path, true);
 
         return Files.readAllBytes(fullPath);
     }
@@ -95,9 +94,6 @@ public class DefaultGitService implements GitService
     public String getContentAsString(Path path) throws IOException
     {
         byte[] bytes = this.getContent(path);
-        if (null == bytes) {
-            return null;
-        }
 
         return new String(bytes);
     }
@@ -143,7 +139,13 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public Path resolve(Path path)
+    public Path resolve(Path path) throws FileNotFoundException
+    {
+        return this.resolve(path, false);
+    }
+
+    @Override
+    public Path resolve(Path path, boolean mustExist) throws FileNotFoundException
     {
         if (path.startsWith(".git")) {
             throw new RuntimeException("Cannot access .git directory");
@@ -154,8 +156,8 @@ public class DefaultGitService implements GitService
             throw new RuntimeException("Trying to access path outside of repository");
         }
 
-        if (!Files.exists(resolvedPath)) {
-            return null;
+        if (mustExist && !Files.exists(resolvedPath)) {
+            throw new FileNotFoundException(String.format("%s does not exist", resolvedPath.toString()));
         }
 
         return resolvedPath;

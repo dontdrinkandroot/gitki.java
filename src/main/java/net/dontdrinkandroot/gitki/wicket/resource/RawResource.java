@@ -9,6 +9,7 @@ import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.resource.FileSystemResource;
 
 import javax.inject.Inject;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 
 /**
@@ -24,8 +25,10 @@ public class RawResource extends FileSystemResource
     protected ResourceResponse newResourceResponse(Attributes attributes)
     {
         FilePath filePath = PageParameterUtils.toFilePath(attributes.getParameters());
-        Path fileSystemPath = this.gitService.resolve(filePath.toPath());
-        if (null == fileSystemPath) {
+        Path fileSystemPath = null;
+        try {
+            fileSystemPath = this.gitService.resolve(filePath.toPath(), true);
+        } catch (FileNotFoundException e) {
             throw new AbortWithHttpErrorCodeException(404);
         }
 
