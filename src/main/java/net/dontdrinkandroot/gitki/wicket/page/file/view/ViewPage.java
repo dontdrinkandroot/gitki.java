@@ -5,8 +5,8 @@ import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropDownButton;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
-import org.apache.wicket.Component;
 import org.apache.wicket.event.IEvent;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -33,9 +33,10 @@ public class ViewPage extends FilePage
     }
 
     @Override
-    protected Component createActions(String id)
+    protected void populatePrimaryButtons(RepeatingView view)
     {
-        return new FileActionsDropDownButton(id, this.getModel());
+        super.populatePrimaryButtons(view);
+        view.add(new FileActionsDropDownButton(view.newChildId(), this.getModel()));
     }
 
     @Override
