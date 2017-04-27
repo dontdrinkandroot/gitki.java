@@ -67,10 +67,13 @@ public class DefaultGitService implements GitService
         List<DirectoryPath> subDirectories = new ArrayList<>();
         List<FilePath> files = new ArrayList<>();
         for (Path subPath : directoryStream) {
-            if (Files.isDirectory(subPath)) {
-                subDirectories.add(DirectoryPath.from(this.basePath.relativize(subPath)));
-            } else {
-                files.add(FilePath.from(this.basePath.relativize(subPath)));
+            Path relativePath = this.basePath.relativize(subPath);
+            if (!relativePath.startsWith(".git")) {
+                if (Files.isDirectory(subPath)) {
+                    subDirectories.add(DirectoryPath.from(relativePath));
+                } else {
+                    files.add(FilePath.from(relativePath));
+                }
             }
         }
 
@@ -142,6 +145,10 @@ public class DefaultGitService implements GitService
     @Override
     public Path resolve(Path path)
     {
+        if (path.startsWith(".git")) {
+            throw new RuntimeException("Cannot access .git directory");
+        }
+
         Path resolvedPath = this.basePath.resolve(path);
         if (!resolvedPath.startsWith(this.basePath)) {
             throw new RuntimeException("Trying to access path outside of repository");
