@@ -2,9 +2,9 @@ package net.dontdrinkandroot.gitki.wicket.component.listitem;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
-import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
+import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
+import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 
@@ -22,15 +22,13 @@ public class FileListItem extends GenericPanel<FilePath>
     protected void onInitialize()
     {
         super.onInitialize();
-        AjaxLink<Void> link = new AjaxLink<Void>("link")
-        {
 
-            @Override
-            public void onClick(AjaxRequestTarget target)
-            {
-                this.setResponsePage(new FilePage(FileListItem.this.getModel()));
-            }
-        };
+        BookmarkablePageLink<Void> link =
+                new BookmarkablePageLink<Void>(
+                        "link",
+                        SimpleViewPage.class,
+                        PageParameterUtils.from(this.getModelObject())
+                );
         link.setBody(new AbstractPathNameModel(this.getModel()));
         this.add(link);
     }

@@ -3,7 +3,6 @@ package net.dontdrinkandroot.gitki.wicket.util;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -47,7 +46,14 @@ public class PageParameterUtils
 
     public static FilePath toFilePath(PageParameters parameters)
     {
-        throw new NotImplementedException();
+        DirectoryPath directoryPath = new DirectoryPath();
+        int indexedCount = parameters.getIndexedCount();
+        for (int i = 0; i < indexedCount - 1; i++) {
+            String name = parameters.get(i).toString();
+            directoryPath = directoryPath.appendDirectoryName(name);
+        }
+
+        return directoryPath.appendFileName(parameters.get(indexedCount - 1).toString());
     }
 
     public static DirectoryPath toDirectoryPath(PageParameters parameters)

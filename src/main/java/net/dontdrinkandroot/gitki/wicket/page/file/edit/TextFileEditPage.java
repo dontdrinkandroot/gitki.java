@@ -1,9 +1,12 @@
-package net.dontdrinkandroot.gitki.wicket.page.file;
+package net.dontdrinkandroot.gitki.wicket.page.file.edit;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.GitService;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
-import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
+import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
+import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea;
@@ -12,6 +15,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 import javax.inject.Inject;
@@ -20,7 +24,8 @@ import java.io.IOException;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class TextFileEditPage extends DecoratorPage<FilePath>
+@Instantiate(Role.COMMITTER)
+public class TextFileEditPage extends AbstractEditPage
 {
     @Inject
     private GitService gitService;
@@ -29,15 +34,14 @@ public class TextFileEditPage extends DecoratorPage<FilePath>
 
     private IModel<String> commitMessageModel;
 
+    public TextFileEditPage(PageParameters parameters)
+    {
+        super(parameters);
+    }
+
     public TextFileEditPage(IModel<FilePath> model)
     {
         super(model);
-        try {
-            this.contentModel = Model.of(this.gitService.getContentAsString(model.getObject().toPath()));
-        } catch (IOException e) {
-            throw new WicketRuntimeException(e);
-        }
-        this.commitMessageModel = Model.of("Editing " + model.getObject().getName());
     }
 
     @Override
@@ -51,7 +55,12 @@ public class TextFileEditPage extends DecoratorPage<FilePath>
     {
         super.onInitialize();
 
-        this.contentModel = new Model<>();
+        try {
+            this.contentModel = Model.of(this.gitService.getContentAsString(this.getModelObject().toPath()));
+        } catch (IOException e) {
+            throw new WicketRuntimeException(e);
+        }
+        this.commitMessageModel = Model.of("Editing " + this.getModelObject().getName());
 
         Form<String> editForm = new Form<>("editForm", this.contentModel);
         this.add(editForm);
@@ -87,7 +96,10 @@ public class TextFileEditPage extends DecoratorPage<FilePath>
             protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
             {
                 super.onAfterSubmit(target, form);
-                this.setResponsePage(new FilePage(TextFileEditPage.this.getModel()));
+                this.setResponsePage(
+                        SimpleViewPage.class,
+                        PageParameterUtils.from(TextFileEditPage.this.getModelObject())
+                );
             }
         };
         editForm.add(submitButton);

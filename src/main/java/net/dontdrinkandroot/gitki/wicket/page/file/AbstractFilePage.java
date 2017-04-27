@@ -6,19 +6,22 @@ import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class FilePage extends DecoratorPage<FilePath>
+public class AbstractFilePage extends DecoratorPage<FilePath>
 {
-    public FilePage(PageParameters parameters)
+    public AbstractFilePage(PageParameters parameters)
     {
         super(parameters);
+        FilePath path = PageParameterUtils.toFilePath(parameters);
+        this.setModel(Model.of(path));
     }
 
-    public FilePage(IModel<FilePath> model)
+    public AbstractFilePage(IModel<FilePath> model)
     {
         super(model);
         PageParameterUtils.from(model.getObject(), this.getPageParameters());
