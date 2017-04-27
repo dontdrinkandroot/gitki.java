@@ -55,4 +55,9 @@ public class FilePath extends AbstractPath
     {
         return false;
     }
+
+    public static FilePath from(Path path)
+    {
+        return DirectoryPath.from(path.getParent()).appendFileName(path.getFileName().toString());
+    }
 }

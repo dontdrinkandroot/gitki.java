@@ -1,6 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.requestmapper;
 
 import net.dontdrinkandroot.gitki.wicket.page.DirectoryPage;
+import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import org.apache.wicket.core.request.mapper.AbstractBookmarkableMapper;
 import org.apache.wicket.core.request.mapper.MapperUtils;
 import org.apache.wicket.request.Request;
@@ -27,17 +28,24 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         PageComponentInfo pageComponentInfo = MapperUtils.getPageComponentInfo(request.getUrl());
 
         String lastSegment = segments.get(segments.size() - 1);
+
+        /* Directory Page */
         if ("".equals(lastSegment)) {
             PageParameters parameters = new PageParameters();
-            for (int i = 0; i < segments.size() - 2; i++) {
-                parameters.set(i, segments.get(i + 1));
+            for (int i = 1; i < segments.size(); i++) {
+                parameters.set(i - 1, segments.get(i));
             }
-            parameters.set(segments.size() - 2, "");
 
             return new UrlInfo(pageComponentInfo, DirectoryPage.class, parameters);
         }
 
-        return null;
+        /* File Page */
+        PageParameters parameters = new PageParameters();
+        for (int i = 1; i < segments.size(); i++) {
+            parameters.set(i - 1, segments.get(i));
+        }
+
+        return new UrlInfo(pageComponentInfo, FilePage.class, parameters);
     }
 
     @Override
@@ -53,6 +61,16 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
             if (copy.getIndexedCount() == 0) {
                 copy.set(0, "");
             }
+            return this.encodePageParameters(url, copy, this.pageParametersEncoder);
+        }
+
+        if (FilePage.class.isAssignableFrom(info.getPageClass())) {
+            Url url = new Url();
+            url.getSegments().add("browse");
+
+            this.encodePageComponentInfo(url, info.getPageComponentInfo());
+
+            PageParameters copy = new PageParameters(info.getPageParameters());
             return this.encodePageParameters(url, copy, this.pageParametersEncoder);
         }
 

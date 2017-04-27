@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.service;
 
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
+import net.dontdrinkandroot.gitki.model.FilePath;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -63,12 +64,12 @@ public class DefaultGitService implements GitService
         DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directoryPath);
 
         List<DirectoryPath> subDirectories = new ArrayList<>();
-        List<Path> files = new ArrayList<>();
+        List<FilePath> files = new ArrayList<>();
         for (Path subPath : directoryStream) {
             if (Files.isDirectory(subPath)) {
                 subDirectories.add(DirectoryPath.from(this.basePath.relativize(subPath)));
             } else {
-                files.add(this.basePath.relativize(subPath));
+                files.add(FilePath.from(this.basePath.relativize(subPath)));
             }
         }
 

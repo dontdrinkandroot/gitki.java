@@ -31,7 +31,18 @@ public class PageParameterUtils
 
     public static PageParameters from(FilePath path)
     {
-        throw new NotImplementedException();
+        return from(path, new PageParameters());
+    }
+
+    public static PageParameters from(FilePath path, PageParameters pageParameters)
+    {
+        List<String> segmentNames = path.getSegmentNames();
+        int segmentCount = segmentNames.size();
+        for (int i = 0; i < segmentCount; i++) {
+            pageParameters.set(i, segmentNames.get(i));
+        }
+
+        return pageParameters;
     }
 
     public static FilePath toFilePath(PageParameters parameters)

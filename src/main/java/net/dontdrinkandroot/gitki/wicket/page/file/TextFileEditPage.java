@@ -1,8 +1,9 @@
-package net.dontdrinkandroot.gitki.wicket.page;
+package net.dontdrinkandroot.gitki.wicket.page.file;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.service.GitService;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
+import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea;
@@ -80,6 +81,13 @@ public class TextFileEditPage extends DecoratorPage<FilePath>
                 } catch (IOException | GitAPIException e) {
                     throw new WicketRuntimeException(e);
                 }
+            }
+
+            @Override
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
+            {
+                super.onAfterSubmit(target, form);
+                this.setResponsePage(new FilePage(TextFileEditPage.this.getModel()));
             }
         };
         editForm.add(submitButton);

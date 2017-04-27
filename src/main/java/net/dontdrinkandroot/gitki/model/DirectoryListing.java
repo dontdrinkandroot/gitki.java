@@ -1,7 +1,6 @@
 package net.dontdrinkandroot.gitki.model;
 
 import java.io.Serializable;
-import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -11,9 +10,9 @@ public class DirectoryListing implements Serializable
 {
     private List<DirectoryPath> subDirectories;
 
-    private List<Path> files;
+    private List<FilePath> files;
 
-    public DirectoryListing(List<DirectoryPath> subDirectories, List<Path> files)
+    public DirectoryListing(List<DirectoryPath> subDirectories, List<FilePath> files)
     {
         this.subDirectories = subDirectories;
         this.files = files;
@@ -24,7 +23,7 @@ public class DirectoryListing implements Serializable
         return this.subDirectories;
     }
 
-    public List<Path> getFiles()
+    public List<FilePath> getFiles()
     {
         return this.files;
     }
