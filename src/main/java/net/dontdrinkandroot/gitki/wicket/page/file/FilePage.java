@@ -1,6 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.page.file;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.wicket.component.PathBreadcrumb;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathStringModel;
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
@@ -40,6 +41,7 @@ public class FilePage extends DecoratorPage<FilePath>
     protected void onInitialize()
     {
         super.onInitialize();
+        this.add(new PathBreadcrumb<>("breadcrumb", this.getModel()));
         this.add(new Label("heading", new AbstractPathNameModel(this.getModel())));
         this.add(this.createActions("actions"));
     }

@@ -52,6 +52,21 @@ public abstract class AbstractPath implements Serializable
         return segmentNames;
     }
 
+    public List<AbstractPath> collectPaths()
+    {
+        if (this.isRoot()) {
+            List<AbstractPath> paths = new ArrayList<>();
+            paths.add(this);
+
+            return paths;
+        }
+
+        List<AbstractPath> paths = this.getParent().collectPaths();
+        paths.add(this);
+
+        return paths;
+    }
+
     public abstract Path toPath();
 
     public abstract boolean isRoot();

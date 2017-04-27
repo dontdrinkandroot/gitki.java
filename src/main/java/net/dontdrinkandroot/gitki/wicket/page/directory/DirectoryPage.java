@@ -6,6 +6,7 @@ import net.dontdrinkandroot.gitki.service.GitService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropDownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryListPanel;
 import net.dontdrinkandroot.gitki.wicket.component.FileListPanel;
+import net.dontdrinkandroot.gitki.wicket.component.PathBreadcrumb;
 import net.dontdrinkandroot.gitki.wicket.model.*;
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
@@ -42,6 +43,7 @@ public class DirectoryPage extends DecoratorPage<DirectoryPath>
     {
         super.onInitialize();
 
+        this.add(new PathBreadcrumb<>("breadcrumb", this.getModel()));
         this.add(new Label("heading", new AbstractPathNameModel(this.getModel())));
         IModel<DirectoryListing> listingModel = new DirectoryPathDirectoryListingModel(this.getModel());
 
