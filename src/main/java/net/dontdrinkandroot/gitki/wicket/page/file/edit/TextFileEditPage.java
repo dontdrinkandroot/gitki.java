@@ -3,6 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.page.file.edit;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.GitService;
+import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
@@ -85,6 +86,7 @@ public class TextFileEditPage extends EditPage
                     TextFileEditPage.this.gitService.save(
                             TextFileEditPage.this.getModelObject().toPath(),
                             TextFileEditPage.this.contentModel.getObject(),
+                            GitkiWebSession.get().getUser(),
                             TextFileEditPage.this.commitMessageModel.getObject()
                     );
                 } catch (IOException | GitAPIException e) {

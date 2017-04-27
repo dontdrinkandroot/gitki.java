@@ -24,6 +24,8 @@ import org.apache.wicket.util.visit.Visits;
 @Instantiate(value = Role.WATCHER, allowAnonymous = true)
 public abstract class DecoratorPage<T> extends ScaffoldPage<T>
 {
+    public static final String MODAL_ID = "modal";
+
     private IModel<String> titleModel;
 
     public DecoratorPage()
@@ -87,8 +89,8 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
 
     private void createModal()
     {
-        this.add(new ModalRequestBehavior("modal"));
-        WebMarkupContainer modalContainer = new WebMarkupContainer("modal");
+        this.add(new ModalRequestBehavior(MODAL_ID));
+        WebMarkupContainer modalContainer = new WebMarkupContainer(MODAL_ID);
         modalContainer.setOutputMarkupId(true);
         this.add(modalContainer);
     }

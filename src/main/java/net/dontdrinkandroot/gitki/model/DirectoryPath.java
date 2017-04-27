@@ -1,7 +1,5 @@
 package net.dontdrinkandroot.gitki.model;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -23,10 +21,8 @@ public class DirectoryPath extends AbstractPath
 
     public DirectoryPath(String name)
     {
-        if (!StringUtils.isEmpty(name)) {
-            this.setName(name);
-            this.setParent(new DirectoryPath());
-        }
+        this.setName(name);
+        this.setParent(new DirectoryPath());
     }
 
     @Override

@@ -58,6 +58,12 @@ public class FilePath extends AbstractPath
 
     public static FilePath from(Path path)
     {
-        return DirectoryPath.from(path.getParent()).appendFileName(path.getFileName().toString());
+        DirectoryPath directoryPath = new DirectoryPath();
+        Path parent = path.getParent();
+        if (null != parent) {
+            directoryPath = DirectoryPath.from(path.getParent());
+        }
+
+        return directoryPath.appendFileName(path.getFileName().toString());
     }
 }

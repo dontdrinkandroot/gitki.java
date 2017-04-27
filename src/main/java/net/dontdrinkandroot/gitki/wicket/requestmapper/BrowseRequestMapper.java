@@ -1,6 +1,6 @@
 package net.dontdrinkandroot.gitki.wicket.requestmapper;
 
-import net.dontdrinkandroot.gitki.wicket.page.DirectoryPage;
+import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextFileEditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;

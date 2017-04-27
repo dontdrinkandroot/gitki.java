@@ -55,4 +55,33 @@ public abstract class AbstractPath implements Serializable
     public abstract Path toPath();
 
     public abstract boolean isRoot();
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        AbstractPath that = (AbstractPath) o;
+
+        if (this.name != null ? !this.name.equals(that.name) : that.name != null) {
+            return false;
+        }
+
+        return this.parent != null ? this.parent.equals(that.parent) : that.parent == null;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = this.name != null ? this.name.hashCode() : 0;
+        result = 31 * result + (this.parent != null ? this.parent.hashCode() : 0);
+
+        return result;
+    }
 }

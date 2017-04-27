@@ -2,9 +2,13 @@ package net.dontdrinkandroot.gitki.wicket.page.file.view;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropDownButton;
+import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
+import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import org.apache.wicket.Component;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -32,5 +36,19 @@ public class ViewPage extends FilePage
     protected Component createActions(String id)
     {
         return new FileActionsDropDownButton(id, this.getModel());
+    }
+
+    @Override
+    public void onEvent(IEvent<?> event)
+    {
+        super.onEvent(event);
+
+        Object payload = event.getPayload();
+        if (payload instanceof FileDeletedEvent) {
+            FilePath path = ((FileDeletedEvent) payload).getFilePath();
+            if (path.equals(this.getModelObject())) {
+                this.setResponsePage(new DirectoryPage(Model.of(path.getParent())));
+            }
+        }
     }
 }

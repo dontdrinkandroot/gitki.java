@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket;
 
-import net.dontdrinkandroot.gitki.wicket.page.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
+import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.resource.ExternalJQueryResourceReference;
 import net.dontdrinkandroot.gitki.wicket.security.RoleAuthorizationStrategy;

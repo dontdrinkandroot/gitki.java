@@ -1,6 +1,7 @@
 package net.dontdrinkandroot.gitki.service;
 
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
+import net.dontdrinkandroot.gitki.model.User;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.IOException;
@@ -17,7 +18,9 @@ public interface GitService
 
     String getContentAsString(Path path) throws IOException;
 
-    void save(Path path, String content, String commitMessage) throws IOException, GitAPIException;
+    void save(Path path, String content, User user, String commitMessage) throws IOException, GitAPIException;
 
     void createDirectory(Path path) throws IOException;
+
+    void deleteFile(Path path, User user, String commitMessage) throws IOException, GitAPIException;
 }

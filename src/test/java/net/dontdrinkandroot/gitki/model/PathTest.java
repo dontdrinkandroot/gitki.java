@@ -85,4 +85,12 @@ public class PathTest
         directoryPath = directoryPath.getParent();
         Assert.assertTrue(directoryPath.isRoot());
     }
+
+    @Test
+    public void testEquals()
+    {
+        Assert.assertTrue(new DirectoryPath().equals(new DirectoryPath()));
+        Assert.assertTrue(DirectoryPath.parse("asdf/qwer/").equals(DirectoryPath.parse("asdf/qwer/")));
+        Assert.assertTrue(FilePath.parse("asdf/qwer").equals(FilePath.parse("asdf/qwer")));
+    }
 }

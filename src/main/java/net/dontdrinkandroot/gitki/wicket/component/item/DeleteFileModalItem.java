@@ -1,8 +1,8 @@
 package net.dontdrinkandroot.gitki.wicket.component.item;
 
-import net.dontdrinkandroot.gitki.model.DirectoryPath;
+import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
-import net.dontdrinkandroot.gitki.wicket.component.modal.CreateFileModal;
+import net.dontdrinkandroot.gitki.wicket.component.modal.DeleteFileModal;
 import net.dontdrinkandroot.gitki.wicket.security.Render;
 import net.dontdrinkandroot.wicket.bootstrap.component.item.AjaxLinkItem;
 import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest;
@@ -15,13 +15,13 @@ import org.apache.wicket.model.Model;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Render(Role.COMMITTER)
-public class CreateFileModalItem extends AjaxLinkItem
+public class DeleteFileModalItem extends AjaxLinkItem
 {
-    private final IModel<DirectoryPath> pathModel;
+    private final IModel<FilePath> pathModel;
 
-    public CreateFileModalItem(String id, IModel<DirectoryPath> pathModel)
+    public DeleteFileModalItem(String id, IModel<FilePath> pathModel)
     {
-        super(id, Model.of("Create File"));
+        super(id, Model.of("Delete File"));
         this.pathModel = pathModel;
     }
 
@@ -31,7 +31,7 @@ public class CreateFileModalItem extends AjaxLinkItem
         this.send(
                 this.getPage(),
                 Broadcast.DEPTH,
-                new CreateAndOpenModalRequest<DirectoryPath>(target, CreateFileModal.class, this.pathModel)
+                new CreateAndOpenModalRequest<FilePath>(target, DeleteFileModal.class, this.pathModel)
         );
     }
 }

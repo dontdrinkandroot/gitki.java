@@ -2,7 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.component.listitem;
 
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
-import net.dontdrinkandroot.gitki.wicket.page.DirectoryPage;
+import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.GenericPanel;

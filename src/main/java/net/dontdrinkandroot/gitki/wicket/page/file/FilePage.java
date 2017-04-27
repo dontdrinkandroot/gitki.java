@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page.file;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
+import net.dontdrinkandroot.gitki.wicket.model.AbstractPathStringModel;
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.Component;
@@ -32,14 +33,14 @@ public class FilePage extends DecoratorPage<FilePath>
     @Override
     protected IModel<String> createTitleModel()
     {
-        return new AbstractPathNameModel(this.getModel());
+        return new AbstractPathStringModel(this.getModel());
     }
 
     @Override
     protected void onInitialize()
     {
         super.onInitialize();
-        this.add(new Label("heading", this.getTitleModel()));
+        this.add(new Label("heading", new AbstractPathNameModel(this.getModel())));
         this.add(this.createActions("actions"));
     }
 

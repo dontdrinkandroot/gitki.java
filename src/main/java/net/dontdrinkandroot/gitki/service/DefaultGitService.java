@@ -3,6 +3,7 @@ package net.dontdrinkandroot.gitki.service;
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -99,13 +100,13 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public void save(Path path, String content, String commitMessage) throws IOException, GitAPIException
+    public void save(Path path, String content, User user, String commitMessage) throws IOException, GitAPIException
     {
         Path fullPath = this.basePath.resolve(path);
         Files.write(fullPath, content.getBytes());
         //TODO: Set committer
         this.git.add().addFilepattern(path.toString()).call();
-        this.git.commit().setMessage(commitMessage).call();
+        this.commit(user, commitMessage);
     }
 
     @Override
@@ -113,5 +114,18 @@ public class DefaultGitService implements GitService
     {
         Path fullPath = this.basePath.resolve(path);
         Files.createDirectories(fullPath);
+    }
+
+    @Override
+    public void deleteFile(Path path, User user, String commitMessage) throws IOException, GitAPIException
+    {
+        Path fullPath = this.basePath.resolve(path);
+        this.git.rm().addFilepattern(path.toString()).call();
+        this.commit(user, commitMessage);
+    }
+
+    private void commit(User user, String commitMessage) throws GitAPIException
+    {
+        this.git.commit().setMessage(commitMessage).setAuthor(user.getFullName(), user.getEmail()).call();
     }
 }

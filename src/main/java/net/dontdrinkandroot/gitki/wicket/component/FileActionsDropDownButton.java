@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.component;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.wicket.component.item.DeleteFileModalItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.EditFileItem;
 import net.dontdrinkandroot.gitki.wicket.security.Render;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.DropDownButton;
@@ -26,5 +27,6 @@ public class FileActionsDropDownButton extends DropDownButton<FilePath>
     protected void populateItems(RepeatingView itemView)
     {
         itemView.add(new EditFileItem(itemView.newChildId(), this.getModel()));
+        itemView.add(new DeleteFileModalItem(itemView.newChildId(), this.getModel()));
     }
 }

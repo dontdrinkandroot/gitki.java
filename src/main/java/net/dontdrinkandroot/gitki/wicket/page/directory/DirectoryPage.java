@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.wicket.page;
+package net.dontdrinkandroot.gitki.wicket.page.directory;
 
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
@@ -6,10 +6,8 @@ import net.dontdrinkandroot.gitki.service.GitService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropDownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryListPanel;
 import net.dontdrinkandroot.gitki.wicket.component.FileListPanel;
-import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
-import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingFilesModel;
-import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingSubDirectoriesModel;
-import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathDirectoryListingModel;
+import net.dontdrinkandroot.gitki.wicket.model.*;
+import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
@@ -44,7 +42,7 @@ public class DirectoryPage extends DecoratorPage<DirectoryPath>
     {
         super.onInitialize();
 
-        this.add(new Label("heading", this.getTitleModel()));
+        this.add(new Label("heading", new AbstractPathNameModel(this.getModel())));
         IModel<DirectoryListing> listingModel = new DirectoryPathDirectoryListingModel(this.getModel());
 
         this.add(new DirectoryActionsDropDownButton("actions", this.getModel()));
@@ -55,6 +53,6 @@ public class DirectoryPage extends DecoratorPage<DirectoryPath>
     @Override
     protected IModel<String> createTitleModel()
     {
-        return new AbstractPathNameModel(this.getModel());
+        return new AbstractPathStringModel(this.getModel());
     }
 }
