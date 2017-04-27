@@ -27,4 +27,6 @@ public interface GitService
     void removeAndCommit(Path path, User user, String commitMessage) throws IOException, GitAPIException;
 
     void commit(User user, String commitMessage) throws GitAPIException;
+
+    Path resolve(Path path);
 }

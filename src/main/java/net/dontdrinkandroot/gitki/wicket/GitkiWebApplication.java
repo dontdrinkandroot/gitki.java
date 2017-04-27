@@ -3,7 +3,9 @@ package net.dontdrinkandroot.gitki.wicket;
 import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper;
+import net.dontdrinkandroot.gitki.wicket.requestmapper.RawRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.resource.ExternalJQueryResourceReference;
+import net.dontdrinkandroot.gitki.wicket.resource.RawResource;
 import net.dontdrinkandroot.gitki.wicket.security.RoleAuthorizationStrategy;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
@@ -11,9 +13,11 @@ import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.IUnauthorizedComponentInstantiationListener;
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -41,7 +45,13 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
         //this.mount(new BrowseRequestMapper());
         //this.mountPage("browse/directory/#{path}", DirectoryPage.class);
         this.mount(new BrowseRequestMapper());
+        this.mount(new RawRequestMapper());
         this.mountPage("login", SignInPage.class);
+
+        RawResource recordingResource = new RawResource();
+        Injector.get().inject(recordingResource);
+        this.getSharedResources().add("raw", recordingResource);
+        this.mountResource("raw", new SharedResourceReference("raw"));
     }
 
     @Override

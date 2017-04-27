@@ -60,7 +60,7 @@ public class DefaultGitService implements GitService
         if (path.isAbsolute()) {
             throw new RuntimeException("Path must not be absolute");
         }
-        Path directoryPath = this.basePath.resolve(path);
+        Path directoryPath = this.resolve(path);
 
         DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directoryPath);
 
@@ -80,7 +80,7 @@ public class DefaultGitService implements GitService
     @Override
     public byte[] getContent(Path path) throws IOException
     {
-        Path fullPath = this.basePath.resolve(path);
+        Path fullPath = this.resolve(path);
         if (!Files.exists(fullPath)) {
             return null;
         }
@@ -114,7 +114,7 @@ public class DefaultGitService implements GitService
     @Override
     public void add(Path path, byte[] content) throws IOException, GitAPIException
     {
-        Path fullPath = this.basePath.resolve(path);
+        Path fullPath = this.resolve(path);
         Files.write(fullPath, content);
         this.git.add().addFilepattern(path.toString()).call();
     }
@@ -122,14 +122,13 @@ public class DefaultGitService implements GitService
     @Override
     public void createDirectory(Path path) throws IOException
     {
-        Path fullPath = this.basePath.resolve(path);
+        Path fullPath = this.resolve(path);
         Files.createDirectories(fullPath);
     }
 
     @Override
     public void removeAndCommit(Path path, User user, String commitMessage) throws IOException, GitAPIException
     {
-        Path fullPath = this.basePath.resolve(path);
         this.git.rm().addFilepattern(path.toString()).call();
         this.commit(user, commitMessage);
     }
@@ -138,5 +137,20 @@ public class DefaultGitService implements GitService
     public void commit(User user, String commitMessage) throws GitAPIException
     {
         this.git.commit().setMessage(commitMessage).setAuthor(user.getFullName(), user.getEmail()).call();
+    }
+
+    @Override
+    public Path resolve(Path path)
+    {
+        Path resolvedPath = this.basePath.resolve(path);
+        if (!resolvedPath.startsWith(this.basePath)) {
+            throw new RuntimeException("Trying to access path outside of repository");
+        }
+
+        if (!Files.exists(resolvedPath)) {
+            return null;
+        }
+
+        return resolvedPath;
     }
 }

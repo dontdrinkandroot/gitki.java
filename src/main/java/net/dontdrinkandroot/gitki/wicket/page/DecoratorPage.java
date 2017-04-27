@@ -82,6 +82,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
     protected void onBeforeRender()
     {
         super.onBeforeRender();
+
         if (null == GitkiWebSession.get().getUser()) {
             Visits.visit(this, new NonStatelessPrintingVisitor());
         }

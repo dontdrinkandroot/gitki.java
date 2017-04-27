@@ -56,6 +56,18 @@ public class RoleAuthorizationStrategy implements IAuthorizationStrategy
     @Override
     public boolean isResourceAuthorized(IResource resource, PageParameters pageParameters)
     {
+        Instantiate instantiateAnnotation = resource.getClass().getAnnotation(Instantiate.class);
+        if (null != instantiateAnnotation) {
+
+            // TODO: Make configurable
+            if (instantiateAnnotation.allowAnonymous()) {
+                return true;
+            }
+
+            Role role = instantiateAnnotation.value();
+            return this.hasRole(role);
+        }
+
         return true;
     }
 
