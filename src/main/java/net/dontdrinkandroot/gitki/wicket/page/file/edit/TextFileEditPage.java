@@ -20,6 +20,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 import javax.inject.Inject;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -58,6 +59,8 @@ public class TextFileEditPage extends EditPage
 
         try {
             this.contentModel = Model.of(this.gitService.getContentAsString(this.getModelObject().toPath()));
+        } catch (FileNotFoundException e) {
+            this.contentModel = Model.of("");
         } catch (IOException e) {
             throw new WicketRuntimeException(e);
         }

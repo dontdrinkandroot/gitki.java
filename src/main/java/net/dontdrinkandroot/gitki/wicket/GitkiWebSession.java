@@ -21,16 +21,19 @@ public class GitkiWebSession extends WebSession
     {
         if ("admin@example.com".equals(email) && "admin".equals(password)) {
             this.user = new User("Admin", "User", "admin@example.com", Role.ADMIN);
+            this.bind();
             return true;
         }
 
         if ("committer@example.com".equals(email) && "committer".equals(password)) {
             this.user = new User("Committer", "User", "committer@example.com", Role.COMMITTER);
+            this.bind();
             return true;
         }
 
         if ("watcher@example.com".equals(email) && "watcher".equals(password)) {
             this.user = new User("Watcher", "User", "watcher@example.com", Role.WATCHER);
+            this.bind();
             return true;
         }
 

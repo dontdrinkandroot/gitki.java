@@ -13,14 +13,6 @@ public class PathTest
     {
         DirectoryPath path;
 
-        path = new DirectoryPath("");
-        Assert.assertTrue(path.isRoot());
-        Assert.assertEquals("", path.toString());
-
-        path = new DirectoryPath(null);
-        Assert.assertTrue(path.isRoot());
-        Assert.assertEquals("", path.toString());
-
         path = new DirectoryPath();
         Assert.assertTrue(path.isRoot());
         Assert.assertEquals("", path.toString());
