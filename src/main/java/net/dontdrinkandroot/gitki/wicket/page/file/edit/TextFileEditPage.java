@@ -83,7 +83,7 @@ public class TextFileEditPage extends EditPage
             {
                 super.onSubmit(target, form);
                 try {
-                    TextFileEditPage.this.gitService.save(
+                    TextFileEditPage.this.gitService.addAndCommit(
                             TextFileEditPage.this.getModelObject().toPath(),
                             TextFileEditPage.this.contentModel.getObject(),
                             GitkiWebSession.get().getUser(),

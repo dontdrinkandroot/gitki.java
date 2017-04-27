@@ -1,9 +1,10 @@
 package net.dontdrinkandroot.gitki.wicket.component.modal;
 
-import net.dontdrinkandroot.gitki.model.DirectoryPath;
+import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.GitService;
-import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
+import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
+import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior;
@@ -12,11 +13,13 @@ import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupI
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.FormModal;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.eclipse.jgit.api.errors.GitAPIException;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -25,14 +28,14 @@ import java.io.IOException;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Instantiate(Role.COMMITTER)
-public class CreateDirectoryModal extends FormModal<DirectoryPath>
+public class RemoveFileModal extends FormModal<FilePath>
 {
     @Inject
     private GitService gitService;
 
-    private IModel<String> nameModel;
+    private IModel<String> commitMessageModel;
 
-    public CreateDirectoryModal(String id, IModel<DirectoryPath> model)
+    public RemoveFileModal(String id, IModel<FilePath> model)
     {
         super(id, model);
     }
@@ -40,7 +43,7 @@ public class CreateDirectoryModal extends FormModal<DirectoryPath>
     @Override
     protected IModel<String> createHeadingModel()
     {
-        return Model.of("Create Directory");
+        return Model.of("Confirm File Removal");
     }
 
     @Override
@@ -48,13 +51,13 @@ public class CreateDirectoryModal extends FormModal<DirectoryPath>
     {
         super.populateFormGroups(formGroupView);
 
-        this.nameModel = new Model<>();
+        this.commitMessageModel = Model.of("Removing " + this.getModelObject().toString());
 
-        FormGroupInputText formGroupName =
-                new FormGroupInputText(formGroupView.newChildId(), Model.of("Name"), this.nameModel);
-        formGroupName.addDefaultAjaxInputValidation();
-        formGroupName.setRequired(true);
-        formGroupView.add(formGroupName);
+        FormGroupInputText formGroupCommitMessage =
+                new FormGroupInputText(formGroupView.newChildId(), Model.of("Commit Message"), this.commitMessageModel);
+        formGroupCommitMessage.addDefaultAjaxInputValidation();
+        formGroupCommitMessage.setRequired(true);
+        formGroupView.add(formGroupCommitMessage);
     }
 
     @Override
@@ -63,36 +66,41 @@ public class CreateDirectoryModal extends FormModal<DirectoryPath>
         super.populateFormActions(formActionView);
 
         AjaxSubmitButton submitButton =
-                new AjaxSubmitButton(formActionView.newChildId(), this.getForm(), Model.of("Create"))
+                new AjaxSubmitButton(formActionView.newChildId(), this.getForm(), Model.of("Remove"))
                 {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form)
                     {
                         super.onSubmit(target, form);
+                        try {
+                            RemoveFileModal.this.gitService.removeAndCommit(
+                                    RemoveFileModal.this.getModelObject().toPath(),
+                                    GitkiWebSession.get().getUser(),
+                                    RemoveFileModal.this.commitMessageModel.getObject()
+                            );
+                        } catch (IOException | GitAPIException e) {
+                            throw new WicketRuntimeException(e);
+                        }
                     }
 
                     @Override
                     protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
                     {
                         super.onAfterSubmit(target, form);
-
-                        DirectoryPath newPath =
-                                CreateDirectoryModal.this.getModelObject()
-                                        .appendDirectoryName(CreateDirectoryModal.this.nameModel
-                                                .getObject());
-                        try {
-                            CreateDirectoryModal.this.gitService.createDirectory(newPath.toPath());
-                            this.setResponsePage(new DirectoryPage(Model.of(newPath)));
-                        } catch (IOException e) {
-                            throw new WicketRuntimeException(e);
-                        }
+                        target.appendJavaScript(RemoveFileModal.this.getHideScript());
+                        RemoveFileModal.this.onFileDeleted(target, RemoveFileModal.this.getModelObject());
                     }
                 };
         formActionView.add(submitButton);
 
-        Label cancelButton = new Label(formActionView.newChildId(), "Cancel");
+        Label cancelButton = new Label(formActionView.newChildId(), "Delete");
         cancelButton.add(new ButtonBehavior());
         cancelButton.add(new OnClickScriptBehavior(this.getHideScript()));
         formActionView.add(cancelButton);
+    }
+
+    protected void onFileDeleted(AjaxRequestTarget target, FilePath path)
+    {
+        this.send(this.getPage(), Broadcast.BREADTH, new FileDeletedEvent(this.getModelObject(), target));
     }
 }

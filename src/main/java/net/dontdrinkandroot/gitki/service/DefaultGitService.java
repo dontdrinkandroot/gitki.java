@@ -100,13 +100,23 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public void save(Path path, String content, User user, String commitMessage) throws IOException, GitAPIException
+    public void addAndCommit(
+            Path path,
+            String content,
+            User user,
+            String commitMessage
+    ) throws IOException, GitAPIException
+    {
+        this.add(path, content.getBytes());
+        this.commit(user, commitMessage);
+    }
+
+    @Override
+    public void add(Path path, byte[] content) throws IOException, GitAPIException
     {
         Path fullPath = this.basePath.resolve(path);
-        Files.write(fullPath, content.getBytes());
-        //TODO: Set committer
+        Files.write(fullPath, content);
         this.git.add().addFilepattern(path.toString()).call();
-        this.commit(user, commitMessage);
     }
 
     @Override
@@ -117,14 +127,15 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public void deleteFile(Path path, User user, String commitMessage) throws IOException, GitAPIException
+    public void removeAndCommit(Path path, User user, String commitMessage) throws IOException, GitAPIException
     {
         Path fullPath = this.basePath.resolve(path);
         this.git.rm().addFilepattern(path.toString()).call();
         this.commit(user, commitMessage);
     }
 
-    private void commit(User user, String commitMessage) throws GitAPIException
+    @Override
+    public void commit(User user, String commitMessage) throws GitAPIException
     {
         this.git.commit().setMessage(commitMessage).setAuthor(user.getFullName(), user.getEmail()).call();
     }

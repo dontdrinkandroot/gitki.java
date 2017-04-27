@@ -18,9 +18,13 @@ public interface GitService
 
     String getContentAsString(Path path) throws IOException;
 
-    void save(Path path, String content, User user, String commitMessage) throws IOException, GitAPIException;
+    void add(Path path, byte[] content) throws IOException, GitAPIException;
+
+    void addAndCommit(Path path, String content, User user, String commitMessage) throws IOException, GitAPIException;
 
     void createDirectory(Path path) throws IOException;
 
-    void deleteFile(Path path, User user, String commitMessage) throws IOException, GitAPIException;
+    void removeAndCommit(Path path, User user, String commitMessage) throws IOException, GitAPIException;
+
+    void commit(User user, String commitMessage) throws GitAPIException;
 }

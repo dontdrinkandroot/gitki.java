@@ -3,7 +3,9 @@ package net.dontdrinkandroot.gitki.wicket.component.modal;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.FileType;
+import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextFileEditPage;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
@@ -22,6 +24,7 @@ import java.util.Arrays;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Instantiate(Role.COMMITTER)
 public class CreateFileModal extends FormModal<DirectoryPath>
 {
     private IModel<String> nameModel;

@@ -56,6 +56,11 @@ public abstract class AbstractPath implements Serializable
 
     public abstract boolean isRoot();
 
+    public String toAbsoluteString()
+    {
+        return SEPARATOR + this.toString();
+    }
+
     @Override
     public boolean equals(Object o)
     {
