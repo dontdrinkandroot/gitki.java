@@ -4,6 +4,8 @@ import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -12,16 +14,16 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class AbstractFilePage extends DecoratorPage<FilePath>
+public class FilePage extends DecoratorPage<FilePath>
 {
-    public AbstractFilePage(PageParameters parameters)
+    public FilePage(PageParameters parameters)
     {
         super(parameters);
         FilePath path = PageParameterUtils.toFilePath(parameters);
         this.setModel(Model.of(path));
     }
 
-    public AbstractFilePage(IModel<FilePath> model)
+    public FilePage(IModel<FilePath> model)
     {
         super(model);
         PageParameterUtils.from(model.getObject(), this.getPageParameters());
@@ -38,5 +40,14 @@ public class AbstractFilePage extends DecoratorPage<FilePath>
     {
         super.onInitialize();
         this.add(new Label("heading", this.getTitleModel()));
+        this.add(this.createActions("actions"));
+    }
+
+    protected Component createActions(String id)
+    {
+        WebMarkupContainer actions = new WebMarkupContainer(id);
+        actions.setVisible(false);
+
+        return actions;
     }
 }

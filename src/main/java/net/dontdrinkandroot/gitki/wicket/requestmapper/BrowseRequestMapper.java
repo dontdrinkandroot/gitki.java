@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.requestmapper;
 
 import net.dontdrinkandroot.gitki.wicket.page.DirectoryPage;
-import net.dontdrinkandroot.gitki.wicket.page.file.AbstractFilePage;
+import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextFileEditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage;
@@ -78,7 +78,7 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
             return this.encodePageParameters(url, copy, this.pageParametersEncoder);
         }
 
-        if (AbstractFilePage.class.isAssignableFrom(info.getPageClass())) {
+        if (FilePage.class.isAssignableFrom(info.getPageClass())) {
             Url url = new Url();
             url.getSegments().add("browse");
 
@@ -91,11 +91,11 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         return null;
     }
 
-    protected Class<? extends AbstractFilePage> resolveFilePageClass(String fileName, StringValue actionValue)
+    protected Class<? extends FilePage> resolveFilePageClass(String fileName, StringValue actionValue)
     {
         String action = actionValue.toString("view");
 
-        Class<? extends AbstractFilePage> pageClass;
+        Class<? extends FilePage> pageClass;
         switch (action) {
             case "view":
                 pageClass = this.resolveFilePageViewClass(fileName);
@@ -115,7 +115,7 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         return SimpleViewPage.class;
     }
 
-    protected Class<? extends AbstractFilePage> resolveFilePageViewClass(String fileName)
+    protected Class<? extends FilePage> resolveFilePageViewClass(String fileName)
     {
         String extension = FilenameUtils.getExtension(fileName);
         switch (extension) {
@@ -126,7 +126,7 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         return null;
     }
 
-    protected Class<? extends AbstractFilePage> resolveFilePageEditClass(String fileName)
+    protected Class<? extends FilePage> resolveFilePageEditClass(String fileName)
     {
         String extension = FilenameUtils.getExtension(fileName);
         switch (extension) {

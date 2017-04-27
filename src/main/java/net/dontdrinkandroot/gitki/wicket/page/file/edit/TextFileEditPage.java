@@ -25,7 +25,7 @@ import java.io.IOException;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Instantiate(Role.COMMITTER)
-public class TextFileEditPage extends AbstractEditPage
+public class TextFileEditPage extends EditPage
 {
     @Inject
     private GitService gitService;
