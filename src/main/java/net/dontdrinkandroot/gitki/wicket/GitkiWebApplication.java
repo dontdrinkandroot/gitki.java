@@ -42,15 +42,16 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
         this.getSecuritySettings().setAuthorizationStrategy(new RoleAuthorizationStrategy());
         this.getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
 
-        //this.mount(new BrowseRequestMapper());
-        //this.mountPage("browse/directory/#{path}", DirectoryPage.class);
-        this.mount(new BrowseRequestMapper());
+        BrowseRequestMapper browseRequestMapper = new BrowseRequestMapper();
+        Injector.get().inject(browseRequestMapper);
+        this.mount(browseRequestMapper);
+
         this.mount(new RawRequestMapper());
         this.mountPage("login", SignInPage.class);
 
-        RawResource recordingResource = new RawResource();
-        Injector.get().inject(recordingResource);
-        this.getSharedResources().add("raw", recordingResource);
+        RawResource rawResource = new RawResource();
+        Injector.get().inject(rawResource);
+        this.getSharedResources().add("raw", rawResource);
         this.mountResource("raw", new SharedResourceReference("raw"));
     }
 

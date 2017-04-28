@@ -30,6 +30,31 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
+    <bean id="requestMappingService" class="net.dontdrinkandroot.gitki.service.markdown.DefaultRequestMappingRegistry">
+        <property name="viewMappings">
+            <map>
+                <entry key="txt" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
+                <entry key="csv" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
+                <entry key="xml" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
+                <entry key="properties" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
+                <entry key="md" value="net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage"/>
+                <entry key="jpg" value="net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"/>
+                <entry key="jpeg" value="net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"/>
+                <entry key="png" value="net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"/>
+                <entry key="gif" value="net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"/>
+            </map>
+        </property>
+        <property name="editMappings">
+            <map>
+                <entry key="txt" value="net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"/>
+                <entry key="csv" value="net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"/>
+                <entry key="xml" value="net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"/>
+                <entry key="properties" value="net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"/>
+                <entry key="md" value="net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage"/>
+            </map>
+        </property>
+    </bean>
+
     <bean id="wicketApplication" class="net.dontdrinkandroot.gitki.wicket.GitkiWebApplication">
     </bean>
 

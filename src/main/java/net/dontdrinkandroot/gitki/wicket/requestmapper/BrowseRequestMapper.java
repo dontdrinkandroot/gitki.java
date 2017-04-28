@@ -1,13 +1,9 @@
 package net.dontdrinkandroot.gitki.wicket.requestmapper;
 
+import net.dontdrinkandroot.gitki.service.markdown.RequestMappingRegistry;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
-import net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage;
-import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextFileEditPage;
-import net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage;
-import net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
-import net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.wicket.core.request.mapper.AbstractBookmarkableMapper;
 import org.apache.wicket.core.request.mapper.MapperUtils;
@@ -17,6 +13,7 @@ import org.apache.wicket.request.mapper.info.PageComponentInfo;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -24,6 +21,9 @@ import java.util.List;
  */
 public class BrowseRequestMapper extends AbstractBookmarkableMapper
 {
+    @Inject
+    private RequestMappingRegistry requestMappingRegistry;
+
     @Override
     protected UrlInfo parseRequest(Request request)
     {
@@ -98,17 +98,18 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
     {
         String action = actionValue.toString("view");
 
+        String extension = FilenameUtils.getExtension(fileName);
         Class<? extends FilePage> pageClass;
         switch (action) {
             case "view":
-                pageClass = this.resolveFilePageViewClass(fileName);
+                pageClass = this.requestMappingRegistry.resolveViewMapping(extension);
                 if (null != pageClass) {
                     return pageClass;
                 }
                 break;
 
             case "edit":
-                pageClass = this.resolveFilePageEditClass(fileName);
+                pageClass = this.requestMappingRegistry.resolveEditMapping(extension);
                 if (null != pageClass) {
                     return pageClass;
                 }
@@ -116,43 +117,6 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         }
 
         return SimpleViewPage.class;
-    }
-
-    protected Class<? extends FilePage> resolveFilePageViewClass(String fileName)
-    {
-        String extension = FilenameUtils.getExtension(fileName);
-        switch (extension) {
-            case "txt":
-            case "csv":
-            case "xml":
-            case "properties":
-                return TextViewPage.class;
-            case "md":
-                return MarkdownViewPage.class;
-            case "jpg":
-            case "jpeg":
-            case "png":
-            case "gif":
-                return ImageViewPage.class;
-        }
-
-        return null;
-    }
-
-    protected Class<? extends FilePage> resolveFilePageEditClass(String fileName)
-    {
-        String extension = FilenameUtils.getExtension(fileName);
-        switch (extension) {
-            case "txt":
-            case "csv":
-            case "xml":
-            case "properties":
-                return TextFileEditPage.class;
-            case "md":
-                return MarkdownEditPage.class;
-        }
-
-        return null;
     }
 
     @Override

@@ -27,7 +27,7 @@ import java.io.IOException;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Instantiate(Role.COMMITTER)
-public class TextFileEditPage extends EditPage
+public class TextEditPage extends EditPage
 {
     @Inject
     private GitService gitService;
@@ -36,12 +36,12 @@ public class TextFileEditPage extends EditPage
 
     private IModel<String> commitMessageModel;
 
-    public TextFileEditPage(PageParameters parameters)
+    public TextEditPage(PageParameters parameters)
     {
         super(parameters);
     }
 
-    public TextFileEditPage(IModel<FilePath> model)
+    public TextEditPage(IModel<FilePath> model)
     {
         super(model);
     }
@@ -86,11 +86,11 @@ public class TextFileEditPage extends EditPage
             {
                 super.onSubmit(target, form);
                 try {
-                    TextFileEditPage.this.gitService.addAndCommit(
-                            TextFileEditPage.this.getModelObject().toPath(),
-                            TextFileEditPage.this.contentModel.getObject(),
+                    TextEditPage.this.gitService.addAndCommit(
+                            TextEditPage.this.getModelObject().toPath(),
+                            TextEditPage.this.contentModel.getObject(),
                             GitkiWebSession.get().getUser(),
-                            TextFileEditPage.this.commitMessageModel.getObject()
+                            TextEditPage.this.commitMessageModel.getObject()
                     );
                 } catch (IOException | GitAPIException e) {
                     throw new WicketRuntimeException(e);
@@ -103,7 +103,7 @@ public class TextFileEditPage extends EditPage
                 super.onAfterSubmit(target, form);
                 this.setResponsePage(
                         SimpleViewPage.class,
-                        PageParameterUtils.from(TextFileEditPage.this.getModelObject())
+                        PageParameterUtils.from(TextEditPage.this.getModelObject())
                 );
             }
         };

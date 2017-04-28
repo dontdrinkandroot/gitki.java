@@ -4,7 +4,7 @@ import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.FileType;
 import net.dontdrinkandroot.gitki.model.Role;
-import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextFileEditPage;
+import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior;
@@ -92,7 +92,7 @@ public class CreateFileModal extends FormModal<DirectoryPath>
                             case MARKDOWN:
                                 break;
                             case TEXT:
-                                this.setResponsePage(new TextFileEditPage(Model.of(filePath)));
+                                this.setResponsePage(new TextEditPage(Model.of(filePath)));
                                 break;
                         }
                     }
