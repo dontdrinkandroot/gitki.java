@@ -1,5 +1,7 @@
 package net.dontdrinkandroot.gitki.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +9,7 @@ import java.util.Set;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public enum Role
+public enum Role implements GrantedAuthority
 {
     WATCHER(null),
     COMMITTER(WATCHER),
@@ -48,5 +50,11 @@ public enum Role
         }
 
         return false;
+    }
+
+    @Override
+    public String getAuthority()
+    {
+        return this.name();
     }
 }

@@ -24,7 +24,7 @@ public class SignInPage extends net.dontdrinkandroot.wicket.extras.page.SignInPa
     @Override
     protected boolean isSignedIn()
     {
-        return GitkiWebSession.get().isSignedIn();
+        return null != GitkiWebSession.get().getUser();
     }
 
     @Override

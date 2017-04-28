@@ -75,7 +75,7 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
     @Override
     public void onUnauthorizedInstantiation(Component component)
     {
-        if (component instanceof Page && !GitkiWebSession.get().isSignedIn()) {
+        if (component instanceof Page && null == GitkiWebSession.get().getUser()) {
             throw new RestartResponseAtInterceptPageException(SignInPage.class);
         }
 

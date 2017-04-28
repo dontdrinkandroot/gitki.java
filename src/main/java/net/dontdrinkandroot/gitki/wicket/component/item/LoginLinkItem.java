@@ -21,7 +21,7 @@ public class LoginLinkItem extends BookmarkablePageLinkItem
     {
         super.onConfigure();
         this.setVersioned(false);
-        if (GitkiWebSession.get().isSignedIn()) {
+        if (null != GitkiWebSession.get().getUser()) {
             this.setVisible(false);
         }
     }

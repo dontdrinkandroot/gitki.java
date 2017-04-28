@@ -1,60 +1,69 @@
 package net.dontdrinkandroot.gitki.wicket;
 
-import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 public class GitkiWebSession extends WebSession
 {
-    private User user;
+    @Inject
+    @Named("authenticationManager")
+    private AuthenticationManager authenticationManager;
 
     public GitkiWebSession(Request request)
     {
         super(request);
+        Injector.get().inject(this);
     }
 
     public boolean signIn(String email, String password)
     {
-        if ("admin@example.com".equals(email) && "admin".equals(password)) {
-            this.user = new User("Admin", "User", "admin@example.com", Role.ADMIN);
-            this.bind();
-            return true;
-        }
-
-        if ("committer@example.com".equals(email) && "committer".equals(password)) {
-            this.user = new User("Committer", "User", "committer@example.com", Role.COMMITTER);
-            this.bind();
-            return true;
-        }
-
-        if ("watcher@example.com".equals(email) && "watcher".equals(password)) {
-            this.user = new User("Watcher", "User", "watcher@example.com", Role.WATCHER);
-            this.bind();
-            return true;
+        try {
+            Authentication authentication = this.authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            if (authentication.isAuthenticated()) {
+                this.bind();
+                return true;
+            }
+        } catch (AuthenticationException e) {
+            System.out.println(e.getMessage());
+            /* Noop */
         }
 
         return false;
     }
 
-    public boolean isSignedIn()
-    {
-        return null != this.user;
-    }
-
     public User getUser()
     {
-        return this.user;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (null == authentication
+                || null == authentication.getPrincipal()
+                || !(authentication.getPrincipal() instanceof User)) {
+            return null;
+        }
+
+        return (User) authentication.getPrincipal();
     }
 
     @Override
     public void invalidate()
     {
         super.invalidate();
-        this.user = null;
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 
     public static GitkiWebSession get()
