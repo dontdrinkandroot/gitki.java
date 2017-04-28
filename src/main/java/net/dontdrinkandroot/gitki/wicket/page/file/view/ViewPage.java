@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page.file.view;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropDownButton;
+import net.dontdrinkandroot.gitki.wicket.component.button.DownloadButton;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
@@ -36,6 +37,7 @@ public class ViewPage extends FilePage
     protected void populatePrimaryButtons(RepeatingView view)
     {
         super.populatePrimaryButtons(view);
+        view.add(new DownloadButton(view.newChildId(), this.getModel()));
         view.add(new FileActionsDropDownButton(view.newChildId(), this.getModel()));
     }
 

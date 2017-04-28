@@ -3,9 +3,9 @@
 
 @font-family-sans-serif: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-@border-radius-base: 1px;
-@border-radius-large: 1px;
 @border-radius-small: 1px;
+@border-radius-base: 2px;
+@border-radius-large: 3px;
 
 @font-size-h6: @font-size-base;
 @font-size-h5: @font-size-h6;
@@ -37,10 +37,22 @@ h1, .h1 {
     }
 }
 
+pre.content {
+    code {
+        &.hljs {
+            background-color: transparent;
+        }
+    }
+}
+
 .markdown.content {
     h1 {
         border-bottom: solid 1px @page-header-border-color;
         padding-bottom: @line-height-computed;
         margin-bottom: @line-height-computed;
     }
+}
+
+textarea {
+    font-family: monospace;
 }

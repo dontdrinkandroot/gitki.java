@@ -64,7 +64,7 @@ public class TextEditPage extends EditPage
         } catch (IOException e) {
             throw new WicketRuntimeException(e);
         }
-        this.commitMessageModel = Model.of("Editing " + this.getModelObject().getName());
+        this.commitMessageModel = Model.of("Editing " + this.getModelObject().toAbsoluteString());
 
         Form<String> editForm = new Form<>("editForm", this.contentModel);
         this.add(editForm);

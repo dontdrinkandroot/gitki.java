@@ -3,7 +3,9 @@ package net.dontdrinkandroot.gitki.wicket.page.file.view;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.service.GitService;
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService;
+import net.dontdrinkandroot.gitki.wicket.component.button.EditButton;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -48,5 +50,12 @@ public class MarkdownViewPage extends ViewPage
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void populatePrimaryButtons(RepeatingView view)
+    {
+        view.add(new EditButton(view.newChildId(), this.getModel()));
+        super.populatePrimaryButtons(view);
     }
 }

@@ -1,12 +1,14 @@
 package net.dontdrinkandroot.gitki.wicket.page.file.view;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.wicket.component.button.EditButton;
 import net.dontdrinkandroot.gitki.wicket.headeritem.HighlightJsHeaderItem;
 import net.dontdrinkandroot.gitki.wicket.headeritem.HightlightCssHeaderItem;
 import net.dontdrinkandroot.gitki.wicket.model.FilePathStringContentModel;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
@@ -39,8 +41,15 @@ public class TextViewPage extends ViewPage
 
         response.render(new HighlightJsHeaderItem());
         response.render(new HightlightCssHeaderItem());
-        response.render(new OnDomReadyHeaderItem("$('.content').each(function(i, block) {\n" +
+        response.render(new OnDomReadyHeaderItem("$('pre.content code').each(function(i, block) {\n" +
                 "    hljs.highlightBlock(block);\n" +
                 "  });"));
+    }
+
+    @Override
+    protected void populatePrimaryButtons(RepeatingView view)
+    {
+        view.add(new EditButton(view.newChildId(), this.getModel()));
+        super.populatePrimaryButtons(view);
     }
 }

@@ -51,7 +51,7 @@ public class RemoveFileModal extends FormModal<FilePath>
     {
         super.populateFormGroups(formGroupView);
 
-        this.commitMessageModel = Model.of("Removing " + this.getModelObject().toString());
+        this.commitMessageModel = Model.of("Removing " + this.getModelObject().toAbsoluteString());
 
         FormGroupInputText formGroupCommitMessage =
                 new FormGroupInputText(formGroupView.newChildId(), Model.of("Commit Message"), this.commitMessageModel);
