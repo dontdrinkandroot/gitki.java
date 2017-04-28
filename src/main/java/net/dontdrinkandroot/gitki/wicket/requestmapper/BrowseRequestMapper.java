@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.requestmapper;
 
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
+import net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextFileEditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage;
@@ -143,8 +144,12 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         String extension = FilenameUtils.getExtension(fileName);
         switch (extension) {
             case "txt":
-            case "md":
+            case "csv":
+            case "xml":
+            case "properties":
                 return TextFileEditPage.class;
+            case "md":
+                return MarkdownEditPage.class;
         }
 
         return null;
