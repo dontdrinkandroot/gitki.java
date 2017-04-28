@@ -14,20 +14,6 @@
             ignore-resource-not-found="true"
     />
 
-    <bean id="wicketApplication" class="net.dontdrinkandroot.gitki.wicket.GitkiWebApplication">
-    </bean>
-
-    <bean id="gitService" class="net.dontdrinkandroot.gitki.service.DefaultGitService">
-        <constructor-arg value="${gitki.repository}"/>
-    </bean>
-
-    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-    </bean>
-
-    <bean id="userService" class="net.dontdrinkandroot.gitki.service.StaticUserService">
-        <constructor-arg ref="passwordEncoder"/>
-    </bean>
-
     <security:http create-session="never" entry-point-ref="authenticationEntryPoint">
         <security:remember-me/>
         <security:csrf disabled="true"/>
@@ -44,9 +30,28 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
+    <bean id="wicketApplication" class="net.dontdrinkandroot.gitki.wicket.GitkiWebApplication">
+    </bean>
+
+    <bean id="gitService" class="net.dontdrinkandroot.gitki.service.DefaultGitService">
+        <constructor-arg value="${gitki.repository}"/>
+    </bean>
+
+    <bean id="markdownService" class="net.dontdrinkandroot.gitki.service.markdown.DefaultMarkdownService">
+    </bean>
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    </bean>
+
     <bean id="authenticationEntryPoint"
           class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
         <constructor-arg value="/login"/>
     </bean>
+
+    <beans profile="test">
+        <bean id="userService" class="net.dontdrinkandroot.gitki.service.StaticUserService">
+            <constructor-arg ref="passwordEncoder"/>
+        </bean>
+    </beans>
 
 </beans>

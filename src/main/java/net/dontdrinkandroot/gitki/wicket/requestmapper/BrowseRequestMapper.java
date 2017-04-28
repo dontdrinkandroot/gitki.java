@@ -143,6 +143,7 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         String extension = FilenameUtils.getExtension(fileName);
         switch (extension) {
             case "txt":
+            case "md":
                 return TextFileEditPage.class;
         }
 

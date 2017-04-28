@@ -10,7 +10,6 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.DropDownButton;
 import net.dontdrinkandroot.wicket.bootstrap.css.DropDownAlignment;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -20,7 +19,7 @@ public class DirectoryActionsDropDownButton extends DropDownButton<DirectoryPath
 {
     public DirectoryActionsDropDownButton(String id, IModel<DirectoryPath> model)
     {
-        super(id, model, Model.of("Actions"));
+        super(id, model, null);
         this.setDropDownAlignment(DropDownAlignment.RIGHT);
     }
 
