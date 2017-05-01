@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.service;
+package net.dontdrinkandroot.gitki.service.user;
 
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;

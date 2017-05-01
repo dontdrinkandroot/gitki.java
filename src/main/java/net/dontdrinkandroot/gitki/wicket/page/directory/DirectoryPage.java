@@ -2,7 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page.directory;
 
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
-import net.dontdrinkandroot.gitki.service.GitService;
+import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropDownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryListPanel;
 import net.dontdrinkandroot.gitki.wicket.component.FileListPanel;

@@ -65,10 +65,13 @@
         <version.org.springframework>4.3.2.RELEASE</version.org.springframework>
         <version.org.springframework.security>4.2.2.RELEASE</version.org.springframework.security>
         <version.junit>4.12</version.junit>
+        <version.org.apache.commons.commons-dbcp2>2.1.1</version.org.apache.commons.commons-dbcp2>
+        <version.org.hibernate>5.2.2.Final</version.org.hibernate>
         <!-- Plugins -->
         <version.org.lesscss.lesscss-maven-plugin>1.7.0.1.1</version.org.lesscss.lesscss-maven-plugin>
         <version.org.jacoco.jacoco-maven-plugin>0.7.7.201606060606</version.org.jacoco.jacoco-maven-plugin>
         <version.org.eluder.coveralls.coveralls-maven-plugin>4.2.0</version.org.eluder.coveralls.coveralls-maven-plugin>
+        <org.hsqldb>2.3.4</org.hsqldb>
     </properties>
 
     <build>
@@ -218,6 +221,30 @@
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-spring</artifactId>
             <version>${version.org.apache.wicket}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${org.hsqldb}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${version.org.hibernate}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${version.org.springframework}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>${version.org.apache.commons.commons-dbcp2}</version>
         </dependency>
 
         <dependency>

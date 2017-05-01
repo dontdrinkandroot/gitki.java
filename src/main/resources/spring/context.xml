@@ -3,16 +3,40 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
+    <tx:annotation-driven transaction-manager="transactionManager"/>
     <context:annotation-config/>
     <context:property-placeholder
             location="classpath:default.properties, file:${gitki.config}"
             ignore-resource-not-found="true"
     />
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="username" value="${gitki.db.username}"/>
+        <property name="password" value="${gitki.db.password}"/>
+        <property name="driverClassName" value="${gitki.db.driverClassName}"/>
+        <property name="url" value="${gitki.db.url}"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceUnitName" value="gitkiPU"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
     <security:http create-session="never" entry-point-ref="authenticationEntryPoint">
         <security:remember-me/>
@@ -58,7 +82,7 @@
     <bean id="wicketApplication" class="net.dontdrinkandroot.gitki.wicket.GitkiWebApplication">
     </bean>
 
-    <bean id="gitService" class="net.dontdrinkandroot.gitki.service.DefaultGitService">
+    <bean id="gitService" class="net.dontdrinkandroot.gitki.service.git.DefaultGitService">
         <constructor-arg value="${gitki.repository}"/>
     </bean>
 
@@ -74,7 +98,7 @@
     </bean>
 
     <beans profile="test">
-        <bean id="userService" class="net.dontdrinkandroot.gitki.service.StaticUserService">
+        <bean id="userService" class="net.dontdrinkandroot.gitki.service.user.JpaUserService">
             <constructor-arg ref="passwordEncoder"/>
         </bean>
     </beans>

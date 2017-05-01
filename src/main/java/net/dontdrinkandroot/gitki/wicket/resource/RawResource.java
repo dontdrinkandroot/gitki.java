@@ -2,7 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.resource;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
-import net.dontdrinkandroot.gitki.service.GitService;
+import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;

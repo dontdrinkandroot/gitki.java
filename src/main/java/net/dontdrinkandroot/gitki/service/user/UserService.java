@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.service;
+package net.dontdrinkandroot.gitki.service.user;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

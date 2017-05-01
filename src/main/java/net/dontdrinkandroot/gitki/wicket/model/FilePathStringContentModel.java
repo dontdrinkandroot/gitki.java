@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.model;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
-import net.dontdrinkandroot.gitki.service.GitService;
+import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.wicket.model.AbstractChainedInjectedLoadableDetachableModel;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;

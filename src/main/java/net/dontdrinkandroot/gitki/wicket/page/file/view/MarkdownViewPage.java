@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.page.file.view;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
-import net.dontdrinkandroot.gitki.service.GitService;
+import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService;
 import net.dontdrinkandroot.gitki.wicket.component.button.EditButton;
 import org.apache.wicket.markup.html.basic.Label;

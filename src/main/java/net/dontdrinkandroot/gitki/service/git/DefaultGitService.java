@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.service;
+package net.dontdrinkandroot.gitki.service.git;
 
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;

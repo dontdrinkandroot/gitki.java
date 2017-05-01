@@ -2,7 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.component.modal;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
-import net.dontdrinkandroot.gitki.service.GitService;
+import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
