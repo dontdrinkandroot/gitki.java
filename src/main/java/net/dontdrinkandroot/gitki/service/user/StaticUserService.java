@@ -5,8 +5,11 @@ import net.dontdrinkandroot.gitki.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,5 +49,25 @@ public class StaticUserService implements UserService
         }
 
         return this.userMap.get(username);
+    }
+
+    @Override
+    public long findCount()
+    {
+        return this.userMap.size();
+    }
+
+    @Override
+    public List<User> find(long first, long count)
+    {
+        List<User> users = new ArrayList<>(this.userMap.values());
+        int size = users.size();
+        return users.subList((int) Math.min(size - 1, first), (int) Math.min(size - 1, first + count));
+    }
+
+    @Override
+    public User save(User user)
+    {
+        throw new NotImplementedException();
     }
 }

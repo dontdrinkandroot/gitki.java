@@ -32,9 +32,8 @@ public class User implements UserDetails
     @Column
     private String password;
 
-    protected User()
+    public User()
     {
-        /* RI */
     }
 
     public User(String firstName, String lastName, String email, Role role)
@@ -63,6 +62,11 @@ public class User implements UserDetails
     public Role getRole()
     {
         return this.role;
+    }
+
+    public void setRole(Role role)
+    {
+        this.role = role;
     }
 
     @Override

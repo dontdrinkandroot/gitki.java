@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,7 +39,7 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
         CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
@@ -56,13 +57,13 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
     {
         CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<User> from = query.from(User.class);
+        query.from(User.class);
 
         return this.entityManager.createQuery(query).getResultList();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void onApplicationEvent(ContextRefreshedEvent event)
     {
         List<User> users = this.findAll();
@@ -71,5 +72,39 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
             user.setPassword(this.passwordEncoder.encode("admin"));
             this.entityManager.persist(user);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long findCount()
+    {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<User> from = query.from(User.class);
+        query.select(builder.count(from));
+
+        return this.entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> find(long first, long count)
+    {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> from = query.from(User.class);
+
+        TypedQuery<User> typedQuery = this.entityManager.createQuery(query);
+        typedQuery.setFirstResult((int) first);
+        typedQuery.setMaxResults((int) count);
+
+        return typedQuery.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public User save(User user)
+    {
+        return this.entityManager.merge(user);
     }
 }

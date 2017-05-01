@@ -5,6 +5,7 @@ import net.dontdrinkandroot.gitki.wicket.GitkiWebApplication;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.component.item.LoginLinkItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
+import net.dontdrinkandroot.gitki.wicket.component.item.UserListPageItem;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
@@ -71,6 +72,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
             protected void populateNavbarRightItems(RepeatingView itemView)
             {
                 super.populateNavbarRightItems(itemView);
+                itemView.add(new UserListPageItem(itemView.newChildId()));
                 itemView.add(new UserDropdownItem(itemView.newChildId()));
                 itemView.add(new LoginLinkItem(itemView.newChildId()));
             }
