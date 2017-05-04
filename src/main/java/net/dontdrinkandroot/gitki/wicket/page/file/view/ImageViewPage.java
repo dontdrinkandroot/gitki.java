@@ -28,6 +28,13 @@ public class ImageViewPage extends ViewPage
         super.onInitialize();
 
         PageParameters resourceParameters = PageParameterUtils.from(this.getModelObject());
-        this.add(new Image("image", new SharedResourceReference("raw"), resourceParameters));
+        this.add(new Image("image", new SharedResourceReference("raw"), resourceParameters)
+        {
+            @Override
+            protected boolean shouldAddAntiCacheParameter()
+            {
+                return false;
+            }
+        });
     }
 }
