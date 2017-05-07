@@ -63,7 +63,7 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event)
     {
         List<User> users = this.findAll();

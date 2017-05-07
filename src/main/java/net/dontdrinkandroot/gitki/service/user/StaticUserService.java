@@ -5,7 +5,6 @@ import net.dontdrinkandroot.gitki.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +67,6 @@ public class StaticUserService implements UserService
     @Override
     public User save(User user)
     {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 }
