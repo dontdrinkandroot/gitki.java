@@ -5,7 +5,6 @@ import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropDownButto
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
-import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize;
 import net.dontdrinkandroot.wicket.bootstrap.css.DropDownAlignment;
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
@@ -28,10 +27,10 @@ public class DirectoryListItem extends GenericPanel<DirectoryPath>
     {
         super.onInitialize();
 
-        this.add(new IconBehavior(FontAwesomeIconClass.FOLDER_O.createIcon()));
-
         DirectoryActionsDropDownButton actionsDropDownButton =
                 new DirectoryActionsDropDownButton("actions", this.getModel());
+        actionsDropDownButton.getIconBehavior()
+                .setAppendIcon(FontAwesomeIconClass.FOLDER_O.createIcon().setFixedWidth(true));
         actionsDropDownButton.setButtonSize(ButtonSize.EXTRA_SMALL);
         actionsDropDownButton.setDropDownAlignment(DropDownAlignment.LEFT);
         this.add(actionsDropDownButton);

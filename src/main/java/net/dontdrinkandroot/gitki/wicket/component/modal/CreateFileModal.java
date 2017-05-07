@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.FileType;
 import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
@@ -90,6 +91,7 @@ public class CreateFileModal extends FormModal<DirectoryPath>
                         FilePath filePath = CreateFileModal.this.getModelObject().appendFileName(fullName);
                         switch (fileType) {
                             case MARKDOWN:
+                                this.setResponsePage(new MarkdownEditPage(Model.of(filePath)));
                                 break;
                             case TEXT:
                                 this.setResponsePage(new TextEditPage(Model.of(filePath)));

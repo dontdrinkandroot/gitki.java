@@ -4,7 +4,7 @@ import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.item.EditFileItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.RemoveFileModalItem;
-import net.dontdrinkandroot.gitki.wicket.security.Render;
+import net.dontdrinkandroot.gitki.wicket.security.Enable;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.DropDownButton;
 import net.dontdrinkandroot.wicket.bootstrap.css.DropDownAlignment;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -13,7 +13,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Render(Role.COMMITTER)
+@Enable(Role.COMMITTER)
 public class FileActionsDropDownButton extends DropDownButton<FilePath>
 {
     public FileActionsDropDownButton(String id, IModel<FilePath> model)

@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.service.markdown;
+package net.dontdrinkandroot.gitki.service.requestmapping;
 
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage;

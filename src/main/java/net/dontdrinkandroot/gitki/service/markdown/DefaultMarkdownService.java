@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.service.markdown;
 
+import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
@@ -30,6 +31,10 @@ public class DefaultMarkdownService implements MarkdownService
     @Override
     public String parseToHtml(String source)
     {
+        if (StringUtils.isEmpty(source)) {
+            return "";
+        }
+
         return this.renderer.render(this.parse(source));
     }
 

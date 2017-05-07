@@ -2,6 +2,8 @@ package net.dontdrinkandroot.gitki.wicket;
 
 import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
+import net.dontdrinkandroot.gitki.wicket.page.user.UserEditPage;
+import net.dontdrinkandroot.gitki.wicket.page.user.UserListPage;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.RawRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.resource.ExternalJQueryResourceReference;
@@ -48,6 +50,8 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
 
         this.mount(new RawRequestMapper());
         this.mountPage("login", SignInPage.class);
+        this.mountPage("users", UserListPage.class);
+        this.mountPage("users/${userId}/edit", UserEditPage.class);
 
         RawResource rawResource = new RawResource();
         Injector.get().inject(rawResource);

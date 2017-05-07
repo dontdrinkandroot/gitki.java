@@ -1,6 +1,8 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
+import net.dontdrinkandroot.gitki.wicket.headeritem.StyleCssHeaderItem;
+import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -31,5 +33,11 @@ public class SignInPage extends net.dontdrinkandroot.wicket.extras.page.SignInPa
     protected boolean signIn(String username, String password)
     {
         return GitkiWebSession.get().signIn(username, password);
+    }
+
+    @Override
+    protected HeaderItem getBootstrapCssHeaderItem()
+    {
+        return new StyleCssHeaderItem();
     }
 }

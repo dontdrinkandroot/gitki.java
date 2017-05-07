@@ -5,7 +5,6 @@ import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropDownButton;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
-import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize;
 import net.dontdrinkandroot.wicket.bootstrap.css.DropDownAlignment;
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
@@ -28,9 +27,9 @@ public class FileListItem extends GenericPanel<FilePath>
     {
         super.onInitialize();
 
-        this.add(new IconBehavior(FontAwesomeIconClass.FILE_O.createIcon()));
-
         FileActionsDropDownButton actionsDropDownButton = new FileActionsDropDownButton("actions", this.getModel());
+        actionsDropDownButton.getIconBehavior()
+                .setAppendIcon(FontAwesomeIconClass.FILE_O.createIcon().setFixedWidth(true));
         actionsDropDownButton.setButtonSize(ButtonSize.EXTRA_SMALL);
         actionsDropDownButton.setDropDownAlignment(DropDownAlignment.LEFT);
         this.add(actionsDropDownButton);

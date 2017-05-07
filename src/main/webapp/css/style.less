@@ -1,5 +1,6 @@
 @import "https://raw.githubusercontent.com/twbs/bootstrap/v3.3.7/less/bootstrap.less";
-@import (css) url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i&subset=latin-ext');
+//@import '../lib/bootstrap/less/bootstrap.less';
+@import (css) url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i&subset=latin-ext');
 
 @font-family-sans-serif: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -7,6 +8,7 @@
 @border-radius-base: 2px;
 @border-radius-large: 3px;
 
+@headings-font-weight: 600;
 @font-size-h6: @font-size-base;
 @font-size-h5: @font-size-h6;
 @font-size-h4: ceil(@font-size-h5 * 1.25);
@@ -18,8 +20,8 @@ body {
     padding-top: @navbar-height;
 }
 
-h1, .h1 {
-    font-weight: 700;
+.container.signin {
+    margin-top: 50px;
 }
 
 .subnav {
@@ -55,4 +57,15 @@ pre.content {
 
 textarea {
     font-family: monospace;
+}
+
+.page-header {
+    padding-top: @line-height-computed;
+    padding-bottom: @line-height-computed;
+    margin-top: 0;
+    margin-bottom: @line-height-computed - 1;
+    h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }

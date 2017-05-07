@@ -11,19 +11,19 @@ import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingSubDirectoriesMod
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathDirectoryListingModel;
 import net.dontdrinkandroot.gitki.wicket.page.BrowsePage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-
-import javax.inject.Inject;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 public class DirectoryPage extends BrowsePage<DirectoryPath>
 {
-    @Inject
+    @SpringBean
     private GitService gitService;
 
     public DirectoryPage(IModel<DirectoryPath> model)
@@ -54,6 +54,11 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
     protected void populatePrimaryButtons(RepeatingView view)
     {
         super.populatePrimaryButtons(view);
-        view.add(new DirectoryActionsDropDownButton(view.newChildId(), this.getModel()));
+
+        DirectoryActionsDropDownButton directoryActionsButton =
+                new DirectoryActionsDropDownButton(view.newChildId(), this.getModel());
+        directoryActionsButton.getIconBehavior()
+                .setAppendIcon(FontAwesomeIconClass.ELLIPSIS_V.createIcon().setFixedWidth(true));
+        view.add(directoryActionsButton);
     }
 }
