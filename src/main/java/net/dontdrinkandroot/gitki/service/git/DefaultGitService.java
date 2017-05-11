@@ -17,6 +17,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,5 +162,12 @@ public class DefaultGitService implements GitService
         }
 
         return resolvedPath;
+    }
+
+    @Override
+    public BasicFileAttributes getBasicFileAttributes(Path path) throws IOException
+    {
+        Path absolutePath = this.resolve(path, true);
+        return Files.readAttributes(absolutePath, BasicFileAttributes.class);
     }
 }

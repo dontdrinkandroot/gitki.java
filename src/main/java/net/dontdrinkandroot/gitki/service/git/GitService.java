@@ -7,6 +7,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -32,4 +33,6 @@ public interface GitService
     Path resolve(Path path) throws FileNotFoundException;
 
     Path resolve(Path path, boolean mustExist) throws FileNotFoundException;
+
+    BasicFileAttributes getBasicFileAttributes(Path path) throws IOException;
 }

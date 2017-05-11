@@ -69,3 +69,19 @@ textarea {
         margin-bottom: 0;
     }
 }
+
+.list-group-item {
+    &.file, &.directory {
+        .size, .lastmodified {
+            display: inline-block;
+            text-align: right;
+            color: @text-muted;
+        }
+        .size {
+            width: 50px;
+        }
+        .lastmodified {
+            width: 200px;
+        }
+    }
+}
