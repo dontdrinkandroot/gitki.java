@@ -70,6 +70,7 @@
         <version.org.eclipse.jetty>9.3.10.v20160621</version.org.eclipse.jetty>
         <version.org.apache.commons.commons-lang3>3.1</version.org.apache.commons.commons-lang3>
         <version.org.apache.commons.commons-collections4>4.1</version.org.apache.commons.commons-collections4>
+        <version.org.apache.logging.log4j>2.8.2</version.org.apache.logging.log4j>
         <!-- Plugins -->
         <version.org.lesscss.lesscss-maven-plugin>1.7.0.1.1</version.org.lesscss.lesscss-maven-plugin>
         <version.org.jacoco.jacoco-maven-plugin>0.7.7.201606060606</version.org.jacoco.jacoco-maven-plugin>
@@ -275,6 +276,18 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>${version.org.apache.commons.commons-collections4}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${version.org.apache.logging.log4j}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${version.org.apache.logging.log4j}</version>
         </dependency>
 
         <dependency>
