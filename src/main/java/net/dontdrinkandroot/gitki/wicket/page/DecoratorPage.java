@@ -9,7 +9,7 @@ import net.dontdrinkandroot.gitki.wicket.component.item.UserListPageItem;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
-import net.dontdrinkandroot.wicket.bootstrap.component.navbar.NavBar;
+import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
 import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass;
 import net.dontdrinkandroot.wicket.utils.NonStatelessPrintingVisitor;
 import org.apache.wicket.Component;
@@ -50,7 +50,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
     {
         super.onInitialize();
 
-        NavBar navBar = new NavBar("navbar")
+        Navbar navbar = new Navbar("navbar")
         {
             @Override
             protected Component createBrand(String id)
@@ -77,8 +77,8 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
                 itemView.add(new LoginLinkItem(itemView.newChildId()));
             }
         };
-        navBar.add(new CssClassAppender(BootstrapCssClass.NAVBAR_FIXED_TOP));
-        this.add(navBar);
+        navbar.add(new CssClassAppender(BootstrapCssClass.NAVBAR_FIXED_TOP));
+        this.add(navbar);
 
         this.createModal();
     }

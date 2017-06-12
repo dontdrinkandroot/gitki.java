@@ -6,8 +6,8 @@ import net.dontdrinkandroot.gitki.wicket.component.item.CreateDirectoryModalItem
 import net.dontdrinkandroot.gitki.wicket.component.item.CreateFileModalItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UploadFilesModalItem;
 import net.dontdrinkandroot.gitki.wicket.security.Enable;
-import net.dontdrinkandroot.wicket.bootstrap.component.button.DropDownButton;
-import net.dontdrinkandroot.wicket.bootstrap.css.DropDownAlignment;
+import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton;
+import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 
@@ -15,12 +15,12 @@ import org.apache.wicket.model.IModel;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Enable(Role.COMMITTER)
-public class DirectoryActionsDropDownButton extends DropDownButton<DirectoryPath>
+public class DirectoryActionsDropdownButton extends DropdownButton<DirectoryPath>
 {
-    public DirectoryActionsDropDownButton(String id, IModel<DirectoryPath> model)
+    public DirectoryActionsDropdownButton(String id, IModel<DirectoryPath> model)
     {
         super(id, model, null);
-        this.setDropDownAlignment(DropDownAlignment.RIGHT);
+        this.setDropdownAlignment(DropdownAlignment.RIGHT);
     }
 
     @Override

@@ -3,7 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.page.directory;
 import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
-import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropDownButton;
+import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryListPanel;
 import net.dontdrinkandroot.gitki.wicket.component.FileListPanel;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingFilesModel;
@@ -55,8 +55,8 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
     {
         super.populatePrimaryButtons(view);
 
-        DirectoryActionsDropDownButton directoryActionsButton =
-                new DirectoryActionsDropDownButton(view.newChildId(), this.getModel());
+        DirectoryActionsDropdownButton directoryActionsButton =
+                new DirectoryActionsDropdownButton(view.newChildId(), this.getModel());
         directoryActionsButton.getIconBehavior()
                 .setAppendIcon(FontAwesomeIconClass.ELLIPSIS_V.createIcon().setFixedWidth(true));
         view.add(directoryActionsButton);

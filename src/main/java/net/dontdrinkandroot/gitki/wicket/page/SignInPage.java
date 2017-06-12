@@ -10,7 +10,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class SignInPage extends net.dontdrinkandroot.wicket.extras.page.SignInPage
+public class SignInPage extends net.dontdrinkandroot.wicket.bootstrap.page.SignInPage
 {
     public SignInPage(PageParameters parameters)
     {

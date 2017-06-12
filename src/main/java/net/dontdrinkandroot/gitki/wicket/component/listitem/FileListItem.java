@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.component.listitem;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
-import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropDownButton;
+import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.css.GitkiCssClass;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathBasicFileAttributesModel;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
@@ -11,7 +11,7 @@ import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize;
-import net.dontdrinkandroot.wicket.bootstrap.css.DropDownAlignment;
+import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment;
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
 import net.dontdrinkandroot.wicket.model.java.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel;
 import net.dontdrinkandroot.wicket.model.java.nio.file.attribute.BasicFileAttributesSizeModel;
@@ -41,11 +41,11 @@ public class FileListItem extends GenericPanel<FilePath>
     {
         super.onInitialize();
 
-        FileActionsDropDownButton actionsDropDownButton = new FileActionsDropDownButton("actions", this.getModel());
+        FileActionsDropdownButton actionsDropDownButton = new FileActionsDropdownButton("actions", this.getModel());
         actionsDropDownButton.getIconBehavior()
                 .setAppendIcon(FontAwesomeIconClass.FILE_O.createIcon().setFixedWidth(true));
         actionsDropDownButton.setButtonSize(ButtonSize.EXTRA_SMALL);
-        actionsDropDownButton.setDropDownAlignment(DropDownAlignment.LEFT);
+        actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT);
         this.add(actionsDropDownButton);
 
         BookmarkablePageLink<Void> link =
