@@ -66,6 +66,7 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event)
     {
+       /* Create an admin user if none exists */
         List<User> users = this.findAll();
         if (users.isEmpty()) {
             User user = new User("Admin", "User", "admin@example.com", Role.ADMIN);

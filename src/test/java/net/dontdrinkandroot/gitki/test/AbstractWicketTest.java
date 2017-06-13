@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("test")
-@ContextConfiguration(locations = {"classpath:spring/context.test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/context.xml"})
 public abstract class AbstractWicketTest extends AbstractGitTest
 {
     @Autowired

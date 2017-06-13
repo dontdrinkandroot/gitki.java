@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:security="http://www.springframework.org/schema/security"
-       xsi:schemaLocation="
-            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
-
-    <context:annotation-config/>
-    <context:property-placeholder location="classpath:test.properties"/>
-
-    <security:http create-session="never" entry-point-ref="authenticationEntryPoint">
-        <security:remember-me/>
-        <security:csrf disabled="true"/>
-        <security:intercept-url pattern="/**"/>
-        <security:headers>
-            <security:frame-options policy="SAMEORIGIN"/>
-        </security:headers>
-    </security:http>
-
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider user-service-ref="userService">
-            <security:password-encoder ref="passwordEncoder">
-            </security:password-encoder>
-        </security:authentication-provider>
-    </security:authentication-manager>
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
     <bean id="requestMappingService"
           class="net.dontdrinkandroot.gitki.service.requestmapping.DefaultRequestMappingRegistry">
@@ -53,9 +29,6 @@
         </property>
     </bean>
 
-    <bean id="wicketApplication" class="net.dontdrinkandroot.gitki.wicket.GitkiWebApplication">
-    </bean>
-
     <bean id="gitService" class="net.dontdrinkandroot.gitki.service.git.DefaultGitService">
         <constructor-arg value="${gitki.repository}"/>
     </bean>
@@ -63,15 +36,7 @@
     <bean id="markdownService" class="net.dontdrinkandroot.gitki.service.markdown.DefaultMarkdownService">
     </bean>
 
-    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-    </bean>
-
-    <bean id="authenticationEntryPoint"
-          class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <constructor-arg value="/login"/>
-    </bean>
-
-    <bean id="userService" class="net.dontdrinkandroot.gitki.service.user.StaticUserService">
+    <bean id="userService" class="net.dontdrinkandroot.gitki.service.user.JpaUserService">
         <constructor-arg ref="passwordEncoder"/>
     </bean>
 
