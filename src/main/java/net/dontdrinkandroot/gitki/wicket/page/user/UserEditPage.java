@@ -6,12 +6,10 @@ import net.dontdrinkandroot.gitki.service.user.UserService;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.form.FormStyleBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitButton;
-import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupActions;
-import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputEmail;
-import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
-import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupSelect;
+import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.*;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle;
 import net.dontdrinkandroot.wicket.bootstrap.css.grid.ColumnSizeStack;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
@@ -31,7 +29,7 @@ public class UserEditPage extends UserPage<User>
     @SpringBean
     private UserService userService;
 
-    private IModel<String> newPasswordModel;
+    private IModel<String> newPasswordModel = new Model<>();
 
     public UserEditPage(PageParameters parameters)
     {
@@ -94,6 +92,10 @@ public class UserEditPage extends UserPage<User>
         formGroupRole.setRequired(true);
         form.add(formGroupRole);
 
+        FormGroupInputPassword formGroupPassword =
+                new FormGroupInputPassword("password", Model.of("Password"), this.newPasswordModel);
+        form.add(formGroupPassword);
+
         FormGroupActions<Void> formGroupActions = new FormGroupActions<Void>("actions")
         {
             @Override
@@ -107,7 +109,14 @@ public class UserEditPage extends UserPage<User>
                     public void onSubmit()
                     {
                         super.onSubmit();
-                        UserEditPage.this.userService.save(UserEditPage.this.getModelObject());
+                        User user = UserEditPage.this.getModelObject();
+                        if (!StringUtils.isEmpty(UserEditPage.this.newPasswordModel.getObject())) {
+                            UserEditPage.this.userService.setPassword(
+                                    user,
+                                    UserEditPage.this.newPasswordModel.getObject()
+                            );
+                        }
+                        UserEditPage.this.userService.save(user);
                     }
 
                     @Override

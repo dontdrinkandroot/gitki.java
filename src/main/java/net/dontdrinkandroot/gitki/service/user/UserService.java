@@ -15,4 +15,6 @@ public interface UserService extends UserDetailsService
     List<User> find(long first, long count);
 
     User save(User user);
+
+    void setPassword(User user, String password);
 }

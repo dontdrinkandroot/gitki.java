@@ -76,6 +76,13 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
     }
 
     @Override
+    @Transactional
+    public void setPassword(User user, String password)
+    {
+        user.setPassword(this.passwordEncoder.encode(password));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public long findCount()
     {
