@@ -7,10 +7,11 @@ import net.dontdrinkandroot.gitki.wicket.component.item.LoginLinkItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserListPageItem;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
-import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
-import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass;
+import net.dontdrinkandroot.wicket.bootstrap.component.navbar.NavbarNav;
+import net.dontdrinkandroot.wicket.bootstrap.css.NavbarAlignment;
+import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition;
 import net.dontdrinkandroot.wicket.utils.NonStatelessPrintingVisitor;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -63,21 +64,35 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
             }
 
             @Override
-            protected void populateNavbarLeftItems(RepeatingView itemView)
+            protected void populateCollapseItems(RepeatingView collapseItemView)
             {
-                super.populateNavbarLeftItems(itemView);
-            }
+                super.populateCollapseItems(collapseItemView);
 
-            @Override
-            protected void populateNavbarRightItems(RepeatingView itemView)
-            {
-                super.populateNavbarRightItems(itemView);
-                itemView.add(new UserListPageItem(itemView.newChildId()));
-                itemView.add(new UserDropdownItem(itemView.newChildId()));
-                itemView.add(new LoginLinkItem(itemView.newChildId()));
+                NavbarNav navbarLeft = new NavbarNav(collapseItemView.newChildId())
+                {
+                    @Override
+                    protected void populateItems(RepeatingView itemView)
+                    {
+                        super.populateItems(itemView);
+                        DecoratorPage.this.populateNavbarLeftItems(itemView);
+                    }
+                };
+                collapseItemView.add(navbarLeft);
+
+                NavbarNav navbarRight = new NavbarNav(collapseItemView.newChildId())
+                {
+                    @Override
+                    protected void populateItems(RepeatingView itemView)
+                    {
+                        super.populateItems(itemView);
+                        DecoratorPage.this.populateNavbarRightItems(itemView);
+                    }
+                };
+                navbarRight.setAlignment(NavbarAlignment.RIGHT);
+                collapseItemView.add(navbarRight);
             }
         };
-        navbar.add(new CssClassAppender(BootstrapCssClass.NAVBAR_FIXED_TOP));
+        navbar.setPosition(NavbarPosition.FIXED_TOP);
         this.add(navbar);
 
         this.createModal();
@@ -91,6 +106,17 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
         if (null == GitkiWebSession.get().getUser()) {
             Visits.visit(this, new NonStatelessPrintingVisitor());
         }
+    }
+
+    protected void populateNavbarLeftItems(RepeatingView itemView)
+    {
+    }
+
+    protected void populateNavbarRightItems(RepeatingView itemView)
+    {
+        itemView.add(new UserListPageItem(itemView.newChildId()));
+        itemView.add(new UserDropdownItem(itemView.newChildId()));
+        itemView.add(new LoginLinkItem(itemView.newChildId()));
     }
 
     private void createModal()
