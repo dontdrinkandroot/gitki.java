@@ -14,19 +14,21 @@ import java.util.Locale;
  */
 public class InstantStringModel extends AbstractChainedReadonlyModel<Instant, String>
 {
-    DateTimeFormatter formatter;
+    private transient DateTimeFormatter formatter;
 
     public InstantStringModel(IModel<? extends Instant> parent)
     {
         super(parent);
-        this.formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                .withLocale(Locale.ENGLISH)
-                .withZone(ZoneId.of("UTC"));
     }
 
     @Override
     public String getObject()
     {
+        if (null == this.formatter) {
+            this.formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                    .withLocale(Locale.ENGLISH)
+                    .withZone(ZoneId.of("UTC"));
+        }
         return this.formatter.format(this.getParentObject());
     }
 }

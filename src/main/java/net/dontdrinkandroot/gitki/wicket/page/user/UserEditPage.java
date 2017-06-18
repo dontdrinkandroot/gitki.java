@@ -94,6 +94,7 @@ public class UserEditPage extends UserPage<User>
 
         FormGroupInputPassword formGroupPassword =
                 new FormGroupInputPassword("password", Model.of("Password"), this.newPasswordModel);
+        formGroupPassword.setRequired(false);
         form.add(formGroupPassword);
 
         FormGroupActions<Void> formGroupActions = new FormGroupActions<Void>("actions")
