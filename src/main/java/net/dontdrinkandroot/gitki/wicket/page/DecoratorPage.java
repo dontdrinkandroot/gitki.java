@@ -9,7 +9,7 @@ import net.dontdrinkandroot.gitki.wicket.component.item.UserListPageItem;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
-import net.dontdrinkandroot.wicket.bootstrap.component.navbar.NavbarNav;
+import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav;
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarAlignment;
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition;
 import net.dontdrinkandroot.wicket.utils.NonStatelessPrintingVisitor;
@@ -68,7 +68,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
             {
                 super.populateCollapseItems(collapseItemView);
 
-                NavbarNav navbarLeft = new NavbarNav(collapseItemView.newChildId())
+                RepeatingNavbarNav navbarLeft = new RepeatingNavbarNav(collapseItemView.newChildId())
                 {
                     @Override
                     protected void populateItems(RepeatingView itemView)
@@ -79,7 +79,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
                 };
                 collapseItemView.add(navbarLeft);
 
-                NavbarNav navbarRight = new NavbarNav(collapseItemView.newChildId())
+                RepeatingNavbarNav navbarRight = new RepeatingNavbarNav(collapseItemView.newChildId())
                 {
                     @Override
                     protected void populateItems(RepeatingView itemView)
