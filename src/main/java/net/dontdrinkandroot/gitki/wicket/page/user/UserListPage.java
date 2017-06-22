@@ -8,6 +8,7 @@ import net.dontdrinkandroot.gitki.wicket.dataprovider.UserDataProvider;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass;
+import net.dontdrinkandroot.wicket.bootstrap.css.TableStyle;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -57,7 +58,7 @@ public class UserListPage extends UserPage<List<User>>
         DataTable<User, String> table = new DataTable<>("table", columns, dataProvider, 20);
         table.addTopToolbar(new HeadersToolbar<>(table, dataProvider));
         table.add(new CssClassAppender(BootstrapCssClass.TABLE));
-        table.add(new CssClassAppender(BootstrapCssClass.TABLE_STRIPED));
+        table.add(new CssClassAppender(TableStyle.STRIPED));
         this.add(table);
     }
 }

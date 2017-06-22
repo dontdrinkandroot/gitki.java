@@ -12,7 +12,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav;
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarAlignment;
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition;
-import net.dontdrinkandroot.wicket.utils.NonStatelessPrintingVisitor;
+import net.dontdrinkandroot.wicket.util.NonStatelessPrintingVisitor;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
