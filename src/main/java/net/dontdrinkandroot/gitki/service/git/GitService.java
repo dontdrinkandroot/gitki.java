@@ -14,6 +14,8 @@ import java.nio.file.attribute.BasicFileAttributes;
  */
 public interface GitService
 {
+    Path getRepositoryPath();
+
     DirectoryListing listDirectory(Path path) throws IOException;
 
     byte[] getContent(Path path) throws IOException;

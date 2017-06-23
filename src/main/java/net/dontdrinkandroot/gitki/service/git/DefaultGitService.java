@@ -57,6 +57,12 @@ public class DefaultGitService implements GitService
     }
 
     @Override
+    public Path getRepositoryPath()
+    {
+        return this.basePath;
+    }
+
+    @Override
     public DirectoryListing listDirectory(Path path) throws IOException
     {
         if (path.isAbsolute()) {

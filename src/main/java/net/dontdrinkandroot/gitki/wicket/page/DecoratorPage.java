@@ -3,9 +3,9 @@ package net.dontdrinkandroot.gitki.wicket.page;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebApplication;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
+import net.dontdrinkandroot.gitki.wicket.component.item.AdminDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.LoginLinkItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
-import net.dontdrinkandroot.gitki.wicket.component.item.UserListPageItem;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
@@ -104,6 +104,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
         super.onBeforeRender();
 
         if (null == GitkiWebSession.get().getUser()) {
+            // TODO: Remove
             Visits.visit(this, new NonStatelessPrintingVisitor());
         }
     }
@@ -114,7 +115,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
 
     protected void populateNavbarRightItems(RepeatingView itemView)
     {
-        itemView.add(new UserListPageItem(itemView.newChildId()));
+        itemView.add(new AdminDropdownItem(itemView.newChildId()));
         itemView.add(new UserDropdownItem(itemView.newChildId()));
         itemView.add(new LoginLinkItem(itemView.newChildId()));
     }
