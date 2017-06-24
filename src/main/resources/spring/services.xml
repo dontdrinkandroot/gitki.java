@@ -10,6 +10,8 @@
                 <entry key="txt" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
                 <entry key="csv" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
                 <entry key="xml" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
+                <entry key="java" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
+                <entry key="yml" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
                 <entry key="properties" value="net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"/>
                 <entry key="md" value="net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage"/>
                 <entry key="jpg" value="net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"/>

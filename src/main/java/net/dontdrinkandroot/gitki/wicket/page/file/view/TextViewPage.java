@@ -41,9 +41,10 @@ public class TextViewPage extends ViewPage
 
         response.render(new HighlightJsHeaderItem());
         response.render(new HightlightCssHeaderItem());
-        response.render(new OnDomReadyHeaderItem("$('pre.content code').each(function(i, block) {\n" +
-                "    hljs.highlightBlock(block);\n" +
-                "  });"));
+        response.render(new OnDomReadyHeaderItem(
+                "$('pre.content code').each(function(i, block) {\n" +
+                        "    hljs.highlightBlock(block);\n" +
+                        "  });"));
     }
 
     @Override
