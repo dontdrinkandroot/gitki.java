@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -175,5 +177,23 @@ public class DefaultGitService implements GitService
     {
         Path absolutePath = this.resolve(path, true);
         return Files.readAttributes(absolutePath, BasicFileAttributes.class);
+    }
+
+    @Override
+    public long getRevisionCount() throws GitAPIException
+    {
+        Iterable<RevCommit> commits = this.git.log().call();
+        long count = 0;
+        for (RevCommit commit : commits) {
+            count++;
+        }
+
+        return count;
+    }
+
+    @Override
+    public Iterator<? extends RevCommit> getRevisionIterator(long first, long count) throws GitAPIException
+    {
+        return this.git.log().setSkip((int) first).setMaxCount((int) count).call().iterator();
     }
 }

@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebApplication;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.component.item.AdminDropdownItem;
+import net.dontdrinkandroot.gitki.wicket.component.item.HistoryPageItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.LoginLinkItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
@@ -111,6 +112,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
 
     protected void populateNavbarLeftItems(RepeatingView itemView)
     {
+        itemView.add(new HistoryPageItem(itemView.newChildId()));
     }
 
     protected void populateNavbarRightItems(RepeatingView itemView)
