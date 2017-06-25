@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.core.env.Environment;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -17,6 +18,9 @@ public class ConfigurationPage extends DecoratorPage
 {
     @SpringBean
     private GitService gitService;
+
+    @SpringBean
+    private Environment environment;
 
     @Override
     protected IModel<String> createTitleModel()
@@ -29,5 +33,7 @@ public class ConfigurationPage extends DecoratorPage
     {
         super.onInitialize();
         this.add(new Label("repositoryPath", this.gitService.getRepositoryPath().toString()));
+        this.add(new Label("defaultProfiles", String.join(",", this.environment.getDefaultProfiles())));
+        this.add(new Label("activeProfiles", String.join(",", this.environment.getActiveProfiles())));
     }
 }
