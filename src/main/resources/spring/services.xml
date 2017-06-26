@@ -42,4 +42,9 @@
         <constructor-arg ref="passwordEncoder"/>
     </bean>
 
+    <bean id="configurationService"
+          class="net.dontdrinkandroot.gitki.service.configuration.DefaultConfigurationService">
+        <constructor-arg value="${gitki.name}"/>
+    </bean>
+
 </beans>
