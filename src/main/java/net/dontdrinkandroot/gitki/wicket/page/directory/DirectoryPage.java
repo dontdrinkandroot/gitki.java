@@ -1,14 +1,10 @@
 package net.dontdrinkandroot.gitki.wicket.page.directory;
 
-import net.dontdrinkandroot.gitki.model.DirectoryListing;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButton;
-import net.dontdrinkandroot.gitki.wicket.component.DirectoryListPanel;
-import net.dontdrinkandroot.gitki.wicket.component.FileListPanel;
-import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingFilesModel;
-import net.dontdrinkandroot.gitki.wicket.model.DirectoryListingSubDirectoriesModel;
-import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathDirectoryListingModel;
+import net.dontdrinkandroot.gitki.wicket.component.DirectoryEntriesPanel;
+import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathEntriesModel;
 import net.dontdrinkandroot.gitki.wicket.page.BrowsePage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
@@ -44,10 +40,7 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
     {
         super.onInitialize();
 
-        IModel<DirectoryListing> listingModel = new DirectoryPathDirectoryListingModel(this.getModel());
-
-        this.add(new FileListPanel("files", new DirectoryListingFilesModel(listingModel)));
-        this.add(new DirectoryListPanel("directories", new DirectoryListingSubDirectoriesModel(listingModel)));
+        this.add(new DirectoryEntriesPanel("entries", new DirectoryPathEntriesModel(this.getModel())));
     }
 
     @Override

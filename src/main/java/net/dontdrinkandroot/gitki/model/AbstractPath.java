@@ -1,5 +1,7 @@
 package net.dontdrinkandroot.gitki.model;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.List;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public abstract class AbstractPath implements Serializable
+public abstract class AbstractPath implements Serializable, Comparable<AbstractPath>
 {
     public static final String SEPARATOR = "/";
 
@@ -67,13 +69,30 @@ public abstract class AbstractPath implements Serializable
         return paths;
     }
 
+    public boolean isFilePath()
+    {
+        return !this.isDirectoryPath();
+    }
+
     public abstract Path toPath();
 
     public abstract boolean isRoot();
 
+    public abstract boolean isDirectoryPath();
+
     public String toAbsoluteString()
     {
         return SEPARATOR + this.toString();
+    }
+
+    @Override
+    public int compareTo(AbstractPath other)
+    {
+        CompareToBuilder compareToBuilder = new CompareToBuilder();
+        compareToBuilder.append(other.isDirectoryPath(), this.isDirectoryPath());
+        compareToBuilder.append(this.getName(), other.getName());
+
+        return compareToBuilder.toComparison();
     }
 
     @Override

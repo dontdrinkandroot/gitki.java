@@ -64,6 +64,12 @@ public class DirectoryPath extends AbstractPath
     }
 
     @Override
+    public boolean isDirectoryPath()
+    {
+        return true;
+    }
+
+    @Override
     public String toString()
     {
         if (null == this.getParent()) {

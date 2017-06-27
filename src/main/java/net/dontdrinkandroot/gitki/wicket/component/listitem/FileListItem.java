@@ -43,7 +43,7 @@ public class FileListItem extends GenericPanel<FilePath>
 
         FileActionsDropdownButton actionsDropDownButton = new FileActionsDropdownButton("actions", this.getModel());
         actionsDropDownButton.getIconBehavior()
-                .setAppendIcon(FontAwesomeIconClass.FILE_O.createIcon().setFixedWidth(true));
+                .setAppendIcon(FontAwesomeIconClass.FILE_TEXT_O.createIcon().setFixedWidth(true));
         actionsDropDownButton.setButtonSize(ButtonSize.EXTRA_SMALL);
         actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT);
         this.add(actionsDropDownButton);

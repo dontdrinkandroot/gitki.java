@@ -1,6 +1,6 @@
 package net.dontdrinkandroot.gitki.service.git;
 
-import net.dontdrinkandroot.gitki.model.DirectoryListing;
+import net.dontdrinkandroot.gitki.model.AbstractPath;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.User;
@@ -65,7 +65,7 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public DirectoryListing listDirectory(Path path) throws IOException
+    public List<AbstractPath> listDirectory(Path path) throws IOException
     {
         if (path.isAbsolute()) {
             throw new RuntimeException("Path must not be absolute");
@@ -75,20 +75,21 @@ public class DefaultGitService implements GitService
 
         DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directoryPath);
 
-        List<DirectoryPath> subDirectories = new ArrayList<>();
-        List<FilePath> files = new ArrayList<>();
+        List<AbstractPath> entries = new ArrayList<>();
         for (Path subPath : directoryStream) {
             Path relativePath = this.basePath.relativize(subPath);
             if (!relativePath.startsWith(".git")) {
                 if (Files.isDirectory(subPath)) {
-                    subDirectories.add(DirectoryPath.from(relativePath));
+                    entries.add(DirectoryPath.from(relativePath));
                 } else {
-                    files.add(FilePath.from(relativePath));
+                    entries.add(FilePath.from(relativePath));
                 }
             }
         }
 
-        return new DirectoryListing(subDirectories, files);
+        entries.sort(AbstractPath::compareTo);
+
+        return entries;
     }
 
     @Override

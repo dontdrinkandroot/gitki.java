@@ -42,7 +42,7 @@ public class DirectoryListItem extends GenericPanel<DirectoryPath>
         DirectoryActionsDropdownButton actionsDropDownButton =
                 new DirectoryActionsDropdownButton("actions", this.getModel());
         actionsDropDownButton.getIconBehavior()
-                .setAppendIcon(FontAwesomeIconClass.FOLDER_O.createIcon().setFixedWidth(true));
+                .setAppendIcon(FontAwesomeIconClass.FOLDER.createIcon().setFixedWidth(true));
         actionsDropDownButton.setButtonSize(ButtonSize.EXTRA_SMALL);
         actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT);
         this.add(actionsDropDownButton);

@@ -56,6 +56,12 @@ public class FilePath extends AbstractPath
         return false;
     }
 
+    @Override
+    public boolean isDirectoryPath()
+    {
+        return false;
+    }
+
     public static FilePath from(Path path)
     {
         DirectoryPath directoryPath = new DirectoryPath();

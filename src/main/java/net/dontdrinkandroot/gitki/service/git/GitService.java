@@ -1,6 +1,6 @@
 package net.dontdrinkandroot.gitki.service.git;
 
-import net.dontdrinkandroot.gitki.model.DirectoryListing;
+import net.dontdrinkandroot.gitki.model.AbstractPath;
 import net.dontdrinkandroot.gitki.model.User;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -18,7 +19,7 @@ public interface GitService
 {
     Path getRepositoryPath();
 
-    DirectoryListing listDirectory(Path path) throws IOException;
+    List<AbstractPath> listDirectory(Path path) throws IOException;
 
     byte[] getContent(Path path) throws IOException;
 
