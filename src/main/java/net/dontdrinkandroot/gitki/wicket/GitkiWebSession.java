@@ -4,22 +4,23 @@ import net.dontdrinkandroot.gitki.model.User;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 public class GitkiWebSession extends WebSession
 {
-    @Inject
-    @Named("authenticationManager")
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @SpringBean(name = "authenticationManager")
     private AuthenticationManager authenticationManager;
 
     public GitkiWebSession(Request request)
@@ -40,8 +41,7 @@ public class GitkiWebSession extends WebSession
                 return true;
             }
         } catch (AuthenticationException e) {
-            System.out.println(e.getMessage());
-            /* Noop */
+            this.logger.error(e.getMessage(), e);
         }
 
         return false;

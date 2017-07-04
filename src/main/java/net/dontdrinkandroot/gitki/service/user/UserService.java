@@ -14,7 +14,7 @@ public interface UserService extends UserDetailsService
 
     List<User> find(long first, long count);
 
-    User save(User user);
+    boolean hasAdminUser();
 
-    void setPassword(User user, String password);
+    User save(User user, String password);
 }

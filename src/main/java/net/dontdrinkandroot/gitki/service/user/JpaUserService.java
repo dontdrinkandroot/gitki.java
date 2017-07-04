@@ -2,8 +2,6 @@ package net.dontdrinkandroot.gitki.service.user;
 
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +19,7 @@ import java.util.List;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class JpaUserService implements UserService, ApplicationListener<ContextRefreshedEvent>
+public class JpaUserService implements UserService
 {
     @PersistenceContext
     private EntityManager entityManager;
@@ -63,26 +61,6 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
     }
 
     @Override
-    @Transactional
-    public void onApplicationEvent(ContextRefreshedEvent event)
-    {
-       /* Create an admin user if none exists */
-        List<User> users = this.findAll();
-        if (users.isEmpty()) {
-            User user = new User("Admin", "User", "admin@example.com", Role.ADMIN);
-            user.setPassword(this.passwordEncoder.encode("admin"));
-            this.entityManager.persist(user);
-        }
-    }
-
-    @Override
-    @Transactional
-    public void setPassword(User user, String password)
-    {
-        user.setPassword(this.passwordEncoder.encode(password));
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public long findCount()
     {
@@ -110,9 +88,28 @@ public class JpaUserService implements UserService, ApplicationListener<ContextR
     }
 
     @Override
-    @Transactional
-    public User save(User user)
+    @Transactional(readOnly = true)
+    public boolean hasAdminUser()
     {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<User> from = query.from(User.class);
+        query.select(builder.countDistinct(from.get("id")));
+        query.where(builder.equal(from.get("role"), Role.ADMIN));
+
+        TypedQuery<Long> typedQuery = this.entityManager.createQuery(query);
+
+        Long numAdminUsers = typedQuery.getSingleResult();
+        return numAdminUsers > 0;
+    }
+
+    @Override
+    @Transactional
+    public User save(User user, String password)
+    {
+        if (null != password) {
+            user.setPassword(this.passwordEncoder.encode(password));
+        }
         return this.entityManager.merge(user);
     }
 }

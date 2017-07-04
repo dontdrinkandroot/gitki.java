@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.wicket;
 
+import net.dontdrinkandroot.gitki.wicket.page.FirstRunPage;
 import net.dontdrinkandroot.gitki.wicket.page.HistoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
 import net.dontdrinkandroot.gitki.wicket.page.configuration.ConfigurationPage;
@@ -51,7 +52,8 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
         this.mount(browseRequestMapper);
 
         this.mount(new RawRequestMapper());
-        this.mountPage("login", SignInPage.class);
+        this.mountPage("signin", SignInPage.class);
+        this.mountPage("firstrun", FirstRunPage.class);
         this.mountPage("configuration", ConfigurationPage.class);
         this.mountPage("history", HistoryPage.class);
         this.mountPage("users", UserListPage.class);

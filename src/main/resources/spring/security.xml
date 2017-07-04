@@ -30,4 +30,8 @@
         <constructor-arg value="/login"/>
     </bean>
 
+    <bean id="firstRunFilter" class="net.dontdrinkandroot.gitki.wicket.security.FirstRunFilter">
+        <constructor-arg ref="userService"/>
+    </bean>
+
 </beans>

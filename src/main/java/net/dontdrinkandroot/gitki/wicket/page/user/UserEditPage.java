@@ -9,7 +9,6 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.*;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle;
 import net.dontdrinkandroot.wicket.bootstrap.css.grid.ColumnSizeStack;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
@@ -111,13 +110,7 @@ public class UserEditPage extends UserPage<User>
                     {
                         super.onSubmit();
                         User user = UserEditPage.this.getModelObject();
-                        if (!StringUtils.isEmpty(UserEditPage.this.newPasswordModel.getObject())) {
-                            UserEditPage.this.userService.setPassword(
-                                    user,
-                                    UserEditPage.this.newPasswordModel.getObject()
-                            );
-                        }
-                        UserEditPage.this.userService.save(user);
+                        UserEditPage.this.userService.save(user, UserEditPage.this.newPasswordModel.getObject());
                     }
 
                     @Override
