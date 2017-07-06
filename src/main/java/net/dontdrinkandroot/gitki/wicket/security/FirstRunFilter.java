@@ -42,6 +42,7 @@ public class FirstRunFilter implements Filter
     ) throws IOException, ServletException
     {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+
         if (!httpRequest.getRequestURI().startsWith("/firstrun") && !this.isResolved()) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendRedirect("/firstrun");

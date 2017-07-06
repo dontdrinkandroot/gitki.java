@@ -1,12 +1,10 @@
 package net.dontdrinkandroot.gitki.wicket.page.file.edit;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
-import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
-import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
@@ -22,23 +20,22 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
-import javax.inject.Inject;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(Role.COMMITTER)
 public class MarkdownEditPage extends EditPage
 {
-    @Inject
+    @SpringBean
     private GitService gitService;
 
-    @Inject
+    @SpringBean
     private MarkdownService markdownService;
 
     private IModel<String> contentModel;

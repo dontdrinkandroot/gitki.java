@@ -44,7 +44,9 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
         this.getComponentInstantiationListeners().add(new SpringComponentInjector(this, this.applicationContext, true));
         this.getJavaScriptLibrarySettings().setJQueryReference(new ExternalJQueryResourceReference());
 
-        this.getSecuritySettings().setAuthorizationStrategy(new RoleAuthorizationStrategy());
+        RoleAuthorizationStrategy roleAuthorizationStrategy = new RoleAuthorizationStrategy();
+        Injector.get().inject(roleAuthorizationStrategy);
+        this.getSecuritySettings().setAuthorizationStrategy(roleAuthorizationStrategy);
         this.getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
 
         BrowseRequestMapper browseRequestMapper = new BrowseRequestMapper();
@@ -57,7 +59,7 @@ public class GitkiWebApplication extends WebApplication implements ApplicationCo
         this.mountPage("configuration", ConfigurationPage.class);
         this.mountPage("history", HistoryPage.class);
         this.mountPage("users", UserListPage.class);
-        this.mountPage("users/${userId}/edit", UserEditPage.class);
+        this.mountPage("users/edit", UserEditPage.class);
 
         RawResource rawResource = new RawResource();
         Injector.get().inject(rawResource);

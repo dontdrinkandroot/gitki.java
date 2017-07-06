@@ -1,8 +1,10 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
+import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.dataprovider.HistoryDataProvider;
 import net.dontdrinkandroot.gitki.wicket.model.PersonIdentWhenModel;
 import net.dontdrinkandroot.gitki.wicket.model.RevCommitAuthorIdentModel;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.component.pagination.AjaxPaginationPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -16,6 +18,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Instantiate(value = Role.WATCHER, anonymous = true)
 public class HistoryPage extends DecoratorPage<Void>
 {
     @Override

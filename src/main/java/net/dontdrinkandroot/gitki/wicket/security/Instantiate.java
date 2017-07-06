@@ -15,5 +15,8 @@ public @interface Instantiate
 {
     Role value();
 
-    boolean allowAnonymous() default false;
+    /**
+     * Allow instantiation if anonymous browsing is enabled.
+     */
+    boolean anonymous() default false;
 }

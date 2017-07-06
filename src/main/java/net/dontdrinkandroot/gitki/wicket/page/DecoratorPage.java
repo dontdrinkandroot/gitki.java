@@ -1,13 +1,11 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
-import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.component.BrandLink;
 import net.dontdrinkandroot.gitki.wicket.component.item.AdminDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.HistoryPageItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.LoginLinkItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
-import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav;
@@ -24,7 +22,6 @@ import org.apache.wicket.util.visit.Visits;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(value = Role.WATCHER, allowAnonymous = true)
 public abstract class DecoratorPage<T> extends ScaffoldPage<T>
 {
     public static final String MODAL_ID = "modal";

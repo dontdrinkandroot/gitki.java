@@ -1,13 +1,16 @@
 package net.dontdrinkandroot.gitki.wicket.page.file.edit;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Instantiate(Role.COMMITTER)
 public class EditPage extends FilePage
 {
     public EditPage(PageParameters parameters)

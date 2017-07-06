@@ -6,4 +6,6 @@ package net.dontdrinkandroot.gitki.service.configuration;
 public interface ConfigurationService
 {
     String getName();
+
+    boolean isAnonymousBrowsingEnabled();
 }

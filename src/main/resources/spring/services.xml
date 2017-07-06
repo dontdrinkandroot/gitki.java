@@ -45,6 +45,7 @@
     <bean id="configurationService"
           class="net.dontdrinkandroot.gitki.service.configuration.DefaultConfigurationService">
         <constructor-arg value="${gitki.name}"/>
+        <constructor-arg value="${gitki.anonymous_browsing_enabled}"/>
     </bean>
 
 </beans>

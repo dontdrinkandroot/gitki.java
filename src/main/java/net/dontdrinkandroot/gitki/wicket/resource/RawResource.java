@@ -24,7 +24,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(value = Role.WATCHER, allowAnonymous = true)
+@Instantiate(value = Role.WATCHER, anonymous = true)
 public class RawResource extends AbstractResource
 {
     @Inject

@@ -1,6 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.page.configuration;
 
 import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.service.configuration.ConfigurationService;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
@@ -22,6 +23,9 @@ public class ConfigurationPage extends DecoratorPage
     @SpringBean
     private Environment environment;
 
+    @SpringBean
+    private ConfigurationService configurationService;
+
     @Override
     protected IModel<String> createTitleModel()
     {
@@ -33,6 +37,10 @@ public class ConfigurationPage extends DecoratorPage
     {
         super.onInitialize();
         this.add(new Label("repositoryPath", this.gitService.getRepositoryPath().toString()));
+        this.add(new Label(
+                "anonymousBrowsingEnabled",
+                Boolean.toString(this.configurationService.isAnonymousBrowsingEnabled())
+        ));
         this.add(new Label("defaultProfiles", String.join(",", this.environment.getDefaultProfiles())));
         this.add(new Label("activeProfiles", String.join(",", this.environment.getActiveProfiles())));
     }
