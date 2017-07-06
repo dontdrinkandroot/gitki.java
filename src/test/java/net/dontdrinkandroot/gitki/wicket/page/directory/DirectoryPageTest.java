@@ -11,7 +11,7 @@ public class DirectoryPageTest extends AbstractWicketTest
     @Test
     public void testAccess()
     {
-        this.addDefaultUsers();
+        this.loadDefaultUsers();
         this.assertPageAccessible(DirectoryPage.class, null);
         this.assertPageAccessible(DirectoryPage.class, this.userWatcher);
         this.assertPageAccessible(DirectoryPage.class, this.userCommitter);

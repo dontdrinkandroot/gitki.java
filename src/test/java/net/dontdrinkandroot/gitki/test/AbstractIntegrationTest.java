@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,11 +22,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"classpath:spring/context.xml"})
 public abstract class AbstractIntegrationTest
 {
-    protected User userWatcher;
+    protected UserDetails userWatcher;
 
-    protected User userCommitter;
+    protected UserDetails userCommitter;
 
-    protected User userAdmin;
+    protected UserDetails userAdmin;
 
     @Autowired
     protected UserService userService;
@@ -32,21 +34,33 @@ public abstract class AbstractIntegrationTest
     @Autowired
     protected DefaultConfigurationService configurationService;
 
-    protected void addDefaultUsers()
+    protected void loadDefaultUsers()
     {
         User user;
 
-        user = new User("Watcher", "User", "watcher@example.com", Role.WATCHER);
-        this.userWatcher = this.userService.save(user, "watcher");
+        try {
+            this.userWatcher = this.userService.loadUserByUsername("watcher@example.com");
+        } catch (UsernameNotFoundException e) {
+            user = new User("Watcher", "User", "watcher@example.com", Role.WATCHER);
+            this.userWatcher = this.userService.save(user, "watcher");
+        }
 
-        user = new User("Committer", "User", "committer@example.com", Role.COMMITTER);
-        this.userCommitter = this.userService.save(user, "committer");
+        try {
+            this.userCommitter = this.userService.loadUserByUsername("committer@example.com");
+        } catch (UsernameNotFoundException e) {
+            user = new User("Committer", "User", "committer@example.com", Role.COMMITTER);
+            this.userCommitter = this.userService.save(user, "committer");
+        }
 
-        user = new User("Admin", "User", "admin@example.com", Role.ADMIN);
-        this.userAdmin = this.userService.save(user, "admin");
+        try {
+            this.userAdmin = this.userService.loadUserByUsername("admin@example.com");
+        } catch (UsernameNotFoundException e) {
+            user = new User("Admin", "User", "admin@example.com", Role.ADMIN);
+            this.userAdmin = this.userService.save(user, "admin");
+        }
     }
 
-    protected void setUser(User user)
+    protected void setUser(UserDetails user)
     {
         if (null == user) {
             SecurityContextHolder.getContext().setAuthentication(null);

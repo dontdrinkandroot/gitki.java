@@ -11,7 +11,7 @@ public class UserListPageTest extends AbstractWicketTest
     @Test
     public void testAccess()
     {
-        this.addDefaultUsers();
+        this.loadDefaultUsers();
         this.assertLoginRequired(UserListPage.class);
         this.assertPageInaccessible(UserListPage.class, this.userWatcher);
         this.assertPageInaccessible(UserListPage.class, this.userCommitter);
