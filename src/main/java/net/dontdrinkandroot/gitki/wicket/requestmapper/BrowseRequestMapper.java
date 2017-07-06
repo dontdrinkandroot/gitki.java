@@ -5,11 +5,18 @@ import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.wicket.RequestListenerInterface;
+import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
 import org.apache.wicket.core.request.mapper.AbstractBookmarkableMapper;
 import org.apache.wicket.core.request.mapper.MapperUtils;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
+import org.apache.wicket.request.component.IRequestablePage;
+import org.apache.wicket.request.mapper.info.ComponentInfo;
 import org.apache.wicket.request.mapper.info.PageComponentInfo;
+import org.apache.wicket.request.mapper.info.PageInfo;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
@@ -94,6 +101,45 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         return null;
     }
 
+    @Override
+    public Url mapHandler(IRequestHandler requestHandler)
+    {
+        Url url = super.mapHandler(requestHandler);
+
+        if (url == null && requestHandler instanceof ListenerInterfaceRequestHandler && this.getRecreateMountedPagesAfterExpiry()) {
+            ListenerInterfaceRequestHandler handler = (ListenerInterfaceRequestHandler) requestHandler;
+            IRequestablePage page = handler.getPage();
+            if (this.checkPageInstance(page)) {
+                String componentPath = handler.getComponentPath();
+                RequestListenerInterface listenerInterface = handler.getListenerInterface();
+
+                Integer renderCount = null;
+                if (listenerInterface.isIncludeRenderCount()) {
+                    renderCount = page.getRenderCount();
+                }
+
+                PageInfo pageInfo = this.getPageInfo(handler);
+                ComponentInfo componentInfo = new ComponentInfo(renderCount,
+                        this.requestListenerInterfaceToString(listenerInterface), componentPath,
+                        handler.getBehaviorIndex()
+                );
+                PageComponentInfo pageComponentInfo = new PageComponentInfo(pageInfo, componentInfo);
+                PageParameters parameters = new PageParameters(page.getPageParameters());
+                UrlInfo urlInfo = new UrlInfo(pageComponentInfo, page.getClass(),
+                        parameters.mergeWith(handler.getPageParameters())
+                );
+                url = this.buildUrl(urlInfo);
+            }
+        }
+
+        return url;
+    }
+
+    boolean getRecreateMountedPagesAfterExpiry()
+    {
+        return WebApplication.get().getPageSettings().getRecreateBookmarkablePagesAfterExpiry();
+    }
+
     protected Class<? extends FilePage> resolveFilePageClass(String fileName, StringValue actionValue)
     {
         String action = actionValue.toString("view");
@@ -101,6 +147,7 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
         String extension = FilenameUtils.getExtension(fileName);
         Class<? extends FilePage> pageClass;
         switch (action) {
+
             case "view":
                 pageClass = this.requestMappingRegistry.resolveViewMapping(extension);
                 if (null != pageClass) {

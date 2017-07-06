@@ -93,7 +93,7 @@ public class RemoveFileModal extends FormModal<FilePath>
                 };
         formActionView.add(submitButton);
 
-        Label cancelButton = new Label(formActionView.newChildId(), "Delete");
+        Label cancelButton = new Label(formActionView.newChildId(), "Cancel");
         cancelButton.add(new ButtonBehavior());
         cancelButton.add(new OnClickScriptBehavior(this.getHideScript()));
         formActionView.add(cancelButton);

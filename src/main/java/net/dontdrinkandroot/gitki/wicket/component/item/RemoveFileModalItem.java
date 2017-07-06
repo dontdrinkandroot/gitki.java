@@ -31,7 +31,7 @@ public class RemoveFileModalItem extends AjaxLinkItem
         this.send(
                 this.getPage(),
                 Broadcast.DEPTH,
-                new CreateAndOpenModalRequest<FilePath>(target, RemoveFileModal.class, this.pathModel)
+                new CreateAndOpenModalRequest<>(target, RemoveFileModal.class, this.pathModel)
         );
     }
 }

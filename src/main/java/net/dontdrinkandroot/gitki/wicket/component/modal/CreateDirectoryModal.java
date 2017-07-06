@@ -17,8 +17,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import javax.inject.Inject;
 import java.io.IOException;
 
 /**
@@ -27,7 +27,7 @@ import java.io.IOException;
 @Instantiate(Role.COMMITTER)
 public class CreateDirectoryModal extends FormModal<DirectoryPath>
 {
-    @Inject
+    @SpringBean
     private GitService gitService;
 
     private IModel<String> nameModel;

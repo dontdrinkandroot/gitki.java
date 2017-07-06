@@ -4,10 +4,12 @@ import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryEntriesPanel;
+import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathEntriesModel;
 import net.dontdrinkandroot.gitki.wicket.page.BrowsePage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -21,6 +23,8 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
 {
     @SpringBean
     private GitService gitService;
+
+    private DirectoryEntriesPanel entriesPanel;
 
     public DirectoryPage(IModel<DirectoryPath> model)
     {
@@ -40,7 +44,9 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
     {
         super.onInitialize();
 
-        this.add(new DirectoryEntriesPanel("entries", new DirectoryPathEntriesModel(this.getModel())));
+        this.entriesPanel = new DirectoryEntriesPanel("entries", new DirectoryPathEntriesModel(this.getModel()));
+        this.entriesPanel.setOutputMarkupId(true);
+        this.add(this.entriesPanel);
     }
 
     @Override
@@ -53,5 +59,15 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
         directoryActionsButton.getIconBehavior()
                 .setAppendIcon(FontAwesomeIconClass.ELLIPSIS_V.createIcon().setFixedWidth(true));
         view.add(directoryActionsButton);
+    }
+
+    @Override
+    public void onEvent(IEvent<?> event)
+    {
+        super.onEvent(event);
+        Object payload = event.getPayload();
+        if (payload instanceof FileDeletedEvent) {
+            ((FileDeletedEvent) payload).getTarget().add(this.entriesPanel);
+        }
     }
 }
