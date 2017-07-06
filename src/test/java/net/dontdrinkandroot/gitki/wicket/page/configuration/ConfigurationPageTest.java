@@ -1,7 +1,6 @@
 package net.dontdrinkandroot.gitki.wicket.page.configuration;
 
 import net.dontdrinkandroot.gitki.test.AbstractWicketTest;
-import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
 import org.junit.Test;
 
 /**
@@ -10,9 +9,12 @@ import org.junit.Test;
 public class ConfigurationPageTest extends AbstractWicketTest
 {
     @Test
-    public void testLoginRequired()
+    public void testAccess()
     {
-        this.getWicketTester().startPage(ConfigurationPage.class);
-        this.getWicketTester().assertRenderedPage(SignInPage.class);
+        this.addDefaultUsers();
+        this.assertLoginRequired(ConfigurationPage.class);
+        this.assertPageInaccessible(ConfigurationPage.class, this.userWatcher);
+        this.assertPageInaccessible(ConfigurationPage.class, this.userCommitter);
+        this.assertPageAccessible(ConfigurationPage.class, this.userAdmin);
     }
 }

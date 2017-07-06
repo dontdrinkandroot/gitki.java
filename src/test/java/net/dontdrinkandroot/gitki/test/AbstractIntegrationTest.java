@@ -1,6 +1,13 @@
 package net.dontdrinkandroot.gitki.test;
 
+import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.model.User;
+import net.dontdrinkandroot.gitki.service.configuration.DefaultConfigurationService;
+import net.dontdrinkandroot.gitki.service.user.UserService;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,4 +20,40 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"classpath:spring/context.xml"})
 public abstract class AbstractIntegrationTest
 {
+    protected User userWatcher;
+
+    protected User userCommitter;
+
+    protected User userAdmin;
+
+    @Autowired
+    protected UserService userService;
+
+    @Autowired
+    protected DefaultConfigurationService configurationService;
+
+    protected void addDefaultUsers()
+    {
+        User user;
+
+        user = new User("Watcher", "User", "watcher@example.com", Role.WATCHER);
+        this.userWatcher = this.userService.save(user, "watcher");
+
+        user = new User("Committer", "User", "committer@example.com", Role.COMMITTER);
+        this.userCommitter = this.userService.save(user, "committer");
+
+        user = new User("Admin", "User", "admin@example.com", Role.ADMIN);
+        this.userAdmin = this.userService.save(user, "admin");
+    }
+
+    protected void setUser(User user)
+    {
+        if (null == user) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+            return;
+        }
+
+        SecurityContextHolder.getContext()
+                .setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
+    }
 }
