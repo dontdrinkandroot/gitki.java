@@ -17,4 +17,8 @@ public interface UserService extends UserDetailsService
     boolean hasAdminUser();
 
     User save(User user, String password);
+
+    void removeAll();
+
+    void remove(User user);
 }

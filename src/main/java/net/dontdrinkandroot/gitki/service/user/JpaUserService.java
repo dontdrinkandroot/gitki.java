@@ -2,7 +2,6 @@ package net.dontdrinkandroot.gitki.service.user;
 
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +37,7 @@ public class JpaUserService implements UserService
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    public User loadUserByUsername(String username) throws UsernameNotFoundException
     {
         CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
@@ -111,5 +110,29 @@ public class JpaUserService implements UserService
             user.setPassword(this.passwordEncoder.encode(password));
         }
         return this.entityManager.merge(user);
+    }
+
+    @Override
+    @Transactional
+    public void removeAll()
+    {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> from = query.from(User.class);
+
+        TypedQuery<User> typedQuery = this.entityManager.createQuery(query);
+        List<User> users = typedQuery.getResultList();
+
+        for (User user : users) {
+            this.entityManager.remove(user);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void remove(User user)
+    {
+        User reloadedUser = this.entityManager.find(User.class, user.getId());
+        this.entityManager.remove(reloadedUser);
     }
 }
