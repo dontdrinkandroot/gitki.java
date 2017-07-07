@@ -65,24 +65,20 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public List<AbstractPath> listDirectory(Path path) throws IOException
+    public List<AbstractPath> listDirectory(DirectoryPath directoryPath) throws IOException
     {
-        if (path.isAbsolute()) {
-            throw new RuntimeException("Path must not be absolute");
-        }
+        Path absolutePath = this.resolveAbsolutePath(directoryPath, true);
 
-        Path directoryPath = this.resolve(path, true);
-
-        DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directoryPath);
+        DirectoryStream<Path> directoryStream = Files.newDirectoryStream(absolutePath);
 
         List<AbstractPath> entries = new ArrayList<>();
         for (Path subPath : directoryStream) {
-            Path relativePath = this.basePath.relativize(subPath);
-            if (!relativePath.startsWith(".git")) {
+            Path relativeSubPath = this.basePath.relativize(subPath);
+            if (!relativeSubPath.startsWith(".git")) {
                 if (Files.isDirectory(subPath)) {
-                    entries.add(DirectoryPath.from(relativePath));
+                    entries.add(DirectoryPath.from(relativeSubPath));
                 } else {
-                    entries.add(FilePath.from(relativePath));
+                    entries.add(FilePath.from(relativeSubPath));
                 }
             }
         }
@@ -93,52 +89,84 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public byte[] getContent(Path path) throws IOException
+    public boolean exists(AbstractPath path)
     {
-        Path fullPath = this.resolve(path, true);
+        Path absolutePath = this.resolveAbsolutePath(path);
+        if (path.isDirectoryPath()) {
+            return Files.exists(absolutePath) && Files.isDirectory(absolutePath);
+        } else {
+            return Files.exists(absolutePath) && Files.isRegularFile(absolutePath);
+        }
+    }
+
+    @Override
+    public DirectoryPath findExistingDirectoryPath(AbstractPath path)
+    {
+        DirectoryPath directoryPath;
+        if (path.isFilePath()) {
+            directoryPath = path.getParent();
+        } else {
+            directoryPath = (DirectoryPath) path;
+        }
+
+        do {
+            if (this.exists(directoryPath)) {
+                return directoryPath;
+            }
+            directoryPath = directoryPath.getParent();
+        } while (!directoryPath.isRoot());
+
+        return new DirectoryPath();
+    }
+
+    @Override
+    public byte[] getContent(FilePath filePath) throws IOException
+    {
+        Path fullPath = this.resolveAbsolutePath(filePath, true);
 
         return Files.readAllBytes(fullPath);
     }
 
     @Override
-    public String getContentAsString(Path path) throws IOException
+    public String getContentAsString(FilePath filePath) throws IOException
     {
-        byte[] bytes = this.getContent(path);
+        byte[] bytes = this.getContent(filePath);
 
         return new String(bytes);
     }
 
     @Override
     public void addAndCommit(
-            Path path,
+            FilePath filePath,
             String content,
             User user,
             String commitMessage
     ) throws IOException, GitAPIException
     {
-        this.add(path, content.getBytes());
+        this.add(filePath, content.getBytes());
         this.commit(user, commitMessage);
     }
 
     @Override
-    public void add(Path path, byte[] content) throws IOException, GitAPIException
+    public void add(FilePath filePath, byte[] content) throws IOException, GitAPIException
     {
-        Path fullPath = this.resolve(path);
-        Files.write(fullPath, content);
-        this.git.add().addFilepattern(path.toString()).call();
+        this.createDirectory(filePath.getParent());
+        Path absolutePath = this.resolveAbsolutePath(filePath);
+        Files.write(absolutePath, content);
+        this.git.add().addFilepattern(filePath.toString()).call();
     }
 
     @Override
-    public void createDirectory(Path path) throws IOException
+    public void createDirectory(DirectoryPath directoryPath) throws IOException
     {
-        Path fullPath = this.resolve(path);
+        Path fullPath = this.resolveAbsolutePath(directoryPath);
         Files.createDirectories(fullPath);
     }
 
     @Override
-    public void removeAndCommit(Path path, User user, String commitMessage) throws IOException, GitAPIException
+    public void removeAndCommit(FilePath filePath, User user, String commitMessage) throws IOException, GitAPIException
     {
-        this.git.rm().addFilepattern(path.toString()).call();
+        this.git.rm().addFilepattern(filePath.toString()).call();
         this.commit(user, commitMessage);
     }
 
@@ -149,34 +177,37 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public Path resolve(Path path) throws FileNotFoundException
+    public Path resolveAbsolutePath(AbstractPath path)
     {
-        return this.resolve(path, false);
-    }
-
-    @Override
-    public Path resolve(Path path, boolean mustExist) throws FileNotFoundException
-    {
-        if (path.startsWith(".git")) {
+        Path relativePath = path.toPath();
+        if (relativePath.startsWith(".git")) {
             throw new RuntimeException("Cannot access .git directory");
         }
 
-        Path resolvedPath = this.basePath.resolve(path);
-        if (!resolvedPath.startsWith(this.basePath)) {
+        Path absolutePath = this.basePath.resolve(relativePath);
+        if (!absolutePath.startsWith(this.basePath)) {
             throw new RuntimeException("Trying to access path outside of repository");
         }
 
-        if (mustExist && !Files.exists(resolvedPath)) {
-            throw new FileNotFoundException(String.format("%s does not exist", resolvedPath.toString()));
-        }
-
-        return resolvedPath;
+        return absolutePath;
     }
 
     @Override
-    public BasicFileAttributes getBasicFileAttributes(Path path) throws IOException
+    public Path resolveAbsolutePath(AbstractPath path, boolean mustExist) throws FileNotFoundException
     {
-        Path absolutePath = this.resolve(path, true);
+        Path absolutePath = this.resolveAbsolutePath(path);
+
+        if (mustExist && !Files.exists(absolutePath)) {
+            throw new FileNotFoundException(String.format("%s does not exist", absolutePath.toString()));
+        }
+
+        return absolutePath;
+    }
+
+    @Override
+    public BasicFileAttributes getBasicFileAttributes(AbstractPath path) throws IOException
+    {
+        Path absolutePath = this.resolveAbsolutePath(path, true);
         return Files.readAttributes(absolutePath, BasicFileAttributes.class);
     }
 

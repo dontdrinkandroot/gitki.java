@@ -1,7 +1,6 @@
 package net.dontdrinkandroot.gitki.wicket.page.directory;
 
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
-import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryEntriesPanel;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
@@ -14,16 +13,12 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 public class DirectoryPage extends BrowsePage<DirectoryPath>
 {
-    @SpringBean
-    private GitService gitService;
-
     private DirectoryEntriesPanel entriesPanel;
 
     public DirectoryPage(IModel<DirectoryPath> model)
@@ -65,9 +60,18 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
     public void onEvent(IEvent<?> event)
     {
         super.onEvent(event);
+
         Object payload = event.getPayload();
         if (payload instanceof FileDeletedEvent) {
-            ((FileDeletedEvent) payload).getTarget().add(this.entriesPanel);
+            FileDeletedEvent fileDeletedEvent = (FileDeletedEvent) payload;
+            DirectoryPath directoryPath =
+                    this.getGitService().findExistingDirectoryPath(fileDeletedEvent.getFilePath());
+            if (directoryPath.equals(this.getModelObject())) {
+                ((FileDeletedEvent) payload).getTarget().add(this.entriesPanel);
+                return;
+            }
+
+            this.setResponsePage(new DirectoryPage(Model.of(directoryPath)));
         }
     }
 }

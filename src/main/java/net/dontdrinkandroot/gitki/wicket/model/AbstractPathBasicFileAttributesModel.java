@@ -27,7 +27,7 @@ public class AbstractPathBasicFileAttributesModel extends AbstractChainedInjecte
     protected BasicFileAttributes load()
     {
         try {
-            return this.gitService.getBasicFileAttributes(this.getParentObject().toPath());
+            return this.gitService.getBasicFileAttributes(this.getParentObject());
         } catch (IOException e) {
             throw new WicketRuntimeException(e);
         }

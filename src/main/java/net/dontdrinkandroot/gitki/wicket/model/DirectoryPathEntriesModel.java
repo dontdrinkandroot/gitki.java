@@ -30,7 +30,7 @@ public class DirectoryPathEntriesModel extends AbstractChainedInjectedLoadableDe
     protected List<AbstractPath> load()
     {
         try {
-            return this.gitService.listDirectory(this.getParentObject().toPath());
+            return this.gitService.listDirectory(this.getParentObject());
         } catch (FileNotFoundException e) {
             throw new AbortWithHttpErrorCodeException(404);
         } catch (IOException e) {

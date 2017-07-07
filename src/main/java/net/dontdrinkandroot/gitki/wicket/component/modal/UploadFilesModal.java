@@ -22,9 +22,9 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.List;
 @Instantiate(Role.COMMITTER)
 public class UploadFilesModal extends FormModal<DirectoryPath>
 {
-    @Inject
+    @SpringBean
     private GitService gitService;
 
     private IModel<List<FileUpload>> fileUploadsModel = new ListModel<>(new ArrayList<>());
@@ -87,7 +87,7 @@ public class UploadFilesModal extends FormModal<DirectoryPath>
                             FilePath path = UploadFilesModal.this.getModelObject()
                                     .appendFileName(fileUpload.getClientFileName());
                             try {
-                                UploadFilesModal.this.gitService.add(path.toPath(), fileUpload.getBytes());
+                                UploadFilesModal.this.gitService.add(path, fileUpload.getBytes());
                             } catch (IOException | GitAPIException e) {
                                 throw new WicketRuntimeException(e);
                             }

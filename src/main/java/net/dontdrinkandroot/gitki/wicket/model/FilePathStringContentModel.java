@@ -26,7 +26,7 @@ public class FilePathStringContentModel extends AbstractChainedInjectedLoadableD
     protected String load()
     {
         try {
-            return this.gitService.getContentAsString(this.getParentObject().toPath());
+            return this.gitService.getContentAsString(this.getParentObject());
         } catch (IOException e) {
             throw new WicketRuntimeException(e);
         }

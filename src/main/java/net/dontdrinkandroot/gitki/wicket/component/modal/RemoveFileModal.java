@@ -74,7 +74,7 @@ public class RemoveFileModal extends FormModal<FilePath>
                         super.onSubmit(target, form);
                         try {
                             RemoveFileModal.this.gitService.removeAndCommit(
-                                    RemoveFileModal.this.getModelObject().toPath(),
+                                    RemoveFileModal.this.getModelObject(),
                                     GitkiWebSession.get().getUser(),
                                     RemoveFileModal.this.commitMessageModel.getObject()
                             );

@@ -81,7 +81,7 @@ public class CreateDirectoryModal extends FormModal<DirectoryPath>
                                         .appendDirectoryName(CreateDirectoryModal.this.nameModel
                                                 .getObject());
                         try {
-                            CreateDirectoryModal.this.gitService.createDirectory(newPath.toPath());
+                            CreateDirectoryModal.this.gitService.createDirectory(newPath);
                             this.setResponsePage(new DirectoryPage(Model.of(newPath)));
                         } catch (IOException e) {
                             throw new WicketRuntimeException(e);

@@ -1,6 +1,8 @@
 package net.dontdrinkandroot.gitki.service.git;
 
 import net.dontdrinkandroot.gitki.model.AbstractPath;
+import net.dontdrinkandroot.gitki.model.DirectoryPath;
+import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.User;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -19,27 +21,36 @@ public interface GitService
 {
     Path getRepositoryPath();
 
-    List<AbstractPath> listDirectory(Path path) throws IOException;
+    List<AbstractPath> listDirectory(DirectoryPath directoryPath) throws IOException;
 
-    byte[] getContent(Path path) throws IOException;
+    boolean exists(AbstractPath path);
 
-    String getContentAsString(Path path) throws IOException;
+    DirectoryPath findExistingDirectoryPath(AbstractPath path);
 
-    void add(Path path, byte[] content) throws IOException, GitAPIException;
+    byte[] getContent(FilePath filePath) throws IOException;
 
-    void addAndCommit(Path path, String content, User user, String commitMessage) throws IOException, GitAPIException;
+    String getContentAsString(FilePath filePath) throws IOException;
 
-    void createDirectory(Path path) throws IOException;
+    void add(FilePath filePath, byte[] content) throws IOException, GitAPIException;
 
-    void removeAndCommit(Path path, User user, String commitMessage) throws IOException, GitAPIException;
+    void addAndCommit(
+            FilePath filePath,
+            String content,
+            User user,
+            String commitMessage
+    ) throws IOException, GitAPIException;
+
+    void createDirectory(DirectoryPath directoryPath) throws IOException;
+
+    void removeAndCommit(FilePath filePath, User user, String commitMessage) throws IOException, GitAPIException;
 
     void commit(User user, String commitMessage) throws GitAPIException;
 
-    Path resolve(Path path) throws FileNotFoundException;
+    Path resolveAbsolutePath(AbstractPath path);
 
-    Path resolve(Path path, boolean mustExist) throws FileNotFoundException;
+    Path resolveAbsolutePath(AbstractPath path, boolean mustExist) throws FileNotFoundException;
 
-    BasicFileAttributes getBasicFileAttributes(Path path) throws IOException;
+    BasicFileAttributes getBasicFileAttributes(AbstractPath path) throws IOException;
 
     long getRevisionCount() throws GitAPIException;
 

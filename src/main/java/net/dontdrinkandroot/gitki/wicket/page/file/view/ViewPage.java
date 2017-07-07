@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.wicket.page.file.view;
 
+import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.button.DownloadButton;
@@ -10,6 +11,7 @@ import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -20,11 +22,17 @@ public class ViewPage extends FilePage
     public ViewPage(PageParameters parameters)
     {
         super(parameters);
+        if (!this.getGitService().exists(this.getModelObject())) {
+            throw new AbortWithHttpErrorCodeException(404);
+        }
     }
 
     public ViewPage(IModel<FilePath> model)
     {
         super(model);
+        if (!this.getGitService().exists(model.getObject())) {
+            throw new AbortWithHttpErrorCodeException(404);
+        }
     }
 
     @Override
@@ -48,10 +56,10 @@ public class ViewPage extends FilePage
 
         Object payload = event.getPayload();
         if (payload instanceof FileDeletedEvent) {
-            FilePath path = ((FileDeletedEvent) payload).getFilePath();
-            if (path.equals(this.getModelObject())) {
-                this.setResponsePage(new DirectoryPage(Model.of(path.getParent())));
-            }
+            FileDeletedEvent fileDeletedEvent = (FileDeletedEvent) payload;
+            DirectoryPath directoryPath =
+                    this.getGitService().findExistingDirectoryPath(fileDeletedEvent.getFilePath());
+            this.setResponsePage(new DirectoryPage(Model.of(directoryPath)));
         }
     }
 }

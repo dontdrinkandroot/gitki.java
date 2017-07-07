@@ -36,7 +36,7 @@ public class RawResource extends AbstractResource
         FilePath filePath = PageParameterUtils.toFilePath(attributes.getParameters());
         Path fileSystemPath = null;
         try {
-            fileSystemPath = this.gitService.resolve(filePath.toPath(), true);
+            fileSystemPath = this.gitService.resolveAbsolutePath(filePath, true);
         } catch (FileNotFoundException e) {
             throw new AbortWithHttpErrorCodeException(404);
         }

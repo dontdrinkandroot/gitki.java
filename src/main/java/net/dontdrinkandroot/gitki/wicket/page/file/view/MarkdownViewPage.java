@@ -42,8 +42,7 @@ public class MarkdownViewPage extends ViewPage
 
         try {
             String renderedMarkdown =
-                    this.markdownService.parseToHtml(this.gitService.getContentAsString(this.getModelObject()
-                            .toPath()));
+                    this.markdownService.parseToHtml(this.gitService.getContentAsString(this.getModelObject()));
             this.add(new Label("content", renderedMarkdown).setEscapeModelStrings(false));
         } catch (FileNotFoundException e) {
             throw new AbortWithHttpErrorCodeException(404);

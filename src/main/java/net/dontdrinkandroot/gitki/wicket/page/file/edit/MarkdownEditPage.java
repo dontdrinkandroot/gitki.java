@@ -50,6 +50,7 @@ public class MarkdownEditPage extends EditPage
     public MarkdownEditPage(IModel<FilePath> model)
     {
         super(model);
+        this.getPageParameters().set("action", "edit");
     }
 
     @Override
@@ -58,7 +59,7 @@ public class MarkdownEditPage extends EditPage
         super.onInitialize();
 
         try {
-            this.contentModel = Model.of(this.gitService.getContentAsString(this.getModelObject().toPath()));
+            this.contentModel = Model.of(this.gitService.getContentAsString(this.getModelObject()));
         } catch (FileNotFoundException e) {
             this.contentModel = Model.of("");
         } catch (IOException e) {
@@ -118,7 +119,7 @@ public class MarkdownEditPage extends EditPage
                 super.onSubmit(target, form);
                 try {
                     MarkdownEditPage.this.gitService.addAndCommit(
-                            MarkdownEditPage.this.getModelObject().toPath(),
+                            MarkdownEditPage.this.getModelObject(),
                             MarkdownEditPage.this.contentModel.getObject(),
                             GitkiWebSession.get().getUser(),
                             MarkdownEditPage.this.commitMessageModel.getObject()

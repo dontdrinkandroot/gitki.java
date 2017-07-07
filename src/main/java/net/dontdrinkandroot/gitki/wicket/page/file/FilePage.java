@@ -15,6 +15,7 @@ public class FilePage extends BrowsePage<FilePath>
     public FilePage(PageParameters parameters)
     {
         super(parameters);
+
         FilePath path = PageParameterUtils.toFilePath(parameters);
         this.setModel(Model.of(path));
     }
@@ -22,6 +23,7 @@ public class FilePage extends BrowsePage<FilePath>
     public FilePage(IModel<FilePath> model)
     {
         super(model);
+
         PageParameterUtils.from(model.getObject(), this.getPageParameters());
     }
 
