@@ -39,8 +39,10 @@ public abstract class AbstractIntegrationTest
     protected DefaultConfigurationService configurationService;
 
     @Before
-    public void loadDefaultUsers()
+    public void beforeMethod()
     {
+        SecurityContextHolder.getContext().setAuthentication(null);
+
         this.userService.removeAll();
 
         User user;
