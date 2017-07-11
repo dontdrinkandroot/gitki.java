@@ -4,7 +4,7 @@ import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.configuration.ConfigurationService;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage;
-import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -14,7 +14,7 @@ import org.springframework.core.env.Environment;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(Role.ADMIN)
+@AuthorizeInstantiation(Role.Constants.ADMIN)
 public class ConfigurationPage extends DecoratorPage
 {
     @SpringBean

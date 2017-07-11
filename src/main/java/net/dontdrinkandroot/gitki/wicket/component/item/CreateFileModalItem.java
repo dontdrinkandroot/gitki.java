@@ -3,10 +3,11 @@ package net.dontdrinkandroot.gitki.wicket.component.item;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.modal.CreateFileModal;
-import net.dontdrinkandroot.gitki.wicket.security.Render;
 import net.dontdrinkandroot.wicket.bootstrap.component.item.AjaxLinkItem;
 import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -14,7 +15,7 @@ import org.apache.wicket.model.Model;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Render(Role.COMMITTER)
+@AuthorizeAction(action = Action.RENDER, roles = Role.Constants.COMMITTER)
 public class CreateFileModalItem extends AjaxLinkItem
 {
     private final IModel<DirectoryPath> pathModel;

@@ -5,7 +5,6 @@ import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
-import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
@@ -13,24 +12,25 @@ import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupI
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.FormModal;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
-import javax.inject.Inject;
 import java.io.IOException;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(Role.COMMITTER)
+@AuthorizeInstantiation(Role.Constants.COMMITTER)
 public class RemoveFileModal extends FormModal<FilePath>
 {
-    @Inject
+    @SpringBean
     private GitService gitService;
 
     private IModel<String> commitMessageModel;

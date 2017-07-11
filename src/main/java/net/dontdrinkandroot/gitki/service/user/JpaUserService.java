@@ -2,8 +2,11 @@ package net.dontdrinkandroot.gitki.service.user;
 
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -18,21 +21,15 @@ import java.util.List;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Service
 public class JpaUserService implements UserService
 {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private PasswordEncoder passwordEncoder;
-
     protected JpaUserService()
     {
         /* RI */
-    }
-
-    public JpaUserService(PasswordEncoder passwordEncoder)
-    {
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -107,7 +104,7 @@ public class JpaUserService implements UserService
     public User save(User user, String password)
     {
         if (null != password) {
-            user.setPassword(this.passwordEncoder.encode(password));
+            user.setPassword(this.passwordEncoder().encode(password));
         }
         return this.entityManager.merge(user);
     }
@@ -134,5 +131,11 @@ public class JpaUserService implements UserService
     {
         User reloadedUser = this.entityManager.find(User.class, user.getId());
         this.entityManager.remove(reloadedUser);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder()
+    {
+        return new BCryptPasswordEncoder();
     }
 }

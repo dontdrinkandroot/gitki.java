@@ -3,12 +3,12 @@ package net.dontdrinkandroot.gitki.wicket.page.user;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.service.user.UserService;
-import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.form.FormStyleBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.*;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle;
 import net.dontdrinkandroot.wicket.bootstrap.css.grid.ColumnSizeStack;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(Role.WATCHER)
+@AuthorizeInstantiation(Role.Constants.WATCHER)
 public class UserEditPage extends UserPage<User>
 {
     @SpringBean

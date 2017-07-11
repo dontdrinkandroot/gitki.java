@@ -1,10 +1,9 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
-import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.dataprovider.HistoryDataProvider;
 import net.dontdrinkandroot.gitki.wicket.model.PersonIdentWhenModel;
 import net.dontdrinkandroot.gitki.wicket.model.RevCommitAuthorIdentModel;
-import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.component.pagination.AjaxPaginationPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -13,14 +12,20 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(value = Role.WATCHER, anonymous = true)
 public class HistoryPage extends DecoratorPage<Void>
 {
+    public HistoryPage(PageParameters parameters)
+    {
+        super(parameters);
+        GitkiWebSession.get().assertAnonymousBrowsing(HistoryPage.class);
+    }
+
     @Override
     protected IModel<String> createTitleModel()
     {

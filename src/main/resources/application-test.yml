@@ -1,0 +1,5 @@
+gitki:
+    repository: "/tmp/gitki_test_repository/"
+spring:
+  datasource:
+    url: "jdbc:hsqldb:mem:test"

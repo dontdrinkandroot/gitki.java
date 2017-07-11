@@ -1,0 +1,17 @@
+gitki:
+    repository: "${user.home}/gitki/default/repository/"
+#management:
+#  context-path: "/manage"
+wicket:
+  core:
+    settings:
+      markup:
+        strip-wicket-tags: true
+spring:
+  datasource:
+    username: sa
+    password:
+    url: "jdbc:hsqldb:file:${user.home}/gitki/default/database/gitki"
+  jpa:
+    hibernate:
+      ddl-auto: update

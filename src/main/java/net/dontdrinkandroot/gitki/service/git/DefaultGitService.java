@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.service.git;
 
+import net.dontdrinkandroot.gitki.config.GitkiConfigurationProperties;
 import net.dontdrinkandroot.gitki.model.AbstractPath;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
@@ -10,7 +11,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +29,7 @@ import java.util.List;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Service
 public class DefaultGitService implements GitService
 {
     private Path basePath;
@@ -37,13 +41,14 @@ public class DefaultGitService implements GitService
         /* RI */
     }
 
-    public DefaultGitService(String gitDir) throws IOException
+    @Inject
+    public DefaultGitService(GitkiConfigurationProperties configurationProperties) throws IOException
     {
-        if (!StringUtils.endsWith(gitDir, File.separator)) {
+        if (!StringUtils.endsWith(configurationProperties.getRepository(), File.separator)) {
             throw new RuntimeException("Git Dir must end with " + File.separator);
         }
 
-        Path gitPath = Paths.get(gitDir);
+        Path gitPath = Paths.get(configurationProperties.getRepository());
         if (!gitPath.isAbsolute()) {
             throw new RuntimeException("Repository path must be absolute");
         }

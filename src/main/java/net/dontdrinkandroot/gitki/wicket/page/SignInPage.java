@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
+import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.headeritem.StyleCssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
@@ -10,6 +11,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@WicketSignInPage
 public class SignInPage extends net.dontdrinkandroot.wicket.bootstrap.page.SignInPage
 {
     public SignInPage(PageParameters parameters)

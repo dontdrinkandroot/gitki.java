@@ -1,6 +1,8 @@
 package net.dontdrinkandroot.gitki.test;
 
+import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebApplication;
+import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.wicket.Page;
@@ -10,7 +12,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -41,18 +42,24 @@ public abstract class AbstractWicketTest extends AbstractIntegrationTest
         this.wicketTester.assertRenderedPage(SignInPage.class);
     }
 
-    protected <P extends Page> P assertPageAccessible(Class<P> pageClass, UserDetails user, Object... parameters)
+    protected <P extends Page> P assertPageAccessible(Class<P> pageClass, User user, Object... parameters)
     {
-        this.setUser(user);
+        GitkiWebSession.get().invalidate();
+        if (null != user) {
+            GitkiWebSession.get().signIn(user);
+        }
         P page = this.startPage(pageClass, parameters);
         this.wicketTester.assertRenderedPage(pageClass);
 
         return page;
     }
 
-    protected void assertPageInaccessible(Class<? extends Page> pageClass, UserDetails user, Object... parameters)
+    protected void assertPageInaccessible(Class<? extends Page> pageClass, User user, Object... parameters)
     {
-        this.setUser(user);
+        GitkiWebSession.get().invalidate();
+        if (null != user) {
+            GitkiWebSession.get().signIn(user);
+        }
         try {
             this.startPage(pageClass, parameters);
             Assert.fail("UnauthorizedInstantiationException expected");

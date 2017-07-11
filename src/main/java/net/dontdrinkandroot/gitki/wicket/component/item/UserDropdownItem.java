@@ -1,15 +1,15 @@
 package net.dontdrinkandroot.gitki.wicket.component.item;
 
-import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.model.CurrentUserFullNameModel;
-import net.dontdrinkandroot.gitki.wicket.security.Render;
 import net.dontdrinkandroot.wicket.bootstrap.component.item.RepeatingDropdownItem;
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.markup.repeater.RepeatingView;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Render(Role.WATCHER)
+@AuthorizeAction(action = Action.RENDER, roles = {"WATCHER"})
 public class UserDropdownItem extends RepeatingDropdownItem
 {
     public UserDropdownItem(String id)

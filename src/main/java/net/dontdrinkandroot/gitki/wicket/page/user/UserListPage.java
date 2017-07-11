@@ -5,10 +5,10 @@ import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.wicket.column.UserActionColumn;
 import net.dontdrinkandroot.gitki.wicket.component.button.UserAddButton;
 import net.dontdrinkandroot.gitki.wicket.dataprovider.UserDataProvider;
-import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass;
 import net.dontdrinkandroot.wicket.bootstrap.css.TableStyle;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@Instantiate(Role.ADMIN)
+@AuthorizeInstantiation(Role.Constants.ADMIN)
 public class UserListPage extends UserPage<List<User>>
 {
     public UserListPage(PageParameters parameters)

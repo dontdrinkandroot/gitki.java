@@ -6,6 +6,7 @@ import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +14,11 @@ import java.util.List;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Service
 public class DefaultMarkdownService implements MarkdownService
 {
     private final Parser parser;
+
     private final HtmlRenderer renderer;
 
     public DefaultMarkdownService()

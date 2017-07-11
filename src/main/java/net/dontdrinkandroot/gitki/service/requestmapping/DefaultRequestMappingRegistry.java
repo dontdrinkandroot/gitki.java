@@ -2,12 +2,14 @@ package net.dontdrinkandroot.gitki.service.requestmapping;
 
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Service
 public class DefaultRequestMappingRegistry implements RequestMappingRegistry
 {
     private Map<String, Class<? extends ViewPage>> viewMappings;

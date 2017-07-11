@@ -1,2 +1,5 @@
 /target/
-/src/main/webapp/css/style.css
+/src/main/java/net/dontdrinkandroot/gitki/wicket/headeritem/style.css
+/.bowerrc
+/bower.json
+/bower

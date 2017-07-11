@@ -29,7 +29,7 @@ public enum Role implements GrantedAuthority
 
     public Collection<Role> getRolesRecursive()
     {
-        Set<Role> roles = new HashSet<Role>();
+        Set<Role> roles = new HashSet<>();
         Role currentRole = this;
         while (currentRole != null) {
             roles.add(currentRole);
@@ -53,8 +53,17 @@ public enum Role implements GrantedAuthority
     }
 
     @Override
-    public String getAuthority()
+    public final String getAuthority()
     {
         return this.name();
+    }
+
+    public static class Constants
+    {
+        public static final String WATCHER = "WATCHER";
+
+        public static final String COMMITTER = "WATCHER";
+
+        public static final String ADMIN = "ADMIN";
     }
 }

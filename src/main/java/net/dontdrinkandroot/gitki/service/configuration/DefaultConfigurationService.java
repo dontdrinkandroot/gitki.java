@@ -1,8 +1,14 @@
 package net.dontdrinkandroot.gitki.service.configuration;
 
+import net.dontdrinkandroot.gitki.config.GitkiConfigurationProperties;
+import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Service
 public class DefaultConfigurationService implements ConfigurationService
 {
     private String name;
@@ -14,10 +20,11 @@ public class DefaultConfigurationService implements ConfigurationService
         /* Reflection Instantiation */
     }
 
-    public DefaultConfigurationService(String name, boolean anonymousBrowsingEnabled)
+    @Inject
+    public DefaultConfigurationService(GitkiConfigurationProperties configurationProperties)
     {
-        this.name = name;
-        this.anonymousBrowsingEnabled = anonymousBrowsingEnabled;
+        this.name = configurationProperties.getName();
+        this.anonymousBrowsingEnabled = configurationProperties.isAnonymousBrowsingEnabled();
     }
 
     @Override
