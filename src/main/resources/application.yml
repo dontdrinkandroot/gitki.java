@@ -1,5 +1,23 @@
 gitki:
     repository: "${user.home}/gitki/default/repository/"
+    viewMappings:
+        txt: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+        csv: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+        xml: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+        java: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+        yml: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+        properties: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+        md: "net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage"
+        jpg: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+        jpeg: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+        png: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+        gif: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+    editMappings:
+        txt: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+        csv: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+        xml: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+        properties: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+        md: "net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage"
 #management:
 #  context-path: "/manage"
 wicket:

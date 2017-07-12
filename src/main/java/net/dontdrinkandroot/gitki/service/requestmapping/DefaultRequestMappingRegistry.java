@@ -1,9 +1,12 @@
 package net.dontdrinkandroot.gitki.service.requestmapping;
 
+import net.dontdrinkandroot.gitki.config.GitkiConfigurationProperties;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,6 +18,19 @@ public class DefaultRequestMappingRegistry implements RequestMappingRegistry
     private Map<String, Class<? extends ViewPage>> viewMappings;
 
     private Map<String, Class<? extends EditPage>> editMappings;
+
+    public DefaultRequestMappingRegistry()
+    {
+        this.viewMappings = new HashMap<>();
+        this.editMappings = new HashMap<>();
+    }
+
+    @Inject
+    public DefaultRequestMappingRegistry(GitkiConfigurationProperties configurationProperties)
+    {
+        this.viewMappings = configurationProperties.getViewMappings();
+        this.editMappings = configurationProperties.getEditMappings();
+    }
 
     @Override
     public void setViewMappings(Map<String, Class<? extends ViewPage>> mappings)
