@@ -95,8 +95,8 @@
                 <artifactId>lesscss-maven-plugin</artifactId>
                 <version>${org.lesscss.lesscss-maven-plugin.version}</version>
                 <configuration>
-                    <sourceDirectory>src/main/java/net/dontdrinkandroot/gitki/wicket/headeritem/</sourceDirectory>
-                    <outputDirectory>src/main/java/net/dontdrinkandroot/gitki/wicket/headeritem/</outputDirectory>
+                    <sourceDirectory>src/main/resources/public/css/</sourceDirectory>
+                    <outputDirectory>src/main/resources/public/css/</outputDirectory>
                     <compress>true</compress>
                     <includes>
                         <include>style.less</include>
