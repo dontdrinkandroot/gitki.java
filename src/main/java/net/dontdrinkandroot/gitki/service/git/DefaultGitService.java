@@ -8,6 +8,7 @@ import net.dontdrinkandroot.gitki.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -219,13 +220,18 @@ public class DefaultGitService implements GitService
     @Override
     public long getRevisionCount() throws GitAPIException
     {
-        Iterable<RevCommit> commits = this.git.log().call();
-        long count = 0;
-        for (RevCommit commit : commits) {
-            count++;
-        }
+        try {
+            Iterable<RevCommit> commits = this.git.log().call();
+            long count = 0;
+            for (RevCommit commit : commits) {
+                count++;
+            }
 
-        return count;
+            return count;
+        } catch (NoHeadException e) {
+            /* No HEAD exists and therefore no history */
+            return 0;
+        }
     }
 
     @Override
