@@ -42,6 +42,8 @@ public class MarkdownEditPage extends EditPage
 
     private IModel<String> commitMessageModel;
 
+    private FormGroupTextArea<String> formGroupContent;
+
     public MarkdownEditPage(PageParameters parameters)
     {
         super(parameters);
@@ -82,10 +84,10 @@ public class MarkdownEditPage extends EditPage
         Form<String> editForm = new Form<>("editForm", this.contentModel);
         this.add(editForm);
 
-        FormGroupTextArea<String> formGroupContent =
+        this.formGroupContent =
                 new FormGroupTextArea<>("content", Model.of("Content"), this.contentModel);
-        formGroupContent.setRows(20);
-        formGroupContent.getFormComponent().add(new AjaxFormComponentUpdatingBehavior("input")
+        this.formGroupContent.setRows(20);
+        this.formGroupContent.getFormComponent().add(new AjaxFormComponentUpdatingBehavior("input")
         {
             @Override
             protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
@@ -104,7 +106,7 @@ public class MarkdownEditPage extends EditPage
                 target.add(preview);
             }
         });
-        editForm.add(formGroupContent);
+        editForm.add(this.formGroupContent);
 
         FormGroupInputText formGroupCommitMessage =
                 new FormGroupInputText("commitMessage", Model.of("Commit message"), this.commitMessageModel);
@@ -141,4 +143,15 @@ public class MarkdownEditPage extends EditPage
         };
         editForm.add(submitButton);
     }
+
+    //    @Override
+    //    public void renderHead(IHeaderResponse response)
+    //    {
+    //        super.renderHead(response);
+    //        response.render(new WoofmarkHeaderItem());
+    //        response.render(new OnDomReadyHeaderItem(String.format(
+    //                "woofmark(document.getElementById('%s'), {parseMarkdown: megamark, parseHTML: domador});",
+    //                "markdown-content"
+    //        )));
+    //    }
 }
