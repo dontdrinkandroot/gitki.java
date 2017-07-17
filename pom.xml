@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
+        <version>1.5.6.RELEASE</version>
     </parent>
 
     <groupId>net.dontdrinkandroot</groupId>
@@ -66,9 +66,9 @@
         <wicket.version>7.8.0</wicket.version>
         <net.dontdrinkandroot.wicket.version>0.5.0-SNAPSHOT</net.dontdrinkandroot.wicket.version>
         <com.atlassian.commonmark.version>0.9.0</com.atlassian.commonmark.version>
-        <org.eclipse.jgit.version>3.5.0.201409260305-r</org.eclipse.jgit.version>
+        <org.eclipse.jgit.version>4.8.0.201706111038-r</org.eclipse.jgit.version>
         <wicket-spring-boot-starter.version>1.0.9</wicket-spring-boot-starter.version>
-        <commons-lang3.version>3.5</commons-lang3.version>
+        <commons-lang3.version>3.6</commons-lang3.version>
         <!-- Plugins -->
         <org.lesscss.lesscss-maven-plugin.version>1.7.0.1.1</org.lesscss.lesscss-maven-plugin.version>
         <org.jacoco.jacoco-maven-plugin.version>0.7.7.201606060606</org.jacoco.jacoco-maven-plugin.version>
@@ -88,6 +88,15 @@
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>${org.eluder.coveralls.coveralls-maven-plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <configuration>
+                    <rulesUri>file://${basedir}/version-number-rules.xml</rulesUri>
+                    <processDependencyManagement>false</processDependencyManagement>
+                </configuration>
             </plugin>
 
             <plugin>
