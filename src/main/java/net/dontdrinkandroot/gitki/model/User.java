@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -31,6 +32,9 @@ public class User implements UserDetails
 
     @Column
     private String password;
+
+    @Column(nullable = false)
+    private String language = "en";
 
     public User()
     {
@@ -139,5 +143,39 @@ public class User implements UserDetails
     public void setEmail(String email)
     {
         this.email = email;
+    }
+
+    public Locale getLocale()
+    {
+        return new Locale(this.language);
+    }
+
+    public String getLanguage()
+    {
+        return this.language;
+    }
+
+    public void setLanguage(String language)
+    {
+        this.language = language;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || this.getClass() != o.getClass())
+            return false;
+
+        User user = (User) o;
+
+        return this.id != null ? this.id.equals(user.id) : user.id == null;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return this.id != null ? this.id.hashCode() : 0;
     }
 }

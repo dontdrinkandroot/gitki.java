@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Locale;
+
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
@@ -74,5 +76,16 @@ public class GitkiWebSession extends SecureWebSession
 
         User user = this.getUser();
         return null != user && user.getRole().containsRole(Role.WATCHER);
+    }
+
+    @Override
+    public Locale getLocale()
+    {
+        User user = this.getUser();
+        if (null != user) {
+            return user.getLocale();
+        }
+
+        return super.getLocale();
     }
 }
