@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.time.ZoneId;
 import java.util.Locale;
 
 /**
@@ -87,5 +88,15 @@ public class GitkiWebSession extends SecureWebSession
         }
 
         return super.getLocale();
+    }
+
+    public ZoneId getZoneId()
+    {
+        User user = this.getUser();
+        if (null != user) {
+            return ZoneId.of(user.getZoneId());
+        }
+
+        return ZoneId.of("UTC");
     }
 }

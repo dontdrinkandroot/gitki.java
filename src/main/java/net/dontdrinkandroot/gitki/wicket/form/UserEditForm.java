@@ -5,6 +5,7 @@ import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.service.user.UserService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.IsoLanguageChoiceRenderer;
+import net.dontdrinkandroot.gitki.wicket.choicerenderer.ZoneIdChoiceRenderer;
 import net.dontdrinkandroot.gitki.wicket.page.user.UserListPage;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.RepeatingAjaxForm;
@@ -17,9 +18,13 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -77,6 +82,19 @@ public class UserEditForm extends RepeatingAjaxForm<User>
         );
         formGroupLanguage.setRequired(true);
         formGroupView.add(formGroupLanguage);
+
+        List<String> availableZoneIds = new ArrayList<>(ZoneId.getAvailableZoneIds());
+        availableZoneIds.sort(String::compareTo);
+        FormGroupSelect<String> formGroupZoneId =
+                new FormGroupSelect<>(
+                        formGroupView.newChildId(),
+                        new StringResourceModel("timezone"),
+                        new PropertyModel<>(this.getModel(), "zoneId"),
+                        availableZoneIds,
+                        new ZoneIdChoiceRenderer()
+                );
+        formGroupZoneId.setRequired(true);
+        formGroupView.add(formGroupZoneId);
 
         FormGroupSelect<Role> formGroupRole =
                 new FormGroupSelect<>(

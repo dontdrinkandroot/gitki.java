@@ -5,7 +5,6 @@ import net.dontdrinkandroot.wicket.model.AbstractChainedReadonlyModel;
 import org.apache.wicket.model.IModel;
 
 import java.time.Instant;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -38,7 +37,7 @@ public class InstantStringModel extends AbstractChainedReadonlyModel<Instant, St
         DateTimeFormatter formatter =
                 DateTimeFormatter.ofLocalizedDateTime(this.formatStyle)
                         .withLocale(GitkiWebSession.get().getLocale())
-                        .withZone(ZoneId.of("UTC"));
+                        .withZone(GitkiWebSession.get().getZoneId());
 
         return formatter.format(instant);
     }

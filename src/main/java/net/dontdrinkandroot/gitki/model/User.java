@@ -36,6 +36,9 @@ public class User implements UserDetails
     @Column(nullable = false)
     private String language = "en";
 
+    @Column(nullable = false)
+    private String zoneId = "UTC";
+
     public User()
     {
     }
@@ -158,6 +161,16 @@ public class User implements UserDetails
     public void setLanguage(String language)
     {
         this.language = language;
+    }
+
+    public String getZoneId()
+    {
+        return this.zoneId;
+    }
+
+    public void setZoneId(String zoneId)
+    {
+        this.zoneId = zoneId;
     }
 
     @Override
