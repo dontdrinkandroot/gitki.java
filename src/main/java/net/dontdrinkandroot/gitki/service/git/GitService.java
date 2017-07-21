@@ -23,6 +23,8 @@ public interface GitService
 
     List<AbstractPath> listDirectory(DirectoryPath directoryPath) throws IOException;
 
+    List<DirectoryPath> listAllDirectories() throws IOException;
+
     boolean exists(AbstractPath path);
 
     DirectoryPath findExistingDirectoryPath(AbstractPath path);
@@ -55,4 +57,11 @@ public interface GitService
     long getRevisionCount() throws GitAPIException;
 
     Iterator<? extends RevCommit> getRevisionIterator(long first, long count) throws GitAPIException;
+
+    void moveAndCommit(
+            FilePath filePath,
+            DirectoryPath targetPath,
+            User user,
+            String commitMessage
+    ) throws IOException, GitAPIException;
 }

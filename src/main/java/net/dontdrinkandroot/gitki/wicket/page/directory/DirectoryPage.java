@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryEntriesPanel;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
+import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathEntriesModel;
 import net.dontdrinkandroot.gitki.wicket.page.BrowsePage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
@@ -72,6 +73,10 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
             }
 
             this.setResponsePage(new DirectoryPage(Model.of(directoryPath)));
+        }
+
+        if (payload instanceof FileMovedEvent) {
+            ((FileMovedEvent) payload).getTarget().add(this.entriesPanel);
         }
     }
 }

@@ -3,6 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.component;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.item.EditFileItem;
+import net.dontdrinkandroot.gitki.wicket.component.item.MoveFileModalItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.RemoveFileModalItem;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton;
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment;
@@ -28,5 +29,6 @@ public class FileActionsDropdownButton extends DropdownButton<FilePath>
     {
         itemView.add(new EditFileItem(itemView.newChildId(), this.getModel()));
         itemView.add(new RemoveFileModalItem(itemView.newChildId(), this.getModel()));
+        itemView.add(new MoveFileModalItem(itemView.newChildId(), this.getModel()));
     }
 }

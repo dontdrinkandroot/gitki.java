@@ -70,4 +70,26 @@ public class GitServiceTest extends AbstractIntegrationTest
 
         Assert.assertEquals(3, this.gitService.getRevisionCount());
     }
+
+    @Test
+    public void testListAllDirectories() throws IOException
+    {
+        List<DirectoryPath> directories;
+        directories = this.gitService.listAllDirectories();
+        Assert.assertEquals(directories.toString(), 1, directories.size());
+
+        DirectoryPath fooPath = new DirectoryPath("foo");
+        DirectoryPath barPath = new DirectoryPath("bar");
+        DirectoryPath subPath = fooPath.appendDirectoryName("sub");
+
+        this.gitService.createDirectory(fooPath);
+        this.gitService.createDirectory(barPath);
+        this.gitService.createDirectory(subPath);
+
+        directories = this.gitService.listAllDirectories();
+        Assert.assertEquals(4, directories.size());
+        Assert.assertTrue(directories.contains(fooPath));
+        Assert.assertTrue(directories.contains(barPath));
+        Assert.assertTrue(directories.contains(subPath));
+    }
 }

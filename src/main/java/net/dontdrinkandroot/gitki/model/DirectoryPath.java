@@ -92,6 +92,10 @@ public class DirectoryPath extends AbstractPath
 
     public static DirectoryPath from(Path path)
     {
+        if ("".equals(path.toString())) {
+            return new DirectoryPath();
+        }
+
         Path parent = path.getParent();
         if (null != parent) {
             return DirectoryPath.from(parent).appendDirectoryName(path.getFileName().toString());
