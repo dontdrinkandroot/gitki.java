@@ -11,7 +11,7 @@ import java.util.Locale;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Entity
-public class User implements UserDetails
+public class User implements UserDetails, GitUser
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
