@@ -28,7 +28,7 @@ public class User implements UserDetails, GitUser
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.WATCHER;
 
     @Column
     private String password;

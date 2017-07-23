@@ -99,4 +99,10 @@ public class GitkiWebSession extends SecureWebSession
 
         return ZoneId.of("UTC");
     }
+
+    public boolean hasRole(Role role)
+    {
+        User user = this.getUser();
+        return null != user && user.getRole().containsRole(role);
+    }
 }

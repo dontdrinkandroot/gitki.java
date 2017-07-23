@@ -21,4 +21,6 @@ public interface UserService extends UserDetailsService
     void removeAll();
 
     void remove(User user);
+
+    User find(Long id);
 }

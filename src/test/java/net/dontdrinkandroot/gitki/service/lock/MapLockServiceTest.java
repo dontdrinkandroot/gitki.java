@@ -40,6 +40,11 @@ public class MapLockServiceTest
 
         try {
             LockInfo lockInfo2 = lockService.lock(path1, user1);
+            try {
+                Thread.sleep(10L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Instant newExpiry = lockInfo2.getExpiry();
             Assert.assertTrue(newExpiry.isAfter(lockInfo1Expiry));
         } catch (LockedException e) {

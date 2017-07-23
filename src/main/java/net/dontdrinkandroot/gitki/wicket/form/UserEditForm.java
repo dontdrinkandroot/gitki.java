@@ -105,6 +105,7 @@ public class UserEditForm extends RepeatingAjaxForm<User>
                 );
         formGroupRole.setNullValid(false);
         formGroupRole.setRequired(true);
+        formGroupRole.setVisible(GitkiWebSession.get().hasRole(Role.ADMIN));
         formGroupView.add(formGroupRole);
 
         FormGroupInputPassword formGroupPassword =

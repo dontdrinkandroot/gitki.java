@@ -56,7 +56,7 @@ public class DefaultGitService implements GitService
         this.basePath = gitPath;
 
         Repository repository = FileRepositoryBuilder.create(this.basePath.resolve(".git").toFile());
-        if (repository.getRef("HEAD") == null) {
+        if (repository.findRef("HEAD") == null) {
             repository.create();
         }
 

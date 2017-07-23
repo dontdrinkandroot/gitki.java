@@ -34,6 +34,21 @@ public class JpaUserService implements UserService
 
     @Override
     @Transactional(readOnly = true)
+    public User find(Long id)
+    {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> from = query.from(User.class);
+        query.where(builder.equal(from.get("id"), id));
+        try {
+            return this.entityManager.createQuery(query).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public User loadUserByUsername(String username) throws UsernameNotFoundException
     {
         CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
