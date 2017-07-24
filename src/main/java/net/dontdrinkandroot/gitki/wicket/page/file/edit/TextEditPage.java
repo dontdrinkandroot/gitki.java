@@ -41,7 +41,6 @@ public class TextEditPage extends EditPage
     public TextEditPage(IModel<FilePath> model)
     {
         super(model);
-        this.getPageParameters().set("action", "edit");
     }
 
     @Override

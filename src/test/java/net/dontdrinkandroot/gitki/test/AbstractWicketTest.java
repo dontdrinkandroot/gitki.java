@@ -38,7 +38,12 @@ public abstract class AbstractWicketTest extends AbstractIntegrationTest
 
     protected void assertLoginRequired(Class<? extends Page> pageClass)
     {
-        this.wicketTester.startPage(pageClass);
+        this.assertLoginRequired(pageClass, new PageParameters());
+    }
+
+    protected void assertLoginRequired(Class<? extends Page> pageClass, PageParameters parameters)
+    {
+        this.wicketTester.startPage(pageClass, parameters);
         this.wicketTester.assertRenderedPage(SignInPage.class);
     }
 

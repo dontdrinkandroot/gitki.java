@@ -5,6 +5,8 @@ import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.service.configuration.DefaultConfigurationService;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.service.user.UserService;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -39,7 +47,7 @@ public abstract class AbstractIntegrationTest
     protected DefaultConfigurationService configurationService;
 
     @Before
-    public void beforeMethod()
+    public void initUsers()
     {
         SecurityContextHolder.getContext().setAuthentication(null);
 
@@ -56,6 +64,20 @@ public abstract class AbstractIntegrationTest
         user = new User("Admin", "User", "admin@example.com", Role.ADMIN);
         this.userAdmin = this.userService.save(user, "admin");
     }
+
+    @Before
+    public void resetRepository() throws IOException
+    {
+        Path repositoryPath = this.gitService.getRepositoryPath();
+        Files.walk(repositoryPath)
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+        Repository repository = FileRepositoryBuilder.create(repositoryPath.resolve(".git").toFile());
+        repository.create();
+    }
+
+
 
     protected void setUser(UserDetails user)
     {

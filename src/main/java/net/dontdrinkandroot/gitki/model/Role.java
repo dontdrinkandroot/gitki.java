@@ -62,7 +62,7 @@ public enum Role implements GrantedAuthority
     {
         public static final String WATCHER = "WATCHER";
 
-        public static final String COMMITTER = "WATCHER";
+        public static final String COMMITTER = "COMMITTER";
 
         public static final String ADMIN = "ADMIN";
     }

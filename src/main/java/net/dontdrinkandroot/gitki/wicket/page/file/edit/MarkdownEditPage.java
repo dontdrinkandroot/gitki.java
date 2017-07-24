@@ -52,7 +52,6 @@ public class MarkdownEditPage extends EditPage
     public MarkdownEditPage(IModel<FilePath> model)
     {
         super(model);
-        this.getPageParameters().set("action", "edit");
     }
 
     @Override

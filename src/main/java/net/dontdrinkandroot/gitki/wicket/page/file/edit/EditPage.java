@@ -21,5 +21,6 @@ public class EditPage extends FilePage
     public EditPage(IModel<FilePath> model)
     {
         super(model);
+        this.getPageParameters().set("action", "edit");
     }
 }

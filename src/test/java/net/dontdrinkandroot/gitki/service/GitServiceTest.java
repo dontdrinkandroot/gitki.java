@@ -5,17 +5,10 @@ import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.test.AbstractIntegrationTest;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,19 +16,6 @@ import java.util.List;
  */
 public class GitServiceTest extends AbstractIntegrationTest
 {
-    @Before
-    public void resetRepository() throws IOException
-    {
-        Path repositoryPath = this.gitService.getRepositoryPath();
-        Files.walk(repositoryPath)
-                .sorted(Comparator.reverseOrder())
-                .map(Path::toFile)
-                .peek(System.out::println)
-                .forEach(File::delete);
-        Repository repository = FileRepositoryBuilder.create(repositoryPath.resolve(".git").toFile());
-        repository.create();
-    }
-
     @Test
     public void testWorkflow() throws IOException, GitAPIException
     {
