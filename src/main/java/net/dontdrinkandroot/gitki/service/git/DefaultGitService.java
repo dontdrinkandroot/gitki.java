@@ -12,6 +12,7 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.PushResult;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -196,6 +197,12 @@ public class DefaultGitService implements GitService
         this.git.add().addFilepattern(targetFilePath.toString()).call();
         this.git.rm().addFilepattern(filePath.toString()).call();
         this.commit(user, commitMessage);
+    }
+
+    @Override
+    public Iterable<PushResult> push() throws GitAPIException
+    {
+        return this.git.push().call();
     }
 
     @Override

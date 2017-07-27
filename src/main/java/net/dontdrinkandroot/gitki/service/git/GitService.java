@@ -6,6 +6,7 @@ import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.User;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.PushResult;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,4 +65,6 @@ public interface GitService
             User user,
             String commitMessage
     ) throws IOException, GitAPIException;
+
+    Iterable<PushResult> push() throws GitAPIException;
 }

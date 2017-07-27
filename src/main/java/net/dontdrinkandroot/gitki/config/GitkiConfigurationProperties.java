@@ -26,6 +26,8 @@ public class GitkiConfigurationProperties
     @NotEmpty
     private String repository;
 
+    private Long autopush;
+
     private Map<String, Class<? extends ViewPage>> viewMappings = new HashMap<>();
 
     private Map<String, Class<? extends EditPage>> editMappings = new HashMap<>();
@@ -80,5 +82,15 @@ public class GitkiConfigurationProperties
     public void setEditMappings(Map<String, Class<? extends EditPage>> editMappings)
     {
         this.editMappings = editMappings;
+    }
+
+    public Long getAutopush()
+    {
+        return this.autopush;
+    }
+
+    public void setAutopush(Long autopush)
+    {
+        this.autopush = autopush;
     }
 }
