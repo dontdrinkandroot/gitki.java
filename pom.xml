@@ -194,7 +194,6 @@
         <!--<artifactId>spring-boot-starter-actuator</artifactId>-->
         <!--</dependency>-->
 
-
         <dependency>
             <groupId>com.giffing.wicket.spring.boot.starter</groupId>
             <artifactId>wicket-spring-boot-starter</artifactId>

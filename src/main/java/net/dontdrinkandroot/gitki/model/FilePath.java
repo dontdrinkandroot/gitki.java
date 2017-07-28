@@ -1,5 +1,7 @@
 package net.dontdrinkandroot.gitki.model;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.nio.file.Path;
 import java.util.Arrays;
 
@@ -71,5 +73,10 @@ public class FilePath extends AbstractPath
         }
 
         return directoryPath.appendFileName(path.getFileName().toString());
+    }
+
+    public String getExtension()
+    {
+        return FilenameUtils.getExtension(this.getName());
     }
 }

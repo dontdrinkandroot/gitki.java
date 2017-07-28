@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.service.requestmapping;
 
+import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage;
 
@@ -14,6 +15,8 @@ public interface RequestMappingRegistry
 
     void setEditMappings(Map<String, Class<? extends EditPage>> mappings);
 
+    void setIndexFileMappings(Map<String, Class<? extends IndexFilePanel>> mappings);
+
     void addViewMapping(String extension, Class<? extends ViewPage> pageClass);
 
     void addEditMapping(String extension, Class<? extends EditPage> pageClass);
@@ -21,4 +24,6 @@ public interface RequestMappingRegistry
     Class<? extends ViewPage> resolveViewMapping(String extension);
 
     Class<? extends EditPage> resolveEditMapping(String extension);
+
+    Class<? extends IndexFilePanel> resolveIndexFilePanel(String extension);
 }

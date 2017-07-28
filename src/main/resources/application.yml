@@ -18,6 +18,14 @@ gitki:
         xml: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
         properties: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
         md: "net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage"
+    indexFileMappings:
+       "md": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.MarkdownIndexFilePanel"
+       "txt": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.TextIndexFilePanel"
+    indexFiles:
+        - "README.md"
+        - "INDEX.md"
+        - "README.txt"
+        - "INDEX.txt"
 #management:
 #  context-path: "/manage"
 wicket:

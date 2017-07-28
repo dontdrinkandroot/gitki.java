@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.config;
 
+import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -7,7 +8,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,11 +31,15 @@ public class GitkiConfigurationProperties
 
     private Long autopush;
 
+    private boolean anonymousBrowsingEnabled = true;
+
     private Map<String, Class<? extends ViewPage>> viewMappings = new HashMap<>();
 
     private Map<String, Class<? extends EditPage>> editMappings = new HashMap<>();
 
-    private boolean anonymousBrowsingEnabled = true;
+    private List<String> indexFiles = new ArrayList<>();
+
+    private Map<String, Class<? extends IndexFilePanel>> indexFileMappings = new HashMap<>();
 
     public String getRepository()
     {
@@ -92,5 +99,25 @@ public class GitkiConfigurationProperties
     public void setAutopush(Long autopush)
     {
         this.autopush = autopush;
+    }
+
+    public Map<String, Class<? extends IndexFilePanel>> getIndexFileMappings()
+    {
+        return this.indexFileMappings;
+    }
+
+    public void setIndexFileMappings(Map<String, Class<? extends IndexFilePanel>> indexFileMappings)
+    {
+        this.indexFileMappings = indexFileMappings;
+    }
+
+    public List<String> getIndexFiles()
+    {
+        return this.indexFiles;
+    }
+
+    public void setIndexFiles(List<String> indexFiles)
+    {
+        this.indexFiles = indexFiles;
     }
 }

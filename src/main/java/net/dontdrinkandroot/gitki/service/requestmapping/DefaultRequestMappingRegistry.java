@@ -1,8 +1,9 @@
 package net.dontdrinkandroot.gitki.service.requestmapping;
 
-import net.dontdrinkandroot.gitki.config.GitkiConfigurationProperties;
+import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -19,17 +20,25 @@ public class DefaultRequestMappingRegistry implements RequestMappingRegistry
 
     private Map<String, Class<? extends EditPage>> editMappings;
 
+    private Map<String, Class<? extends IndexFilePanel>> indexFileMappings;
+
     public DefaultRequestMappingRegistry()
     {
         this.viewMappings = new HashMap<>();
         this.editMappings = new HashMap<>();
+        this.indexFileMappings = new HashMap<>();
     }
 
     @Inject
-    public DefaultRequestMappingRegistry(GitkiConfigurationProperties configurationProperties)
+    public DefaultRequestMappingRegistry(
+            @Value("#{gitkiConfigurationProperties.viewMappings}") Map<String, Class<? extends ViewPage>> viewMappings,
+            @Value("#{gitkiConfigurationProperties.editMappings}") Map<String, Class<? extends EditPage>> editMappings,
+            @Value("#{gitkiConfigurationProperties.indexFileMappings}") Map<String, Class<? extends IndexFilePanel>> indexFileMappings
+    )
     {
-        this.viewMappings = configurationProperties.getViewMappings();
-        this.editMappings = configurationProperties.getEditMappings();
+        this.viewMappings = viewMappings;
+        this.editMappings = editMappings;
+        this.indexFileMappings = indexFileMappings;
     }
 
     @Override
@@ -42,6 +51,12 @@ public class DefaultRequestMappingRegistry implements RequestMappingRegistry
     public void setEditMappings(Map<String, Class<? extends EditPage>> mappings)
     {
         this.editMappings = mappings;
+    }
+
+    @Override
+    public void setIndexFileMappings(Map<String, Class<? extends IndexFilePanel>> mappings)
+    {
+        this.indexFileMappings = mappings;
     }
 
     @Override
@@ -74,5 +89,15 @@ public class DefaultRequestMappingRegistry implements RequestMappingRegistry
         }
 
         return this.editMappings.get(extension);
+    }
+
+    @Override
+    public Class<? extends IndexFilePanel> resolveIndexFilePanel(String extension)
+    {
+        if (!this.indexFileMappings.containsKey(extension)) {
+            return null;
+        }
+
+        return this.indexFileMappings.get(extension);
     }
 }

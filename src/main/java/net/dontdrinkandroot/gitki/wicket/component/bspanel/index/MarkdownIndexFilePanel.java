@@ -1,15 +1,13 @@
-package net.dontdrinkandroot.gitki.wicket.page.file.view;
+package net.dontdrinkandroot.gitki.wicket.component.bspanel.index;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService;
-import net.dontdrinkandroot.gitki.wicket.component.button.EditButton;
+import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.io.FileNotFoundException;
@@ -18,7 +16,7 @@ import java.io.IOException;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class MarkdownViewPage extends ViewPage
+public class MarkdownIndexFilePanel extends IndexFilePanel
 {
     @SpringBean
     private GitService gitService;
@@ -26,36 +24,22 @@ public class MarkdownViewPage extends ViewPage
     @SpringBean
     private MarkdownService markdownService;
 
-    public MarkdownViewPage(PageParameters parameters)
+    public MarkdownIndexFilePanel(String id, IModel<FilePath> model)
     {
-        super(parameters);
-    }
-
-    public MarkdownViewPage(IModel<FilePath> model)
-    {
-        super(model);
+        super(id, model);
     }
 
     @Override
-    protected void onInitialize()
+    protected Component createBody(String id)
     {
-        super.onInitialize();
-
         try {
             String renderedMarkdown =
                     this.markdownService.parseToHtml(this.gitService.getContentAsString(this.getModelObject()));
-            this.add(new Label("content", renderedMarkdown).setEscapeModelStrings(false));
+            return new Label(id, renderedMarkdown).setEscapeModelStrings(false);
         } catch (FileNotFoundException e) {
             throw new AbortWithHttpErrorCodeException(404);
         } catch (IOException e) {
             throw new WicketRuntimeException(e);
         }
-    }
-
-    @Override
-    protected void populatePrimaryButtons(RepeatingView view)
-    {
-        view.add(new EditButton(view.newChildId(), this.getModel()));
-        super.populatePrimaryButtons(view);
     }
 }

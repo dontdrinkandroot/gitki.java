@@ -18,9 +18,9 @@ import org.apache.wicket.request.mapper.info.ComponentInfo;
 import org.apache.wicket.request.mapper.info.PageComponentInfo;
 import org.apache.wicket.request.mapper.info.PageInfo;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class BrowseRequestMapper extends AbstractBookmarkableMapper
 {
-    @Inject
+    @SpringBean
     private RequestMappingRegistry requestMappingRegistry;
 
     @Override
