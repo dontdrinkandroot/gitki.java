@@ -23,9 +23,13 @@ gitki:
        "txt": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.TextIndexFilePanel"
     indexFiles:
         - "README.md"
+        - "readme.md"
         - "INDEX.md"
+        - "index.md"
         - "README.txt"
+        - "readme.txt"
         - "INDEX.txt"
+        - "index.txt"
 #management:
 #  context-path: "/manage"
 wicket:
