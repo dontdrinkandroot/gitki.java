@@ -4,23 +4,23 @@ import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.wicket.model.AbstractChainedReadonlyModel;
 import org.apache.wicket.model.IModel;
 
-import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAccessor;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class InstantStringModel extends AbstractChainedReadonlyModel<Instant, String>
+public class TemporalAccessorStringModel extends AbstractChainedReadonlyModel<TemporalAccessor, String>
 {
     private final FormatStyle formatStyle;
 
-    public InstantStringModel(IModel<? extends Instant> parent)
+    public TemporalAccessorStringModel(IModel<? extends TemporalAccessor> parent)
     {
         this(parent, FormatStyle.MEDIUM);
     }
 
-    public InstantStringModel(IModel<? extends Instant> parent, FormatStyle formatStyle)
+    public TemporalAccessorStringModel(IModel<? extends TemporalAccessor> parent, FormatStyle formatStyle)
     {
         super(parent);
         this.formatStyle = formatStyle;
@@ -29,8 +29,8 @@ public class InstantStringModel extends AbstractChainedReadonlyModel<Instant, St
     @Override
     public String getObject()
     {
-        Instant instant = this.getParentObject();
-        if (null == instant) {
+        TemporalAccessor temporalAccessor = this.getParentObject();
+        if (null == temporalAccessor) {
             return null;
         }
 
@@ -39,6 +39,6 @@ public class InstantStringModel extends AbstractChainedReadonlyModel<Instant, St
                         .withLocale(GitkiWebSession.get().getLocale())
                         .withZone(GitkiWebSession.get().getZoneId());
 
-        return formatter.format(instant);
+        return formatter.format(temporalAccessor);
     }
 }

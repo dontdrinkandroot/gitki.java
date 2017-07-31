@@ -5,7 +5,7 @@ import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButto
 import net.dontdrinkandroot.gitki.wicket.css.GitkiCssClass;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathBasicFileAttributesModel;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
-import net.dontdrinkandroot.gitki.wicket.model.InstantStringModel;
+import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
@@ -59,7 +59,7 @@ public class DirectoryListItem extends GenericPanel<DirectoryPath>
         Label lastModifiedLabel =
                 new Label(
                         "lastmodified",
-                        new InstantStringModel(new FileTimeInstantModel(new BasicFileAttributesLastModifiedTimeModel(
+                        new TemporalAccessorStringModel(new FileTimeInstantModel(new BasicFileAttributesLastModifiedTimeModel(
                                 this.attributesModel)))
                 );
         this.add(lastModifiedLabel);

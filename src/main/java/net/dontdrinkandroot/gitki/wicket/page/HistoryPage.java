@@ -1,13 +1,11 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
+import net.dontdrinkandroot.gitki.wicket.component.bspanel.RevCommitPanel;
 import net.dontdrinkandroot.gitki.wicket.dataprovider.HistoryDataProvider;
-import net.dontdrinkandroot.gitki.wicket.model.PersonIdentWhenModel;
-import net.dontdrinkandroot.gitki.wicket.model.RevCommitAuthorIdentModel;
 import net.dontdrinkandroot.wicket.bootstrap.component.pagination.AjaxPaginationPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
@@ -46,13 +44,7 @@ public class HistoryPage extends DecoratorPage<Void>
             @Override
             protected void populateItem(Item<RevCommit> item)
             {
-                item.add(new Label("message", item.getModelObject().getFullMessage()));
-                item.add(new Label("authorName", item.getModelObject().getAuthorIdent().getName()));
-                item.add(new Label("authorEmail", item.getModelObject().getAuthorIdent().getEmailAddress()));
-                item.add(new Label(
-                        "authorDate",
-                        new PersonIdentWhenModel(new RevCommitAuthorIdentModel(item.getModel()))
-                ));
+                item.add(new RevCommitPanel("detail", item.getModel()));
             }
         };
         commitView.setItemsPerPage(20);

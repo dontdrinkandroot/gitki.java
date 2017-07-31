@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.wicket.model;
+package net.dontdrinkandroot.gitki.wicket.model.revcommit;
 
 import net.dontdrinkandroot.wicket.model.AbstractChainedReadonlyModel;
 import org.apache.wicket.model.IModel;

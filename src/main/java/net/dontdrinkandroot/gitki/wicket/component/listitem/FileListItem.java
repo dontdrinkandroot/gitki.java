@@ -6,7 +6,7 @@ import net.dontdrinkandroot.gitki.wicket.css.GitkiCssClass;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathBasicFileAttributesModel;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.model.FileSizeStringModel;
-import net.dontdrinkandroot.gitki.wicket.model.InstantStringModel;
+import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
@@ -64,7 +64,7 @@ public class FileListItem extends GenericPanel<FilePath>
         Label lastModifiedLabel =
                 new Label(
                         "lastmodified",
-                        new InstantStringModel(
+                        new TemporalAccessorStringModel(
                                 new FileTimeInstantModel(new BasicFileAttributesLastModifiedTimeModel(this.attributesModel))
                         )
                 );
