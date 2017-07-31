@@ -23,9 +23,9 @@ public class UserDropdownItem extends RepeatingDropdownItem
     @Override
     protected void populateItems(RepeatingView itemView)
     {
-        itemView.add(new BookmarkablePageLinkItem<>(itemView.newChildId(), new StringResourceModel("profile"),
+        itemView.add(new BookmarkablePageLinkItem<>(itemView.newChildId(), new StringResourceModel("gitki.profile"),
                 UserEditPage.class
         ));
-        itemView.add(new LogoutItem(itemView.newChildId()));
+        itemView.add(new SignoutItem(itemView.newChildId()));
     }
 }

@@ -5,7 +5,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.item.RepeatingDropdownIte
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -15,7 +15,7 @@ public class AdminDropdownItem extends RepeatingDropdownItem<Void>
 {
     public AdminDropdownItem(String id)
     {
-        super(id, Model.of("Administration"));
+        super(id, new StringResourceModel("gitki.administration"));
     }
 
     @Override

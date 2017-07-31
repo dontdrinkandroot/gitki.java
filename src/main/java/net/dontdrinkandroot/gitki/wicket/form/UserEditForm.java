@@ -88,7 +88,7 @@ public class UserEditForm extends RepeatingAjaxForm<User>
         FormGroupSelect<String> formGroupZoneId =
                 new FormGroupSelect<>(
                         formGroupView.newChildId(),
-                        new StringResourceModel("timezone"),
+                        new StringResourceModel("gitki.timezone"),
                         new PropertyModel<>(this.getModel(), "zoneId"),
                         availableZoneIds,
                         new ZoneIdChoiceRenderer()
@@ -117,7 +117,7 @@ public class UserEditForm extends RepeatingAjaxForm<User>
     @Override
     protected void populateActions(RepeatingView buttonView)
     {
-        buttonView.add(new SubmitLabelButton(buttonView.newChildId(), "Save"));
+        buttonView.add(new SubmitLabelButton(buttonView.newChildId(), new StringResourceModel("gitki.save")));
     }
 
     @Override

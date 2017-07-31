@@ -21,13 +21,21 @@ public class BrowsePage<T extends AbstractPath> extends DecoratorPage<T>
     public BrowsePage(PageParameters parameters)
     {
         super(parameters);
-        GitkiWebSession.get().assertAnonymousBrowsing(BrowsePage.class);
+        this.checkAccess();
     }
 
     public BrowsePage(IModel<T> model)
     {
         super(model);
-        GitkiWebSession.get().assertAnonymousBrowsing(BrowsePage.class);
+        this.checkAccess();
+    }
+
+    private void checkAccess()
+    {
+        GitkiWebSession gitkiWebSession = GitkiWebSession.get();
+        if (!gitkiWebSession.isSignedIn()) {
+            gitkiWebSession.assertAnonymousBrowsing(BrowsePage.class);
+        }
     }
 
     @Override

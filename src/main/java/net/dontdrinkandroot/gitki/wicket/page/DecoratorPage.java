@@ -4,7 +4,7 @@ import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.component.BrandLink;
 import net.dontdrinkandroot.gitki.wicket.component.item.AdminDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.HistoryPageItem;
-import net.dontdrinkandroot.gitki.wicket.component.item.LoginLinkItem;
+import net.dontdrinkandroot.gitki.wicket.component.item.SignInPageLinkItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
@@ -110,7 +110,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
     {
         itemView.add(new AdminDropdownItem(itemView.newChildId()));
         itemView.add(new UserDropdownItem(itemView.newChildId()));
-        itemView.add(new LoginLinkItem(itemView.newChildId()));
+        itemView.add(new SignInPageLinkItem(itemView.newChildId()));
     }
 
     private void createModal()

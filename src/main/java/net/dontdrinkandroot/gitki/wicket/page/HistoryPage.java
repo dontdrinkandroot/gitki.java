@@ -11,7 +11,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -29,7 +29,7 @@ public class HistoryPage extends DecoratorPage<Void>
     @Override
     protected IModel<String> createTitleModel()
     {
-        return Model.of("History");
+        return new StringResourceModel("gitki.history");
     }
 
     @Override

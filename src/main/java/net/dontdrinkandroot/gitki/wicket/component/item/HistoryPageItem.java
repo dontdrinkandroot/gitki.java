@@ -12,6 +12,6 @@ public class HistoryPageItem extends BookmarkablePageLinkItem<Void>
 {
     public <C extends Page> HistoryPageItem(String id)
     {
-        super(id, new StringResourceModel("history"), HistoryPage.class);
+        super(id, new StringResourceModel("gitki.history"), HistoryPage.class);
     }
 }

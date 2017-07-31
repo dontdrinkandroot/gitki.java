@@ -6,7 +6,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.item.BookmarkablePageLink
 import org.apache.wicket.Page;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -16,6 +16,6 @@ public class ConfigurationPageItem extends BookmarkablePageLinkItem
 {
     public <C extends Page> ConfigurationPageItem(String id)
     {
-        super(id, Model.of("Configuration"), ConfigurationPage.class);
+        super(id, new StringResourceModel("gitki.configuration"), ConfigurationPage.class);
     }
 }

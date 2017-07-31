@@ -86,7 +86,7 @@ public class MarkdownEditPage extends EditPage
         this.add(editForm);
 
         this.formGroupContent =
-                new FormGroupTextArea<>("content", new StringResourceModel("content"), this.contentModel);
+                new FormGroupTextArea<>("content", new StringResourceModel("gitki.content"), this.contentModel);
         this.formGroupContent.setRows(20);
         this.formGroupContent.getFormComponent().add(new AjaxFormComponentUpdatingBehavior("input")
         {
@@ -112,13 +112,14 @@ public class MarkdownEditPage extends EditPage
         FormGroupInputText formGroupCommitMessage =
                 new FormGroupInputText(
                         "commitMessage",
-                        new StringResourceModel("commitmessage"),
+                        new StringResourceModel("gitki.commitmessage"),
                         this.commitMessageModel
                 );
         formGroupCommitMessage.setRequired(true);
         editForm.add(formGroupCommitMessage);
 
-        AjaxSubmitButton saveAndBackButton = new AjaxSubmitButton("saveandback", new StringResourceModel("saveandback"))
+        AjaxSubmitButton saveAndBackButton =
+                new AjaxSubmitButton("saveandback", new StringResourceModel("gitki.saveandback"))
         {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form)
@@ -138,7 +139,7 @@ public class MarkdownEditPage extends EditPage
         };
         editForm.add(saveAndBackButton);
 
-        AjaxSubmitButton saveButton = new AjaxSubmitButton("save", new StringResourceModel("save"))
+        AjaxSubmitButton saveButton = new AjaxSubmitButton("save", new StringResourceModel("gitki.save"))
         {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form)
