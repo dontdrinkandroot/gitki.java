@@ -19,9 +19,6 @@ public class DirectoryPageTest extends AbstractWicketTest
 
         this.configurationService.setAnonymousBrowsingEnabled(false);
         GitkiWebSession.get().invalidate();
-        this.assertPageInaccessible(DirectoryPage.class, null);
-
-        //TODO: Maybe refactor authorization strategy so we get redirected to login
-        //this.assertLoginRequired(DirectoryPage.class);
+        this.assertLoginRequired(DirectoryPage.class);
     }
 }

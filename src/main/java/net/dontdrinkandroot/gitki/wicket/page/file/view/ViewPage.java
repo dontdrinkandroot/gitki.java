@@ -2,11 +2,13 @@ package net.dontdrinkandroot.gitki.wicket.page.file.view;
 
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.button.DownloadButton;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
@@ -17,6 +19,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Instantiate(value = Role.WATCHER, allowAnonymousIfConfigured = true)
 public class ViewPage extends FilePage
 {
     public ViewPage(PageParameters parameters)

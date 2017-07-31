@@ -1,8 +1,9 @@
 package net.dontdrinkandroot.gitki.wicket.resource;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.git.GitService;
-import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.Application;
 import org.apache.wicket.WicketRuntimeException;
@@ -14,7 +15,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +24,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Instantiate(value = Role.WATCHER, allowAnonymousIfConfigured = true)
 public class RawResource extends AbstractResource
 {
     @SpringBean
@@ -32,10 +33,6 @@ public class RawResource extends AbstractResource
     @Override
     protected ResourceResponse newResourceResponse(Attributes attributes)
     {
-        if (!GitkiWebSession.get().checkAnonymousBrowsing()) {
-            throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_FORBIDDEN);
-        }
-
         FilePath filePath = PageParameterUtils.toFilePath(attributes.getParameters());
         Path fileSystemPath = null;
         try {

@@ -2,7 +2,6 @@ package net.dontdrinkandroot.gitki.wicket.page;
 
 import net.dontdrinkandroot.gitki.model.AbstractPath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
-import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.component.PathBreadcrumb;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathAbsoluteStringModel;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -21,21 +20,11 @@ public class BrowsePage<T extends AbstractPath> extends DecoratorPage<T>
     public BrowsePage(PageParameters parameters)
     {
         super(parameters);
-        this.checkAccess();
     }
 
     public BrowsePage(IModel<T> model)
     {
         super(model);
-        this.checkAccess();
-    }
-
-    private void checkAccess()
-    {
-        GitkiWebSession gitkiWebSession = GitkiWebSession.get();
-        if (!gitkiWebSession.isSignedIn()) {
-            gitkiWebSession.assertAnonymousBrowsing(BrowsePage.class);
-        }
     }
 
     @Override

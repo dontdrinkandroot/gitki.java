@@ -5,8 +5,8 @@ import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.service.user.UserService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.form.UserEditForm;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.bootstrap.css.grid.ColumnSizeStack;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -15,7 +15,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@AuthorizeInstantiation(Role.Constants.WATCHER)
+@Instantiate(Role.WATCHER)
 public class UserEditPage extends UserPage<User>
 {
     @SpringBean

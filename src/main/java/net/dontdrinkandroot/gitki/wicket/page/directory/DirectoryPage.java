@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page.directory;
 
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.requestmapping.RequestMappingRegistry;
 import net.dontdrinkandroot.gitki.service.wiki.WikiService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButton;
@@ -11,6 +12,7 @@ import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathEntriesModel;
 import net.dontdrinkandroot.gitki.wicket.page.BrowsePage;
+import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
 import org.apache.wicket.Component;
@@ -29,6 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
+@Instantiate(value = Role.WATCHER, allowAnonymousIfConfigured = true)
 public class DirectoryPage extends BrowsePage<DirectoryPath>
 {
     @SpringBean

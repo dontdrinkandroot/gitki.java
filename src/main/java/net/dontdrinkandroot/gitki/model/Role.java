@@ -57,13 +57,4 @@ public enum Role implements GrantedAuthority
     {
         return this.name();
     }
-
-    public static class Constants
-    {
-        public static final String WATCHER = "WATCHER";
-
-        public static final String COMMITTER = "COMMITTER";
-
-        public static final String ADMIN = "ADMIN";
-    }
 }

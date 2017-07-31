@@ -12,6 +12,7 @@ import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.RawRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.resource.ExternalJQueryResourceReference;
 import net.dontdrinkandroot.gitki.wicket.resource.RawResource;
+import net.dontdrinkandroot.gitki.wicket.security.GitkiAuthorizationStrategy;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.injection.Injector;
@@ -32,6 +33,9 @@ public class GitkiWebApplication extends WicketBootSecuredWebApplication
         super.init();
 
         this.getJavaScriptLibrarySettings().setJQueryReference(new ExternalJQueryResourceReference());
+
+        this.getSecuritySettings()
+                .setAuthorizationStrategy(this.getApplicationContext().getBean(GitkiAuthorizationStrategy.class));
 
         BrowseRequestMapper browseRequestMapper = new BrowseRequestMapper();
         Injector.get().inject(browseRequestMapper);

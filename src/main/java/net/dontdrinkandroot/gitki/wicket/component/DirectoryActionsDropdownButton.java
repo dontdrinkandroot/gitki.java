@@ -5,17 +5,16 @@ import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.item.CreateDirectoryModalItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.CreateFileModalItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UploadFilesModalItem;
+import net.dontdrinkandroot.gitki.wicket.security.Enable;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton;
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment;
-import org.apache.wicket.authorization.Action;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@AuthorizeAction(action = Action.ENABLE, roles = Role.Constants.COMMITTER)
+@Enable(Role.COMMITTER)
 public class DirectoryActionsDropdownButton extends DropdownButton<DirectoryPath>
 {
     public DirectoryActionsDropdownButton(String id, IModel<DirectoryPath> model)
