@@ -35,6 +35,8 @@ gitki:
 wicket:
   core:
     settings:
+      general:
+        configuration-type: deployment
       markup:
         strip-wicket-tags: true
 spring:
