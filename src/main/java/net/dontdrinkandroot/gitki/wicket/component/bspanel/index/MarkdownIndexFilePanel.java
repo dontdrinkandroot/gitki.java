@@ -3,6 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.component.bspanel.index;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService;
+import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.basic.Label;
@@ -35,7 +36,11 @@ public class MarkdownIndexFilePanel extends IndexFilePanel
         try {
             String renderedMarkdown =
                     this.markdownService.parseToHtml(this.gitService.getContentAsString(this.getModelObject()));
-            return new Label(id, renderedMarkdown).setEscapeModelStrings(false);
+            Component body = new Label(id, renderedMarkdown).setEscapeModelStrings(false);
+            body.add(new CssClassAppender("content"));
+            body.add(new CssClassAppender("markdown"));
+
+            return body;
         } catch (FileNotFoundException e) {
             throw new AbortWithHttpErrorCodeException(404);
         } catch (IOException e) {

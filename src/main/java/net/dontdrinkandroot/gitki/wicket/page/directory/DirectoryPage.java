@@ -10,6 +10,7 @@ import net.dontdrinkandroot.gitki.wicket.component.DirectoryEntriesPanel;
 import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent;
+import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathEntriesModel;
 import net.dontdrinkandroot.gitki.wicket.page.BrowsePage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
@@ -19,6 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -59,6 +61,8 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
     protected void onInitialize()
     {
         super.onInitialize();
+
+        this.add(new Label("heading", new AbstractPathNameModel(this.getModel())));
 
         this.entriesPanel = new DirectoryEntriesPanel("entries", new DirectoryPathEntriesModel(this.getModel()));
         this.entriesPanel.setOutputMarkupId(true);
