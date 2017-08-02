@@ -2,12 +2,17 @@ package net.dontdrinkandroot.gitki.service.wiki;
 
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
+import net.dontdrinkandroot.gitki.model.GitUser;
 import net.dontdrinkandroot.gitki.service.git.GitService;
+import net.dontdrinkandroot.gitki.service.lock.LockMissingException;
 import net.dontdrinkandroot.gitki.service.lock.LockService;
+import net.dontdrinkandroot.gitki.service.lock.LockedException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,5 +57,36 @@ public class DefaultWikiService implements WikiService
         }
 
         return null;
+    }
+
+    @Override
+    public void lock(FilePath filePath, GitUser user) throws LockedException
+    {
+        this.lockService.lock(filePath, user);
+    }
+
+    @Override
+    public void save(
+            FilePath filePath,
+            GitUser user,
+            String commitMessage,
+            String content
+    ) throws LockedException, LockMissingException, IOException, GitAPIException
+    {
+        this.lockService.lock(filePath, user);
+        this.gitService.addAndCommit(filePath, content, user, commitMessage);
+    }
+
+    @Override
+    public void saveAndUnlock(
+            FilePath filePath,
+            GitUser user,
+            String commitMessage,
+            String content
+    ) throws LockedException, IOException, GitAPIException
+    {
+        this.lockService.lock(filePath, user);
+        this.gitService.addAndCommit(filePath, content, user, commitMessage);
+        this.lockService.release(filePath, user);
     }
 }

@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.wicket.page.configuration;
+package net.dontdrinkandroot.gitki.wicket.page.admin;
 
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.configuration.ConfigurationService;

@@ -4,6 +4,8 @@ import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.GitUser;
 import net.dontdrinkandroot.gitki.model.LockInfo;
 
+import java.util.List;
+
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
@@ -14,4 +16,6 @@ public interface LockService
     void release(FilePath filePath, GitUser user) throws LockedException;
 
     LockInfo check(FilePath filePath);
+
+    List<LockInfo> list();
 }

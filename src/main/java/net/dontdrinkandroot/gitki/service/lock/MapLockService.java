@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -67,6 +69,16 @@ public class MapLockService implements LockService
         }
 
         return lockInfo;
+    }
+
+    @Override
+    public List<LockInfo> list()
+    {
+        return this.lockMap.values()
+                .stream()
+                .filter(lockInfo -> !lockInfo.isExpired())
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     private Instant computeExpiry()

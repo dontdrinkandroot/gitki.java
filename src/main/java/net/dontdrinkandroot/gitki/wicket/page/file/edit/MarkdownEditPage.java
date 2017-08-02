@@ -2,6 +2,8 @@ package net.dontdrinkandroot.gitki.wicket.page.file.edit;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
+import net.dontdrinkandroot.gitki.service.lock.LockMissingException;
+import net.dontdrinkandroot.gitki.service.lock.LockedException;
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
@@ -120,23 +122,33 @@ public class MarkdownEditPage extends EditPage
 
         AjaxSubmitButton saveAndBackButton =
                 new AjaxSubmitButton("saveandback", new StringResourceModel("gitki.saveandback"))
-        {
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-            {
-                MarkdownEditPage.this.saveAndCommit();
-            }
+                {
+                    @Override
+                    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+                    {
+                        try {
+                            MarkdownEditPage.this.getWikiService()
+                                    .saveAndUnlock(
+                                            MarkdownEditPage.this.getModelObject(),
+                                            GitkiWebSession.get().getUser(),
+                                            MarkdownEditPage.this.commitMessageModel.getObject(),
+                                            MarkdownEditPage.this.contentModel.getObject()
+                                    );
+                        } catch (LockedException | GitAPIException | IOException e) {
+                            throw new WicketRuntimeException(e);
+                        }
+                    }
 
-            @Override
-            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
-            {
-                super.onAfterSubmit(target, form);
-                this.setResponsePage(
-                        SimpleViewPage.class,
-                        PageParameterUtils.from(MarkdownEditPage.this.getModelObject())
-                );
-            }
-        };
+                    @Override
+                    protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
+                    {
+                        super.onAfterSubmit(target, form);
+                        this.setResponsePage(
+                                SimpleViewPage.class,
+                                PageParameterUtils.from(MarkdownEditPage.this.getModelObject())
+                        );
+                    }
+                };
         editForm.add(saveAndBackButton);
 
         AjaxSubmitButton saveButton = new AjaxSubmitButton("save", new StringResourceModel("gitki.save"))
@@ -144,25 +156,21 @@ public class MarkdownEditPage extends EditPage
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form)
             {
-                MarkdownEditPage.this.saveAndCommit();
+                try {
+                    MarkdownEditPage.this.getWikiService()
+                            .save(
+                                    MarkdownEditPage.this.getModelObject(),
+                                    GitkiWebSession.get().getUser(),
+                                    MarkdownEditPage.this.commitMessageModel.getObject(),
+                                    MarkdownEditPage.this.contentModel.getObject()
+                            );
+                } catch (LockedException | LockMissingException | GitAPIException | IOException e) {
+                    throw new WicketRuntimeException(e);
+                }
             }
         };
         saveButton.setButtonStyle(ButtonStyle.DEFAULT);
         editForm.add(saveButton);
-    }
-
-    private void saveAndCommit()
-    {
-        try {
-            this.gitService.addAndCommit(
-                    this.getModelObject(),
-                    this.contentModel.getObject(),
-                    GitkiWebSession.get().getUser(),
-                    this.commitMessageModel.getObject()
-            );
-        } catch (IOException | GitAPIException e) {
-            throw new WicketRuntimeException(e);
-        }
     }
 
     //    @Override

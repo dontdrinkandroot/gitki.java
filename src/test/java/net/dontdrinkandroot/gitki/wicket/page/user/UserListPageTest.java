@@ -1,6 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.page.user;
 
 import net.dontdrinkandroot.gitki.test.AbstractWicketTest;
+import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage;
 import org.junit.Test;
 
 /**

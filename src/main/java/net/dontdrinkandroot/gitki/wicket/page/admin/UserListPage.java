@@ -1,10 +1,11 @@
-package net.dontdrinkandroot.gitki.wicket.page.user;
+package net.dontdrinkandroot.gitki.wicket.page.admin;
 
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.wicket.column.UserActionColumn;
 import net.dontdrinkandroot.gitki.wicket.component.button.UserAddButton;
 import net.dontdrinkandroot.gitki.wicket.dataprovider.UserDataProvider;
+import net.dontdrinkandroot.gitki.wicket.page.user.UserPage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass;

@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page.file.edit;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
+import net.dontdrinkandroot.gitki.service.lock.LockedException;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
@@ -83,13 +84,14 @@ public class TextEditPage extends EditPage
             {
                 super.onSubmit(target, form);
                 try {
-                    TextEditPage.this.gitService.addAndCommit(
-                            TextEditPage.this.getModelObject(),
-                            TextEditPage.this.contentModel.getObject(),
-                            GitkiWebSession.get().getUser(),
-                            TextEditPage.this.commitMessageModel.getObject()
-                    );
-                } catch (IOException | GitAPIException e) {
+                    TextEditPage.this.getWikiService()
+                            .saveAndUnlock(
+                                    TextEditPage.this.getModelObject(),
+                                    GitkiWebSession.get().getUser(),
+                                    TextEditPage.this.commitMessageModel.getObject(),
+                                    TextEditPage.this.contentModel.getObject()
+                            );
+                } catch (IOException | GitAPIException | LockedException e) {
                     throw new WicketRuntimeException(e);
                 }
             }

@@ -39,6 +39,12 @@ wicket:
         configuration-type: deployment
       markup:
         strip-wicket-tags: true
+  web:
+    servlet:
+      dispatcher-types:
+        - request
+        - error
+        - async
 spring:
   datasource:
     username: sa
@@ -47,3 +53,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+server:
+  error:
+    whitelabel:
+      enabled: false

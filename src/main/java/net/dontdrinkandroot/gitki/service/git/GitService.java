@@ -1,9 +1,6 @@
 package net.dontdrinkandroot.gitki.service.git;
 
-import net.dontdrinkandroot.gitki.model.AbstractPath;
-import net.dontdrinkandroot.gitki.model.DirectoryPath;
-import net.dontdrinkandroot.gitki.model.FilePath;
-import net.dontdrinkandroot.gitki.model.User;
+import net.dontdrinkandroot.gitki.model.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.PushResult;
@@ -39,7 +36,7 @@ public interface GitService
     void addAndCommit(
             FilePath filePath,
             String content,
-            User user,
+            GitUser user,
             String commitMessage
     ) throws IOException, GitAPIException;
 
@@ -47,7 +44,7 @@ public interface GitService
 
     void removeAndCommit(FilePath filePath, User user, String commitMessage) throws IOException, GitAPIException;
 
-    void commit(User user, String commitMessage) throws GitAPIException;
+    void commit(GitUser user, String commitMessage) throws GitAPIException;
 
     Path resolveAbsolutePath(AbstractPath path);
 

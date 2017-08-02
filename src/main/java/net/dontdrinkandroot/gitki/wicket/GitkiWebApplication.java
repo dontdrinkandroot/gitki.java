@@ -4,10 +4,10 @@ import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplicatio
 import net.dontdrinkandroot.gitki.wicket.page.FirstRunPage;
 import net.dontdrinkandroot.gitki.wicket.page.HistoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
-import net.dontdrinkandroot.gitki.wicket.page.configuration.ConfigurationPage;
+import net.dontdrinkandroot.gitki.wicket.page.admin.ConfigurationPage;
+import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.user.UserEditPage;
-import net.dontdrinkandroot.gitki.wicket.page.user.UserListPage;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.RawRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.resource.ExternalJQueryResourceReference;

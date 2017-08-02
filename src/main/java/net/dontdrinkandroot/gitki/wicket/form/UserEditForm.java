@@ -6,7 +6,7 @@ import net.dontdrinkandroot.gitki.service.user.UserService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.IsoLanguageChoiceRenderer;
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.ZoneIdChoiceRenderer;
-import net.dontdrinkandroot.gitki.wicket.page.user.UserListPage;
+import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.RepeatingAjaxForm;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputEmail;

@@ -1,10 +1,7 @@
 package net.dontdrinkandroot.gitki.service.git;
 
 import net.dontdrinkandroot.gitki.config.GitkiConfigurationProperties;
-import net.dontdrinkandroot.gitki.model.AbstractPath;
-import net.dontdrinkandroot.gitki.model.DirectoryPath;
-import net.dontdrinkandroot.gitki.model.FilePath;
-import net.dontdrinkandroot.gitki.model.User;
+import net.dontdrinkandroot.gitki.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -165,7 +162,7 @@ public class DefaultGitService implements GitService
     public void addAndCommit(
             FilePath filePath,
             String content,
-            User user,
+            GitUser user,
             String commitMessage
     ) throws IOException, GitAPIException
     {
@@ -220,7 +217,7 @@ public class DefaultGitService implements GitService
     }
 
     @Override
-    public void commit(User user, String commitMessage) throws GitAPIException
+    public void commit(GitUser user, String commitMessage) throws GitAPIException
     {
         this.git.commit().setMessage(commitMessage).setAuthor(user.getFullName(), user.getEmail()).call();
     }
