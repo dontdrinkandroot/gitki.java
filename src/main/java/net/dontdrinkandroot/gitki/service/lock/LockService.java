@@ -15,7 +15,19 @@ public interface LockService
 
     void release(FilePath filePath, GitUser user) throws LockedException;
 
+    /**
+     * Forces the release of the Lock for the given FilePath.
+     *
+     * @param filePath The FilePath to unlock.
+     */
+    void forceRelease(FilePath filePath);
+
     LockInfo check(FilePath filePath);
 
     List<LockInfo> list();
+
+    /**
+     * Clears all locks.
+     */
+    void clear();
 }

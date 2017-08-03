@@ -4,11 +4,14 @@ import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.service.configuration.DefaultConfigurationService;
 import net.dontdrinkandroot.gitki.service.git.GitService;
+import net.dontdrinkandroot.gitki.service.lock.LockService;
 import net.dontdrinkandroot.gitki.service.user.UserService;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +34,8 @@ import java.util.Comparator;
 @SpringBootTest
 public abstract class AbstractIntegrationTest
 {
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     protected User userWatcher;
 
     protected User userCommitter;
@@ -44,11 +49,16 @@ public abstract class AbstractIntegrationTest
     protected GitService gitService;
 
     @Autowired
+    protected LockService lockService;
+
+    @Autowired
     protected DefaultConfigurationService configurationService;
 
     @Before
     public void initUsers()
     {
+        this.logger.info("Initializing Users");
+
         SecurityContextHolder.getContext().setAuthentication(null);
 
         this.userService.removeAll();
@@ -68,6 +78,8 @@ public abstract class AbstractIntegrationTest
     @Before
     public void resetRepository() throws IOException
     {
+        this.logger.info("Resetting repository");
+
         Path repositoryPath = this.gitService.getRepositoryPath();
         Files.walk(repositoryPath)
                 .sorted(Comparator.reverseOrder())
@@ -75,9 +87,9 @@ public abstract class AbstractIntegrationTest
                 .forEach(File::delete);
         Repository repository = FileRepositoryBuilder.create(repositoryPath.resolve(".git").toFile());
         repository.create();
+
+        this.lockService.clear();
     }
-
-
 
     protected void setUser(UserDetails user)
     {

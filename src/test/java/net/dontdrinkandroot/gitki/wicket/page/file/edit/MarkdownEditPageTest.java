@@ -2,8 +2,10 @@ package net.dontdrinkandroot.gitki.wicket.page.file.edit;
 
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.test.AbstractWicketTest;
+import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +19,7 @@ public class MarkdownEditPageTest extends AbstractWicketTest
     @Before
     public void initRepo() throws IOException, GitAPIException
     {
+        this.logger.info("Initializing repository");
         this.gitService.addAndCommit(new FilePath("test.md"), "Test\n====", this.userCommitter, "Adding test.md");
     }
 
@@ -30,8 +33,22 @@ public class MarkdownEditPageTest extends AbstractWicketTest
         this.assertPageAccessible(MarkdownEditPage.class,
                 this.userCommitter, new PageParameters().set(0, "test.md").set("action", "edit")
         );
+        this.lockService.clear();
         this.assertPageAccessible(MarkdownEditPage.class,
                 this.userAdmin, new PageParameters().set(0, "test.md").set("action", "edit")
         );
+    }
+
+    @Test
+    public void testLocking()
+    {
+        GitkiWebSession.get().signIn(this.userAdmin);
+        this.getWicketTester()
+                .startPage(MarkdownEditPage.class, new PageParameters().set(0, "test.md").set("action", "edit"));
+
+        GitkiWebSession.get().signIn(this.userCommitter);
+        this.getWicketTester()
+                .startPage(MarkdownEditPage.class, new PageParameters().set(0, "test.md").set("action", "edit"));
+        Assert.assertEquals(423, this.getWicketTester().getLastResponse().getStatus());
     }
 }

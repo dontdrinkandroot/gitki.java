@@ -56,6 +56,12 @@ public class MapLockService implements LockService
     }
 
     @Override
+    public void forceRelease(FilePath filePath)
+    {
+        this.lockMap.remove(filePath);
+    }
+
+    @Override
     public LockInfo check(FilePath filePath)
     {
         LockInfo lockInfo = this.lockMap.get(filePath);
@@ -79,6 +85,12 @@ public class MapLockService implements LockService
                 .filter(lockInfo -> !lockInfo.isExpired())
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void clear()
+    {
+        this.lockMap.clear();
     }
 
     private Instant computeExpiry()
