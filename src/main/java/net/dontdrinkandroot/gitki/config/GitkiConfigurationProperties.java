@@ -26,10 +26,7 @@ public class GitkiConfigurationProperties
     @NotEmpty
     private String name = "GitKi";
 
-    @NotEmpty
-    private String repository;
-
-    private Long autopush;
+    private final Git git = new Git();
 
     private boolean anonymousBrowsingEnabled = true;
 
@@ -40,16 +37,6 @@ public class GitkiConfigurationProperties
     private List<String> indexFiles = new ArrayList<>();
 
     private Map<String, Class<? extends IndexFilePanel>> indexFileMappings = new HashMap<>();
-
-    public String getRepository()
-    {
-        return this.repository;
-    }
-
-    public void setRepository(String repository)
-    {
-        this.repository = repository;
-    }
 
     public String getName()
     {
@@ -91,16 +78,6 @@ public class GitkiConfigurationProperties
         this.editMappings = editMappings;
     }
 
-    public Long getAutopush()
-    {
-        return this.autopush;
-    }
-
-    public void setAutopush(Long autopush)
-    {
-        this.autopush = autopush;
-    }
-
     public Map<String, Class<? extends IndexFilePanel>> getIndexFileMappings()
     {
         return this.indexFileMappings;
@@ -119,5 +96,104 @@ public class GitkiConfigurationProperties
     public void setIndexFiles(List<String> indexFiles)
     {
         this.indexFiles = indexFiles;
+    }
+
+    public Git getGit()
+    {
+        return this.git;
+    }
+
+    public static class Git
+    {
+        @NotEmpty
+        private String repository;
+
+        private final Remote remote = new Remote();
+
+        public String getRepository()
+        {
+            return this.repository;
+        }
+
+        public void setRepository(String repository)
+        {
+            this.repository = repository;
+        }
+
+        public Remote getRemote()
+        {
+            return this.remote;
+        }
+
+        public static class Remote
+        {
+            private final Autopush autopush = new Autopush();
+
+            private final Autopull autopull = new Autopull();
+
+            public Autopush getAutopush()
+            {
+                return this.autopush;
+            }
+
+            public Autopull getAutopull()
+            {
+                return this.autopull;
+            }
+
+            public static class Autopush
+            {
+                private boolean enabled = false;
+
+                private Long interval = 300000L;
+
+                public boolean isEnabled()
+                {
+                    return this.enabled;
+                }
+
+                public void setEnabled(boolean enabled)
+                {
+                    this.enabled = enabled;
+                }
+
+                public Long getInterval()
+                {
+                    return this.interval;
+                }
+
+                public void setInterval(Long interval)
+                {
+                    this.interval = interval;
+                }
+            }
+
+            public static class Autopull
+            {
+                private boolean enabled = false;
+
+                private Long interval = 300000L;
+
+                public boolean isEnabled()
+                {
+                    return this.enabled;
+                }
+
+                public void setEnabled(boolean enabled)
+                {
+                    this.enabled = enabled;
+                }
+
+                public Long getInterval()
+                {
+                    return this.interval;
+                }
+
+                public void setInterval(Long interval)
+                {
+                    this.interval = interval;
+                }
+            }
+        }
     }
 }

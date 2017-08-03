@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.config.GitkiConfigurationProperties;
 import net.dontdrinkandroot.gitki.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.lib.Repository;
@@ -42,11 +43,11 @@ public class DefaultGitService implements GitService
     @Inject
     public DefaultGitService(GitkiConfigurationProperties configurationProperties) throws IOException
     {
-        if (!StringUtils.endsWith(configurationProperties.getRepository(), File.separator)) {
+        if (!StringUtils.endsWith(configurationProperties.getGit().getRepository(), File.separator)) {
             throw new RuntimeException("Git Dir must end with " + File.separator);
         }
 
-        Path gitPath = Paths.get(configurationProperties.getRepository());
+        Path gitPath = Paths.get(configurationProperties.getGit().getRepository());
         if (!gitPath.isAbsolute()) {
             throw new RuntimeException("Repository path must be absolute");
         }
@@ -194,6 +195,12 @@ public class DefaultGitService implements GitService
         this.git.add().addFilepattern(targetFilePath.toString()).call();
         this.git.rm().addFilepattern(filePath.toString()).call();
         this.commit(user, commitMessage);
+    }
+
+    @Override
+    public PullResult pull() throws GitAPIException
+    {
+        return this.git.pull().call();
     }
 
     @Override

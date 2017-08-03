@@ -1,6 +1,7 @@
 package net.dontdrinkandroot.gitki.service.git;
 
 import net.dontdrinkandroot.gitki.model.*;
+import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.PushResult;
@@ -62,6 +63,8 @@ public interface GitService
             User user,
             String commitMessage
     ) throws IOException, GitAPIException;
+
+    PullResult pull() throws GitAPIException;
 
     Iterable<PushResult> push() throws GitAPIException;
 }
