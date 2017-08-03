@@ -54,7 +54,7 @@ public class GitRemoteService
                 if (pullResult.isSuccessful()) {
                     this.logger.info("Autopull result: success");
                 } else {
-                    System.err.println(pullResult.getFetchResult());
+                    this.logger.error(pullResult.getFetchResult().toString());
                 }
             } catch (GitAPIException e) {
                 this.logger.error("Autopull failed", e);

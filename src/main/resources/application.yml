@@ -1,5 +1,4 @@
 gitki:
-    repository: "${user.home}/gitki/default/repository/"
     viewMappings:
         txt: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
         csv: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
@@ -30,6 +29,15 @@ gitki:
         - "readme.txt"
         - "INDEX.txt"
         - "index.txt"
+    git:
+      repository: "${user.home}/gitki/default/repository/"
+      remote:
+        autopull:
+          enabled: false
+          interval: 300000
+        autopush:
+          enabled: false
+          interval: 300000
 #management:
 #  context-path: "/manage"
 wicket:
