@@ -1,43 +1,52 @@
 gitki:
-    viewMappings:
-        txt: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
-        csv: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
-        xml: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
-        java: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
-        yml: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
-        properties: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
-        md: "net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage"
-        jpg: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
-        jpeg: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
-        png: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
-        gif: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
-    editMappings:
-        txt: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
-        csv: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
-        xml: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
-        properties: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
-        md: "net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage"
-    indexFileMappings:
-       "md": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.MarkdownIndexFilePanel"
-       "txt": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.TextIndexFilePanel"
-    indexFiles:
-        - "README.md"
-        - "readme.md"
-        - "INDEX.md"
-        - "index.md"
-        - "README.txt"
-        - "readme.txt"
-        - "INDEX.txt"
-        - "index.txt"
-    git:
-      repository: "${user.home}/gitki/default/repository/"
-      remote:
-        autopull:
-          enabled: false
-          interval: 300000
-        autopush:
-          enabled: false
-          interval: 300000
+  viewMappings:
+    txt: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+    csv: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+    xml: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+    java: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+    yml: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+    properties: "net.dontdrinkandroot.gitki.wicket.page.file.view.TextViewPage"
+    md: "net.dontdrinkandroot.gitki.wicket.page.file.view.MarkdownViewPage"
+    jpg: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+    jpeg: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+    png: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+    gif: "net.dontdrinkandroot.gitki.wicket.page.file.view.ImageViewPage"
+  editMappings:
+    txt: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+    csv: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+    xml: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+    properties: "net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage"
+    md: "net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage"
+  indexFileMappings:
+    "md": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.MarkdownIndexFilePanel"
+    "txt": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.TextIndexFilePanel"
+  indexFiles:
+    - "README.md"
+    - "readme.md"
+    - "INDEX.md"
+    - "index.md"
+    - "README.txt"
+    - "readme.txt"
+    - "INDEX.txt"
+    - "index.txt"
+  git:
+    repository: "${user.home}/gitki/default/repository/"
+    remote:
+      autopull:
+        enabled: false
+        interval: 300000
+      autopush:
+        enabled: false
+        interval: 300000
+  oauth:
+    github:
+      enabled: false
+      client:
+        accessTokenUri: "https://github.com/login/oauth/access_token"
+        userAuthorizationUri: "https://github.com/login/oauth/authorize"
+        clientAuthenticationScheme: "form"
+      resource:
+        userInfoUri: "https://api.github.com/user"
 #management:
 #  context-path: "/manage"
 wicket:

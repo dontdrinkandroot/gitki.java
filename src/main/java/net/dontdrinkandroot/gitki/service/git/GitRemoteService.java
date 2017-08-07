@@ -52,9 +52,15 @@ public class GitRemoteService
             try {
                 PullResult pullResult = this.gitService.pull();
                 if (pullResult.isSuccessful()) {
-                    this.logger.info("Autopull result: success");
+                    this.logger.info(String.format(
+                            "Autopull result: %s",
+                            pullResult.getMergeResult().getMergeStatus()
+                    ));
                 } else {
-                    this.logger.error(pullResult.getFetchResult().toString());
+                    this.logger.error(String.format(
+                            "Autopull result: %s",
+                            pullResult.getMergeResult().getMergeStatus()
+                    ));
                 }
             } catch (GitAPIException e) {
                 this.logger.error("Autopull failed", e);
