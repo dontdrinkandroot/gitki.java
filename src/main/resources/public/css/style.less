@@ -111,3 +111,31 @@ textarea {
         .text-right();
     }
 }
+
+//
+// Table Orderings
+//
+
+th.wicket_orderNone:after, th.wicket_orderUp:after, th.wicket_orderDown:after {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+    margin-left: 5px;
+}
+
+th.wicket_orderNone:after {
+    content: "\f0dc";
+    color: #bfbfbf;
+}
+
+th.wicket_orderUp:after {
+    content: "\f0dd";
+}
+
+th.wicket_orderDown:after {
+    content: "\f0de";
+}

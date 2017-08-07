@@ -24,6 +24,7 @@ public class UserEditPage extends UserPage<User>
     public UserEditPage(PageParameters parameters)
     {
         super(parameters);
+
         User user = this.userService.find(GitkiWebSession.get().getUser().getId());
         this.setModel(Model.of(user));
     }
