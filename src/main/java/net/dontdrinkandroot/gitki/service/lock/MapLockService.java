@@ -50,6 +50,7 @@ public class MapLockService implements LockService
 
         if (user.equals(lockInfo.getUser())) {
             this.lockMap.remove(filePath);
+            return;
         }
 
         throw new LockedException(lockInfo);

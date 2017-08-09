@@ -69,7 +69,7 @@ public class MapLockServiceTest
             lockService.release(path1, user1);
             Assert.assertNull(lockService.check(path1));
         } catch (LockedException e) {
-            /* Expected */
+            Assert.fail("Should not be locked");
         }
 
         try {
