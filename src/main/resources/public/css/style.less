@@ -97,9 +97,28 @@ textarea {
     }
 }
 
+.lock-info {
+    margin-top: @line-height-computed / 2;
+    margin-bottom: @line-height-computed / 2;
+    color: @text-muted;
+}
+
+.flash-messages {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
 //
 // Responsive additions
 //
+
+@media (min-width: @screen-sm-min) {
+    .flash-messages {
+        width: 750px;
+    }
+}
 
 @media (min-width: @screen-md-min) {
 
@@ -110,6 +129,34 @@ textarea {
     .text-right-ge-md {
         .text-right();
     }
+}
+
+//
+// Margins and Paddings
+//
+
+.margin-top-none {
+    margin-top: 0;
+}
+
+.margin-top-half {
+    margin-top: @line-height-computed / 2;
+}
+
+.margin-top-full {
+    margin-top: @line-height-computed;
+}
+
+.margin-bottom-none {
+    margin-bottom: 0;
+}
+
+.margin-bottom-half {
+    margin-bottom: @line-height-computed / 2;
+}
+
+.margin-bottom-full {
+    margin-bottom: @line-height-computed;
 }
 
 //

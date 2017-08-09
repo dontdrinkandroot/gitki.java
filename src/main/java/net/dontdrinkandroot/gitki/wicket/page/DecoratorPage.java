@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page;
 
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.component.BrandLink;
+import net.dontdrinkandroot.gitki.wicket.component.feedback.FlashMessagePanel;
 import net.dontdrinkandroot.gitki.wicket.component.item.AdminDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.HistoryPageItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.SignInPageLinkItem;
@@ -86,6 +87,8 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
         };
         navbar.setPosition(NavbarPosition.FIXED_TOP);
         this.add(navbar);
+
+        this.add(new FlashMessagePanel("flashMessages"));
 
         this.createModal();
     }

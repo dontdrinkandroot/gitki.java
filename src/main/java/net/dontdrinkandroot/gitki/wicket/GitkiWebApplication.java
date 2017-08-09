@@ -7,6 +7,7 @@ import net.dontdrinkandroot.gitki.wicket.page.SignInPage;
 import net.dontdrinkandroot.gitki.wicket.page.admin.ConfigurationPage;
 import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
+import net.dontdrinkandroot.gitki.wicket.page.test.FeedbackTestPage;
 import net.dontdrinkandroot.gitki.wicket.page.user.UserEditPage;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper;
 import net.dontdrinkandroot.gitki.wicket.requestmapper.RawRequestMapper;
@@ -48,6 +49,9 @@ public class GitkiWebApplication extends WicketBootSecuredWebApplication
         this.mountPage("history", HistoryPage.class);
         this.mountPage("users", UserListPage.class);
         this.mountPage("users/edit", UserEditPage.class);
+
+        // Testing
+        this.mountPage("test/feedback", FeedbackTestPage.class);
 
         RawResource rawResource = new RawResource();
         Injector.get().inject(rawResource);

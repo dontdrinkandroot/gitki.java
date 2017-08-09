@@ -3,6 +3,7 @@ package net.dontdrinkandroot.gitki.service.wiki;
 import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.GitUser;
+import net.dontdrinkandroot.gitki.model.LockInfo;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.service.lock.LockMissingException;
 import net.dontdrinkandroot.gitki.service.lock.LockService;
@@ -60,9 +61,9 @@ public class DefaultWikiService implements WikiService
     }
 
     @Override
-    public void lock(FilePath filePath, GitUser user) throws LockedException
+    public LockInfo lock(FilePath filePath, GitUser user) throws LockedException
     {
-        this.lockService.lock(filePath, user);
+        return this.lockService.lock(filePath, user);
     }
 
     @Override
@@ -88,5 +89,11 @@ public class DefaultWikiService implements WikiService
         this.lockService.lock(filePath, user);
         this.gitService.addAndCommit(filePath, content, user, commitMessage);
         this.lockService.release(filePath, user);
+    }
+
+    @Override
+    public LockInfo getLockInfo(FilePath filePath)
+    {
+        return this.lockService.check(filePath);
     }
 }

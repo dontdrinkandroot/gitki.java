@@ -164,6 +164,8 @@ public class MarkdownEditPage extends EditPage
                                     MarkdownEditPage.this.commitMessageModel.getObject(),
                                     MarkdownEditPage.this.contentModel.getObject()
                             );
+                    this.getSession().info(this.getString("gitki.saved"));
+                    target.add(MarkdownEditPage.this.lockLabel);
                 } catch (LockedException | LockMissingException | GitAPIException | IOException e) {
                     throw new WicketRuntimeException(e);
                 }

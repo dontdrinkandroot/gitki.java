@@ -1,11 +1,12 @@
 package net.dontdrinkandroot.gitki.model;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class LockInfo
+public class LockInfo implements Serializable
 {
     private FilePath path;
 

@@ -6,7 +6,6 @@ import net.dontdrinkandroot.gitki.service.user.UserService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.IsoLanguageChoiceRenderer;
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.ZoneIdChoiceRenderer;
-import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.RepeatingAjaxForm;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputEmail;
@@ -131,12 +130,7 @@ public class UserEditForm extends RepeatingAjaxForm<User>
         if (GitkiWebSession.get().getUser().equals(user)) {
             GitkiWebSession.get().signIn(user);
         }
-    }
 
-    @Override
-    protected void onAfterSubmit(AjaxRequestTarget target)
-    {
-        super.onAfterSubmit(target);
-        this.setResponsePage(UserListPage.class);
+        this.getSession().success(this.getString("gitki.user.saved"));
     }
 }

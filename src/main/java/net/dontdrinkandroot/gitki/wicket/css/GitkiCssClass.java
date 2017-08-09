@@ -8,7 +8,9 @@ import net.dontdrinkandroot.wicket.css.CssClass;
 public enum GitkiCssClass implements CssClass
 {
     FILE("file"),
-    DIRECTORY("directory");
+    DIRECTORY("directory"),
+    LOCK_INFO("lock-info"),
+    FLASH_MESSAGES("flash-messages");
 
     private String classString;
 
