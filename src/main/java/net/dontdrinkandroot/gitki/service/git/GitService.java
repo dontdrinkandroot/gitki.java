@@ -58,8 +58,8 @@ public interface GitService
     Iterator<? extends RevCommit> getRevisionIterator(long first, long count) throws GitAPIException;
 
     void moveAndCommit(
-            FilePath filePath,
-            DirectoryPath targetPath,
+            FilePath sourcePath,
+            FilePath targetPath,
             User user,
             String commitMessage
     ) throws IOException, GitAPIException;

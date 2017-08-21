@@ -27,7 +27,7 @@ public class FileActionsDropdownButton extends DropdownButton<FilePath>
     protected void populateItems(RepeatingView itemView)
     {
         itemView.add(new EditFileItem(itemView.newChildId(), this.getModel()));
-        itemView.add(new RemoveFileModalItem(itemView.newChildId(), this.getModel()));
         itemView.add(new MoveFileModalItem(itemView.newChildId(), this.getModel()));
+        itemView.add(new RemoveFileModalItem(itemView.newChildId(), this.getModel()));
     }
 }

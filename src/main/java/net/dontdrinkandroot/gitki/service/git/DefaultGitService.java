@@ -182,18 +182,17 @@ public class DefaultGitService implements GitService
 
     @Override
     public void moveAndCommit(
-            FilePath filePath,
-            DirectoryPath targetPath,
+            FilePath sourcePath,
+            FilePath targetPath,
             User user,
             String commitMessage
     ) throws IOException, GitAPIException
     {
-        FilePath targetFilePath = targetPath.appendFileName(filePath.getName());
-        Path absoluteSource = this.resolveAbsolutePath(filePath);
-        Path absoluteTarget = this.resolveAbsolutePath(targetFilePath);
+        Path absoluteSource = this.resolveAbsolutePath(sourcePath);
+        Path absoluteTarget = this.resolveAbsolutePath(targetPath);
         Files.move(absoluteSource, absoluteTarget, StandardCopyOption.ATOMIC_MOVE);
-        this.git.add().addFilepattern(targetFilePath.toString()).call();
-        this.git.rm().addFilepattern(filePath.toString()).call();
+        this.git.add().addFilepattern(targetPath.toString()).call();
+        this.git.rm().addFilepattern(sourcePath.toString()).call();
         this.commit(user, commitMessage);
     }
 

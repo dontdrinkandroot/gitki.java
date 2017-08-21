@@ -28,7 +28,7 @@ import java.nio.file.attribute.BasicFileAttributes;
  */
 public class FileListItem extends GenericPanel<FilePath>
 {
-    IModel<BasicFileAttributes> attributesModel;
+    private IModel<BasicFileAttributes> attributesModel;
 
     public FileListItem(String id, IModel<FilePath> model)
     {
@@ -49,7 +49,7 @@ public class FileListItem extends GenericPanel<FilePath>
         this.add(actionsDropDownButton);
 
         BookmarkablePageLink<Void> link =
-                new BookmarkablePageLink<Void>(
+                new BookmarkablePageLink<>(
                         "link",
                         SimpleViewPage.class,
                         PageParameterUtils.from(this.getModelObject())

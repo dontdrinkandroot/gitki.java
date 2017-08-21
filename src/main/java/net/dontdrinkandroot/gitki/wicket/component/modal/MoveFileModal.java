@@ -5,6 +5,7 @@ import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
+import net.dontdrinkandroot.gitki.wicket.choicerenderer.AbstractPathAbsoluteStringChoiceRenderer;
 import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
@@ -39,19 +40,22 @@ public class MoveFileModal extends FormModal<FilePath>
 
     private IModel<String> commitMessageModel;
 
-    private IModel<DirectoryPath> targetPathModel;
+    private IModel<String> targetNameModel;
+
+    private IModel<DirectoryPath> targetDirectoryModel;
 
     public MoveFileModal(String id, IModel<FilePath> model)
     {
         super(id, model);
         this.commitMessageModel = Model.of("Moving " + this.getModelObject().toAbsoluteString());
-        this.targetPathModel = Model.of(this.getModelObject().getParent());
+        this.targetNameModel = Model.of(this.getModelObject().getName());
+        this.targetDirectoryModel = Model.of(this.getModelObject().getParent());
     }
 
     @Override
     protected IModel<String> createHeadingModel()
     {
-        return Model.of("Move File");
+        return new StringResourceModel("gitki.move");
     }
 
     @Override
@@ -66,18 +70,32 @@ public class MoveFileModal extends FormModal<FilePath>
             throw new WicketRuntimeException(e);
         }
 
+        FormGroupInputText formGroupTargetName =
+                new FormGroupInputText(
+                        formGroupView.newChildId(),
+                        new StringResourceModel("gitki.name"),
+                        this.targetNameModel
+                );
+        formGroupTargetName.setRequired(true);
+        formGroupView.add(formGroupTargetName);
+
         FormGroupSelect<DirectoryPath> formGroupTargetPath =
                 new FormGroupSelect<>(
                         formGroupView.newChildId(),
-                        new StringResourceModel("targetpath"),
-                        this.targetPathModel,
-                        availableDirectories
+                        new StringResourceModel("gitki.targetpath"),
+                        this.targetDirectoryModel,
+                        availableDirectories,
+                        new AbstractPathAbsoluteStringChoiceRenderer<>()
                 );
         formGroupTargetPath.setRequired(true);
         formGroupView.add(formGroupTargetPath);
 
         FormGroupInputText formGroupCommitMessage =
-                new FormGroupInputText(formGroupView.newChildId(), Model.of("Commit Message"), this.commitMessageModel);
+                new FormGroupInputText(
+                        formGroupView.newChildId(),
+                        new StringResourceModel("gitki.commitmessage"),
+                        this.commitMessageModel
+                );
         formGroupCommitMessage.addDefaultAjaxInputValidation();
         formGroupCommitMessage.setRequired(true);
         formGroupView.add(formGroupCommitMessage);
@@ -89,7 +107,7 @@ public class MoveFileModal extends FormModal<FilePath>
         super.populateFormActions(formActionView);
 
         AjaxSubmitButton submitButton =
-                new AjaxSubmitButton(formActionView.newChildId(), this.getForm(), Model.of("Move"))
+                new AjaxSubmitButton(formActionView.newChildId(), this.getForm(), new StringResourceModel("gitki.move"))
                 {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form)
@@ -98,7 +116,7 @@ public class MoveFileModal extends FormModal<FilePath>
                         try {
                             MoveFileModal.this.gitService.moveAndCommit(
                                     MoveFileModal.this.getModelObject(),
-                                    MoveFileModal.this.targetPathModel.getObject(),
+                                    MoveFileModal.this.getTargetPath(),
                                     GitkiWebSession.get().getUser(),
                                     MoveFileModal.this.commitMessageModel.getObject()
                             );
@@ -112,19 +130,26 @@ public class MoveFileModal extends FormModal<FilePath>
                     {
                         super.onAfterSubmit(target, form);
                         target.appendJavaScript(MoveFileModal.this.getHideScript());
-                        MoveFileModal.this.onFileMoved(target, MoveFileModal.this.getModelObject());
+                        MoveFileModal.this.onFileMoved(target, MoveFileModal.this.getModelObject(),
+                                MoveFileModal.this.getTargetPath()
+                        );
                     }
                 };
         formActionView.add(submitButton);
 
-        Label cancelButton = new Label(formActionView.newChildId(), "Cancel");
+        Label cancelButton = new Label(formActionView.newChildId(), new StringResourceModel("gitki.cancel"));
         cancelButton.add(new ButtonBehavior());
         cancelButton.add(new OnClickScriptBehavior(this.getHideScript()));
         formActionView.add(cancelButton);
     }
 
-    protected void onFileMoved(AjaxRequestTarget target, FilePath path)
+    protected FilePath getTargetPath()
     {
-        this.send(this.getPage(), Broadcast.BREADTH, new FileMovedEvent(this.getModelObject(), target));
+        return this.targetDirectoryModel.getObject().appendFileName(this.targetNameModel.getObject());
+    }
+
+    protected void onFileMoved(AjaxRequestTarget target, FilePath sourcePath, FilePath targetPath)
+    {
+        this.send(this.getPage(), Broadcast.BREADTH, new FileMovedEvent(sourcePath, target, targetPath));
     }
 }

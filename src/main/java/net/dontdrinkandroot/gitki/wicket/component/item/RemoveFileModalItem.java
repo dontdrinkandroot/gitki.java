@@ -5,6 +5,7 @@ import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.modal.RemoveFileModal;
 import net.dontdrinkandroot.gitki.wicket.security.Render;
 import net.dontdrinkandroot.wicket.bootstrap.component.item.AjaxLinkItem;
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
 import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.Broadcast;
@@ -23,6 +24,7 @@ public class RemoveFileModalItem extends AjaxLinkItem
     {
         super(id, Model.of("Remove File"));
         this.pathModel = pathModel;
+        this.setPrependIcon(FontAwesomeIconClass.TRASH_O.createIcon().setFixedWidth(true));
     }
 
     @Override

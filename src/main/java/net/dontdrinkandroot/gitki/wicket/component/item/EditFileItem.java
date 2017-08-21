@@ -6,6 +6,7 @@ import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.security.Render;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.bootstrap.component.item.BookmarkablePageLinkItem;
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -23,5 +24,6 @@ public class EditFileItem extends BookmarkablePageLinkItem
         PageParameters pageParameters = PageParameterUtils.from(filePathModel.getObject());
         pageParameters.add("action", "edit");
         this.setParameters(pageParameters);
+        this.setPrependIcon(FontAwesomeIconClass.PENCIL.createIcon().setFixedWidth(true));
     }
 }

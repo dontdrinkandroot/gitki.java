@@ -6,9 +6,11 @@ import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.FileActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.button.DownloadButton;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
+import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent;
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
+import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
@@ -63,6 +65,11 @@ public class ViewPage extends FilePage
             DirectoryPath directoryPath =
                     this.getGitService().findExistingDirectoryPath(fileDeletedEvent.getFilePath());
             this.setResponsePage(new DirectoryPage(Model.of(directoryPath)));
+        }
+
+        if (payload instanceof FileMovedEvent) {
+            FileMovedEvent fileMovedEvent = (FileMovedEvent) payload;
+            this.setResponsePage(SimpleViewPage.class, PageParameterUtils.from(fileMovedEvent.getTargetPath()));
         }
     }
 }
