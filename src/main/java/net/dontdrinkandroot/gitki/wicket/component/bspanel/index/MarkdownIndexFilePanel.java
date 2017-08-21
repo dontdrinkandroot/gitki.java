@@ -3,9 +3,11 @@ package net.dontdrinkandroot.gitki.wicket.component.bspanel.index;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.service.git.GitService;
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService;
+import net.dontdrinkandroot.gitki.wicket.headeritem.HighlightInitHeaderItem;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
@@ -46,5 +48,12 @@ public class MarkdownIndexFilePanel extends IndexFilePanel
         } catch (IOException e) {
             throw new WicketRuntimeException(e);
         }
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response)
+    {
+        super.renderHead(response);
+        response.render(new HighlightInitHeaderItem());
     }
 }

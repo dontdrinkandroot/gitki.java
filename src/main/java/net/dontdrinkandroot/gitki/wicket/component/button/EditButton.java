@@ -22,7 +22,7 @@ public class EditButton extends BookmarkablePageButton<FilePath>
     {
         super(id, EditPage.class);
         this.setModel(model);
-        this.add(new IconBehavior(FontAwesomeIconClass.PENCIL.createIcon()));
+        this.add(new IconBehavior(FontAwesomeIconClass.PENCIL.createIcon().setFixedWidth(true)));
     }
 
     @Override
