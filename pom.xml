@@ -6,12 +6,14 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.6.RELEASE</version>
+        <relativePath/>
     </parent>
 
     <groupId>net.dontdrinkandroot</groupId>
     <artifactId>gitki</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <description>Git backed markdown wiki</description>
+    <inceptionYear>2017</inceptionYear>
 
     <developers>
         <developer>
@@ -61,6 +63,10 @@
     </distributionManagement>
 
     <properties>
+        <!-- Build properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Dependency versions -->
         <java.version>1.8</java.version>
         <wicket.version>7.8.0</wicket.version>
         <net.dontdrinkandroot.wicket.version>0.5.0-SNAPSHOT</net.dontdrinkandroot.wicket.version>
@@ -68,7 +74,7 @@
         <org.eclipse.jgit.version>4.8.0.201706111038-r</org.eclipse.jgit.version>
         <wicket-spring-boot-starter.version>1.0.9</wicket-spring-boot-starter.version>
         <commons-lang3.version>3.6</commons-lang3.version>
-        <!-- Plugins -->
+        <!-- Plugin versions -->
         <org.lesscss.lesscss-maven-plugin.version>1.7.0.1.1</org.lesscss.lesscss-maven-plugin.version>
         <org.jacoco.jacoco-maven-plugin.version>0.7.7.201606060606</org.jacoco.jacoco-maven-plugin.version>
         <org.eluder.coveralls.coveralls-maven-plugin.version>4.2.0</org.eluder.coveralls.coveralls-maven-plugin.version>
