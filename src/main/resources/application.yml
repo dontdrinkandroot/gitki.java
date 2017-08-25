@@ -24,12 +24,16 @@ gitki:
     "txt": "net.dontdrinkandroot.gitki.wicket.component.bspanel.index.TextIndexFilePanel"
   indexFiles:
     - "README.md"
+    - "Readme.md"
     - "readme.md"
     - "INDEX.md"
+    - "Index.md"
     - "index.md"
     - "README.txt"
+    - "Readme.txt"
     - "readme.txt"
     - "INDEX.txt"
+    - "Index.txt"
     - "index.txt"
   git:
     repository: "${user.home}/gitki/default/repository/"

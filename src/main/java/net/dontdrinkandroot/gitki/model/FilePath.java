@@ -79,4 +79,9 @@ public class FilePath extends AbstractPath
     {
         return FilenameUtils.getExtension(this.getName());
     }
+
+    public String getNameWithoutExtension()
+    {
+        return FilenameUtils.removeExtension(this.getName());
+    }
 }

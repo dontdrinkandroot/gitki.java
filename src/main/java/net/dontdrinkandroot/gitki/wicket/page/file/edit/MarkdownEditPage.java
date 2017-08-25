@@ -9,6 +9,7 @@ import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
+import net.dontdrinkandroot.wicket.bootstrap.component.button.Button;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle;
@@ -30,6 +31,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -66,7 +68,7 @@ public class MarkdownEditPage extends EditPage
         try {
             this.contentModel = Model.of(this.gitService.getContentAsString(this.getModelObject()));
         } catch (FileNotFoundException e) {
-            this.contentModel = Model.of("");
+            this.contentModel = Model.of(this.createDefaultContent());
         } catch (IOException e) {
             throw new WicketRuntimeException(e);
         }
@@ -173,6 +175,42 @@ public class MarkdownEditPage extends EditPage
         };
         saveButton.setButtonStyle(ButtonStyle.DEFAULT);
         editForm.add(saveButton);
+
+        Button cancelButton = new Button("cancel")
+        {
+            @Override
+            public void onClick()
+            {
+                try {
+                    MarkdownEditPage.this.getWikiService()
+                            .unlock(MarkdownEditPage.this.getModelObject(), GitkiWebSession.get().getUser());
+                    this.setResponsePage(
+                            SimpleViewPage.class,
+                            PageParameterUtils.from(MarkdownEditPage.this.getModelObject())
+                    );
+                } catch (LockedException e) {
+                    throw new WicketRuntimeException(e);
+                }
+            }
+        };
+        cancelButton.setBody(new StringResourceModel("gitki.cancel"));
+        editForm.add(cancelButton);
+    }
+
+    /**
+     * Creates default content for a new file.
+     *
+     * @return The content.
+     */
+    protected String createDefaultContent()
+    {
+        String name = this.getModelObject().getNameWithoutExtension();
+        String content = name;
+        content += "\n";
+        content += String.join("", Collections.nCopies(name.length(), "="));
+        content += "\n\n";
+
+        return content;
     }
 
     //    @Override

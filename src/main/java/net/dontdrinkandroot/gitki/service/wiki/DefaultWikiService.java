@@ -96,4 +96,10 @@ public class DefaultWikiService implements WikiService
     {
         return this.lockService.check(filePath);
     }
+
+    @Override
+    public void unlock(FilePath filePath, GitUser user) throws LockedException
+    {
+        this.lockService.release(filePath, user);
+    }
 }

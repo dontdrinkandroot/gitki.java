@@ -9,7 +9,7 @@ import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -21,7 +21,7 @@ public class CreateFileModalItem extends AjaxLinkItem
 
     public CreateFileModalItem(String id, IModel<DirectoryPath> pathModel)
     {
-        super(id, Model.of("Create File"));
+        super(id, new StringResourceModel("gitki.file.create"));
         this.pathModel = pathModel;
     }
 
@@ -31,7 +31,7 @@ public class CreateFileModalItem extends AjaxLinkItem
         this.send(
                 this.getPage(),
                 Broadcast.DEPTH,
-                new CreateAndOpenModalRequest<DirectoryPath>(target, CreateFileModal.class, this.pathModel)
+                new CreateAndOpenModalRequest<>(target, CreateFileModal.class, this.pathModel)
         );
     }
 }

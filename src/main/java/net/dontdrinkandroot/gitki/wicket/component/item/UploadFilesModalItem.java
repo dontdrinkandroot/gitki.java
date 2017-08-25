@@ -9,7 +9,7 @@ import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -21,7 +21,7 @@ public class UploadFilesModalItem extends AjaxLinkItem
 
     public UploadFilesModalItem(String id, IModel<DirectoryPath> pathModel)
     {
-        super(id, Model.of("Upload Files"));
+        super(id, new StringResourceModel("gitki.files.upload"));
         this.pathModel = pathModel;
     }
 

@@ -15,6 +15,12 @@ import java.io.IOException;
  */
 public interface WikiService
 {
+    /**
+     * Checks if there is an index file for the given DirectoryPath.
+     *
+     * @param directoryPath The {@link DirectoryPath} to check.
+     * @return The index file or null if not found.
+     */
     FilePath resolveIndexFile(DirectoryPath directoryPath);
 
     LockInfo lock(FilePath filePath, GitUser user) throws LockedException;
@@ -34,4 +40,12 @@ public interface WikiService
     ) throws LockedException, IOException, GitAPIException;
 
     LockInfo getLockInfo(FilePath filePath);
+
+    /**
+     * Unlocks the given {@link FilePath}.
+     *
+     * @param filePath The {@link FilePath} to unlock.
+     * @param user     The {@link GitUser} which wants to unlock.
+     */
+    void unlock(FilePath filePath, GitUser user) throws LockedException;
 }
