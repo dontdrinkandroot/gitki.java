@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.service.markdown;
 
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
+import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -23,7 +24,7 @@ public class DefaultMarkdownService implements MarkdownService
 
     public DefaultMarkdownService()
     {
-        List<Extension> extensions = Arrays.asList(TablesExtension.create());
+        List<Extension> extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create());
         this.parser = Parser.builder().extensions(extensions).build();
         this.renderer = HtmlRenderer.builder()
                 .extensions(extensions)

@@ -76,6 +76,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  devtools:
+    restart:
+      enabled: false
 server:
   error:
     whitelabel:

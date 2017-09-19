@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.FileType;
 import net.dontdrinkandroot.gitki.model.Role;
+import net.dontdrinkandroot.gitki.wicket.choicerenderer.FileTypeChoiceRenderer;
 import net.dontdrinkandroot.gitki.wicket.component.button.ModalCancelButton;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.MarkdownEditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.TextEditPage;
@@ -59,7 +60,8 @@ public class CreateFileModal extends AjaxFormModal<DirectoryPath>
                 formGroupView.newChildId(),
                 new StringResourceModel("gitki.file.type"),
                 this.fileTypeModel,
-                Arrays.asList(FileType.values())
+                Arrays.asList(FileType.values()),
+                new FileTypeChoiceRenderer()
         );
         formGroupFileType.addAjaxValidation("change");
         formGroupFileType.setRequired(true);
