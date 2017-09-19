@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.DirectoryPath;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.wicket.component.item.CreateDirectoryModalItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.CreateFileModalItem;
+import net.dontdrinkandroot.gitki.wicket.component.item.MoveDirectoryModalItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UploadFilesModalItem;
 import net.dontdrinkandroot.gitki.wicket.security.Enable;
 import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton;
@@ -29,5 +30,6 @@ public class DirectoryActionsDropdownButton extends DropdownButton<DirectoryPath
         itemView.add(new CreateFileModalItem(itemView.newChildId(), this.getModel()));
         itemView.add(new CreateDirectoryModalItem(itemView.newChildId(), this.getModel()));
         itemView.add(new UploadFilesModalItem(itemView.newChildId(), this.getModel()));
+        itemView.add(new MoveDirectoryModalItem(itemView.newChildId(), this.getModel()));
     }
 }

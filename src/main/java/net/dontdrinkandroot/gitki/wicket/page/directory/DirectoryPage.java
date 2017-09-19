@@ -8,6 +8,7 @@ import net.dontdrinkandroot.gitki.service.wiki.WikiService;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryActionsDropdownButton;
 import net.dontdrinkandroot.gitki.wicket.component.DirectoryEntriesPanel;
 import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel;
+import net.dontdrinkandroot.gitki.wicket.event.DirectoryMovedEvent;
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent;
 import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent;
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel;
@@ -113,6 +114,7 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
         super.onEvent(event);
 
         Object payload = event.getPayload();
+
         if (payload instanceof FileDeletedEvent) {
             FileDeletedEvent fileDeletedEvent = (FileDeletedEvent) payload;
             DirectoryPath directoryPath =
@@ -123,10 +125,21 @@ public class DirectoryPage extends BrowsePage<DirectoryPath>
             }
 
             this.setResponsePage(new DirectoryPage(Model.of(directoryPath)));
+            return;
         }
 
         if (payload instanceof FileMovedEvent) {
             ((FileMovedEvent) payload).getTarget().add(this.entriesPanel);
+            return;
+        }
+
+        if (payload instanceof DirectoryMovedEvent) {
+            DirectoryMovedEvent directoryMovedEvent = (DirectoryMovedEvent) payload;
+            if (directoryMovedEvent.getDirectoryPath().equals(this.getModelObject())) {
+                this.setResponsePage(new DirectoryPage(Model.of(directoryMovedEvent.getTargetPath())));
+            } else {
+                directoryMovedEvent.getTarget().add(this.entriesPanel);
+            }
         }
     }
 }

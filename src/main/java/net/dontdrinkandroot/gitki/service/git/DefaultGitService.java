@@ -182,8 +182,8 @@ public class DefaultGitService implements GitService
 
     @Override
     public void moveAndCommit(
-            FilePath sourcePath,
-            FilePath targetPath,
+            AbstractPath sourcePath,
+            AbstractPath targetPath,
             User user,
             String commitMessage
     ) throws IOException, GitAPIException

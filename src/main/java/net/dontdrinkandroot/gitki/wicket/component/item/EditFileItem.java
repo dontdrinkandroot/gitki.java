@@ -9,7 +9,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.item.BookmarkablePageLink
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -20,7 +20,7 @@ public class EditFileItem extends BookmarkablePageLinkItem
 {
     public <C extends Page> EditFileItem(String id, IModel<FilePath> filePathModel)
     {
-        super(id, Model.of("Edit"), EditPage.class);
+        super(id, new StringResourceModel("gitki.edit"), EditPage.class);
         PageParameters pageParameters = PageParameterUtils.from(filePathModel.getObject());
         pageParameters.add("action", "edit");
         this.setParameters(pageParameters);

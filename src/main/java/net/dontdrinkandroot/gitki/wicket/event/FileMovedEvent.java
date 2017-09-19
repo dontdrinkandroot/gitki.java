@@ -10,11 +10,6 @@ public class FileMovedEvent extends FileEvent
 {
     private FilePath targetPath;
 
-    public FileMovedEvent(FilePath filePath)
-    {
-        super(filePath);
-    }
-
     public FileMovedEvent(FilePath filePath, AjaxRequestTarget target, FilePath targetPath)
     {
         super(filePath, target);
