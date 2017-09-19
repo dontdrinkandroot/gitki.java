@@ -7,16 +7,16 @@ import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior;
-import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
+import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
-import net.dontdrinkandroot.wicket.bootstrap.component.modal.FormModal;
+import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.io.IOException;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Instantiate(Role.COMMITTER)
-public class CreateDirectoryModal extends FormModal<DirectoryPath>
+public class CreateDirectoryModal extends AjaxFormModal<DirectoryPath>
 {
     @SpringBean
     private GitService gitService;
@@ -40,7 +40,7 @@ public class CreateDirectoryModal extends FormModal<DirectoryPath>
     @Override
     protected IModel<String> createHeadingModel()
     {
-        return Model.of("Create Directory");
+        return new StringResourceModel("gitki.directory.create");
     }
 
     @Override
@@ -51,7 +51,11 @@ public class CreateDirectoryModal extends FormModal<DirectoryPath>
         this.nameModel = new Model<>();
 
         FormGroupInputText formGroupName =
-                new FormGroupInputText(formGroupView.newChildId(), Model.of("Name"), this.nameModel);
+                new FormGroupInputText(
+                        formGroupView.newChildId(),
+                        new StringResourceModel("gitki.name"),
+                        this.nameModel
+                );
         formGroupName.addDefaultAjaxInputValidation();
         formGroupName.setRequired(true);
         formGroupView.add(formGroupName);
@@ -62,37 +66,37 @@ public class CreateDirectoryModal extends FormModal<DirectoryPath>
     {
         super.populateFormActions(formActionView);
 
-        AjaxSubmitButton submitButton =
-                new AjaxSubmitButton(formActionView.newChildId(), this.getForm(), Model.of("Create"))
-                {
-                    @Override
-                    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-                    {
-                        super.onSubmit(target, form);
-                    }
+        formActionView.add(new SubmitLabelButton(formActionView.newChildId(), new StringResourceModel("gitki.create")));
 
-                    @Override
-                    protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
-                    {
-                        super.onAfterSubmit(target, form);
-
-                        DirectoryPath newPath =
-                                CreateDirectoryModal.this.getModelObject()
-                                        .appendDirectoryName(CreateDirectoryModal.this.nameModel
-                                                .getObject());
-                        try {
-                            CreateDirectoryModal.this.gitService.createDirectory(newPath);
-                            this.setResponsePage(new DirectoryPage(Model.of(newPath)));
-                        } catch (IOException e) {
-                            throw new WicketRuntimeException(e);
-                        }
-                    }
-                };
-        formActionView.add(submitButton);
-
-        Label cancelButton = new Label(formActionView.newChildId(), "Cancel");
+        Label cancelButton = new Label(formActionView.newChildId(), new StringResourceModel("gitki.cancel"));
         cancelButton.add(new ButtonBehavior());
         cancelButton.add(new OnClickScriptBehavior(this.getHideScript()));
         formActionView.add(cancelButton);
+    }
+
+    @Override
+    protected void onSubmit(AjaxRequestTarget target)
+    {
+        super.onSubmit(target);
+
+        try {
+            CreateDirectoryModal.this.gitService.createDirectory(this.getNewPath());
+        } catch (IOException e) {
+            throw new WicketRuntimeException(e);
+        }
+    }
+
+    @Override
+    protected void onAfterSubmit(AjaxRequestTarget target)
+    {
+        super.onAfterSubmit(target);
+
+        this.setResponsePage(new DirectoryPage(Model.of(this.getNewPath())));
+    }
+
+    private DirectoryPath getNewPath()
+    {
+        return CreateDirectoryModal.this.getModelObject()
+                .appendDirectoryName(CreateDirectoryModal.this.nameModel.getObject());
     }
 }

@@ -9,18 +9,18 @@ import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate;
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior;
-import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton;
+import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputFile;
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText;
-import net.dontdrinkandroot.wicket.bootstrap.component.modal.FormModal;
+import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -33,7 +33,7 @@ import java.util.List;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Instantiate(Role.COMMITTER)
-public class UploadFilesModal extends FormModal<DirectoryPath>
+public class UploadFilesModal extends AjaxFormModal<DirectoryPath>
 {
     @SpringBean
     private GitService gitService;
@@ -76,44 +76,46 @@ public class UploadFilesModal extends FormModal<DirectoryPath>
     {
         super.populateFormActions(formActionView);
 
-        AjaxSubmitButton submitButton =
-                new AjaxSubmitButton(formActionView.newChildId(), this.getForm(), Model.of("Upload"))
-                {
-                    @Override
-                    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-                    {
-                        super.onSubmit(target, form);
-                        for (FileUpload fileUpload : UploadFilesModal.this.fileUploadsModel.getObject()) {
-                            FilePath path = UploadFilesModal.this.getModelObject()
-                                    .appendFileName(fileUpload.getClientFileName());
-                            try {
-                                UploadFilesModal.this.gitService.add(path, fileUpload.getBytes());
-                            } catch (IOException | GitAPIException e) {
-                                throw new WicketRuntimeException(e);
-                            }
-                        }
-                        try {
-                            UploadFilesModal.this.gitService.commit(
-                                    GitkiWebSession.get().getUser(),
-                                    UploadFilesModal.this.commitMessageModel.getObject()
-                            );
-                        } catch (GitAPIException e) {
-                            throw new WicketRuntimeException(e);
-                        }
-                    }
-
-                    @Override
-                    protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
-                    {
-                        super.onAfterSubmit(target, form);
-                        this.setResponsePage(new DirectoryPage(UploadFilesModal.this.getModel()));
-                    }
-                };
-        formActionView.add(submitButton);
+        formActionView.add(new SubmitLabelButton(
+                formActionView.newChildId(),
+                new StringResourceModel("gitki.files.upload")
+        ));
 
         Label cancelButton = new Label(formActionView.newChildId(), "Cancel");
         cancelButton.add(new ButtonBehavior());
         cancelButton.add(new OnClickScriptBehavior(this.getHideScript()));
         formActionView.add(cancelButton);
+    }
+
+    @Override
+    protected void onSubmit(AjaxRequestTarget target)
+    {
+        super.onSubmit(target);
+
+        for (FileUpload fileUpload : UploadFilesModal.this.fileUploadsModel.getObject()) {
+            FilePath path = UploadFilesModal.this.getModelObject()
+                    .appendFileName(fileUpload.getClientFileName());
+            try {
+                UploadFilesModal.this.gitService.add(path, fileUpload.getBytes());
+            } catch (IOException | GitAPIException e) {
+                throw new WicketRuntimeException(e);
+            }
+        }
+        try {
+            UploadFilesModal.this.gitService.commit(
+                    GitkiWebSession.get().getUser(),
+                    UploadFilesModal.this.commitMessageModel.getObject()
+            );
+        } catch (GitAPIException e) {
+            throw new WicketRuntimeException(e);
+        }
+    }
+
+    @Override
+    protected void onAfterSubmit(AjaxRequestTarget target)
+    {
+        super.onAfterSubmit(target);
+
+        this.setResponsePage(new DirectoryPage(UploadFilesModal.this.getModel()));
     }
 }
