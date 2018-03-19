@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.7.RELEASE</version>
+        <version>1.5.10.RELEASE</version>
         <relativePath/>
     </parent>
 
     <groupId>net.dontdrinkandroot</groupId>
     <artifactId>gitki</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <description>Git backed markdown wiki</description>
     <inceptionYear>2017</inceptionYear>
 
@@ -63,22 +63,25 @@
     </distributionManagement>
 
     <properties>
+
         <!-- Build properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <!-- Dependency versions -->
         <java.version>1.8</java.version>
-        <wicket.version>7.8.0</wicket.version>
-        <net.dontdrinkandroot.wicket.version>0.5.0-SNAPSHOT</net.dontdrinkandroot.wicket.version>
+        <wicket.version>8.0.0-M9</wicket.version>
+        <net.dontdrinkandroot.wicket.version>0.6.0-SNAPSHOT</net.dontdrinkandroot.wicket.version>
         <com.atlassian.commonmark.version>0.10.0</com.atlassian.commonmark.version>
         <org.eclipse.jgit.version>4.8.0.201706111038-r</org.eclipse.jgit.version>
-        <wicket-spring-boot-starter.version>1.0.9</wicket-spring-boot-starter.version>
+        <wicket-spring-boot-starter.version>2.1.0</wicket-spring-boot-starter.version>
         <commons-lang3.version>3.6</commons-lang3.version>
+
         <!-- Plugin versions -->
-        <org.lesscss.lesscss-maven-plugin.version>1.7.0.1.1</org.lesscss.lesscss-maven-plugin.version>
         <org.jacoco.jacoco-maven-plugin.version>0.7.7.201606060606</org.jacoco.jacoco-maven-plugin.version>
         <org.eluder.coveralls.coveralls-maven-plugin.version>4.2.0</org.eluder.coveralls.coveralls-maven-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+
     </properties>
 
     <build>
@@ -103,27 +106,6 @@
                     <rulesUri>file://${basedir}/version-number-rules.xml</rulesUri>
                     <processDependencyManagement>false</processDependencyManagement>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.lesscss</groupId>
-                <artifactId>lesscss-maven-plugin</artifactId>
-                <version>${org.lesscss.lesscss-maven-plugin.version}</version>
-                <configuration>
-                    <sourceDirectory>src/main/resources/public/css/</sourceDirectory>
-                    <outputDirectory>src/main/resources/public/css/</outputDirectory>
-                    <compress>true</compress>
-                    <includes>
-                        <include>style.less</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>

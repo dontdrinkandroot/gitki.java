@@ -126,7 +126,7 @@ public class MarkdownEditPage extends EditPage
                 new AjaxSubmitButton("saveandback", new StringResourceModel("gitki.saveandback"))
                 {
                     @Override
-                    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+                    protected void onSubmit(AjaxRequestTarget target)
                     {
                         try {
                             MarkdownEditPage.this.getWikiService()
@@ -142,9 +142,9 @@ public class MarkdownEditPage extends EditPage
                     }
 
                     @Override
-                    protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
+                    protected void onAfterSubmit(AjaxRequestTarget target)
                     {
-                        super.onAfterSubmit(target, form);
+                        super.onAfterSubmit(target);
                         this.setResponsePage(
                                 SimpleViewPage.class,
                                 PageParameterUtils.from(MarkdownEditPage.this.getModelObject())
@@ -156,7 +156,7 @@ public class MarkdownEditPage extends EditPage
         AjaxSubmitButton saveButton = new AjaxSubmitButton("save", new StringResourceModel("gitki.save"))
         {
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+            protected void onSubmit(AjaxRequestTarget target)
             {
                 try {
                     MarkdownEditPage.this.getWikiService()
@@ -173,10 +173,10 @@ public class MarkdownEditPage extends EditPage
                 }
             }
         };
-        saveButton.setButtonStyle(ButtonStyle.DEFAULT);
+        saveButton.setButtonStyle(ButtonStyle.PRIMARY);
         editForm.add(saveButton);
 
-        Button cancelButton = new Button("cancel")
+        Button<Void> cancelButton = new Button<Void>("cancel")
         {
             @Override
             public void onClick()

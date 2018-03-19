@@ -16,7 +16,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Render(Role.COMMITTER)
-public class EditFileItem extends BookmarkablePageLinkItem
+public class EditFileItem extends BookmarkablePageLinkItem<Void>
 {
     public <C extends Page> EditFileItem(String id, IModel<FilePath> filePathModel)
     {

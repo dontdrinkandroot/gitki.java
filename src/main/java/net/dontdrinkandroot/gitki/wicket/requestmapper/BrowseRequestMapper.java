@@ -5,8 +5,7 @@ import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.wicket.RequestListenerInterface;
-import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.ListenerRequestHandler;
 import org.apache.wicket.core.request.mapper.AbstractBookmarkableMapper;
 import org.apache.wicket.core.request.mapper.MapperUtils;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -106,26 +105,28 @@ public class BrowseRequestMapper extends AbstractBookmarkableMapper
     {
         Url url = super.mapHandler(requestHandler);
 
-        if (url == null && requestHandler instanceof ListenerInterfaceRequestHandler && this.getRecreateMountedPagesAfterExpiry()) {
-            ListenerInterfaceRequestHandler handler = (ListenerInterfaceRequestHandler) requestHandler;
+        /* TODO: Recheck */
+        if (url == null && requestHandler instanceof ListenerRequestHandler && this.getRecreateMountedPagesAfterExpiry()) {
+            ListenerRequestHandler handler = (ListenerRequestHandler) requestHandler;
             IRequestablePage page = handler.getPage();
             if (this.checkPageInstance(page)) {
-                String componentPath = handler.getComponentPath();
-                RequestListenerInterface listenerInterface = handler.getListenerInterface();
 
                 Integer renderCount = null;
-                if (listenerInterface.isIncludeRenderCount()) {
-                    renderCount = page.getRenderCount();
+                if (handler.includeRenderCount()) {
+                    renderCount = handler.getRenderCount();
                 }
 
                 PageInfo pageInfo = this.getPageInfo(handler);
-                ComponentInfo componentInfo = new ComponentInfo(renderCount,
-                        this.requestListenerInterfaceToString(listenerInterface), componentPath,
+                ComponentInfo componentInfo = new ComponentInfo(
+                        renderCount,
+                        handler.getComponentPath(),
                         handler.getBehaviorIndex()
                 );
                 PageComponentInfo pageComponentInfo = new PageComponentInfo(pageInfo, componentInfo);
                 PageParameters parameters = new PageParameters(page.getPageParameters());
-                UrlInfo urlInfo = new UrlInfo(pageComponentInfo, page.getClass(),
+                UrlInfo urlInfo = new UrlInfo(
+                        pageComponentInfo,
+                        page.getClass(),
                         parameters.mergeWith(handler.getPageParameters())
                 );
                 url = this.buildUrl(urlInfo);

@@ -11,7 +11,7 @@ import org.apache.wicket.model.StringResourceModel;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Render(Role.ADMIN)
-public class ConfigurationPageItem extends BookmarkablePageLinkItem
+public class ConfigurationPageItem extends BookmarkablePageLinkItem<Void>
 {
     public <C extends Page> ConfigurationPageItem(String id)
     {

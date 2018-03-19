@@ -7,11 +7,12 @@ import net.dontdrinkandroot.gitki.wicket.component.item.AdminDropdownItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.HistoryPageItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.SignInPageLinkItem;
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem;
+import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav;
-import net.dontdrinkandroot.wicket.bootstrap.css.NavbarAlignment;
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition;
+import net.dontdrinkandroot.wicket.bootstrap.css.Spacing;
 import net.dontdrinkandroot.wicket.util.NonStatelessPrintingVisitor;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -61,7 +62,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
             {
                 super.populateCollapseItems(collapseItemView);
 
-                RepeatingNavbarNav navbarLeft = new RepeatingNavbarNav(collapseItemView.newChildId())
+                RepeatingNavbarNav<Void> navbarLeft = new RepeatingNavbarNav<Void>(collapseItemView.newChildId())
                 {
                     @Override
                     protected void populateItems(RepeatingView itemView)
@@ -72,7 +73,7 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
                 };
                 collapseItemView.add(navbarLeft);
 
-                RepeatingNavbarNav navbarRight = new RepeatingNavbarNav(collapseItemView.newChildId())
+                RepeatingNavbarNav<Void> navbarRight = new RepeatingNavbarNav<Void>(collapseItemView.newChildId())
                 {
                     @Override
                     protected void populateItems(RepeatingView itemView)
@@ -81,7 +82,11 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
                         DecoratorPage.this.populateNavbarRightItems(itemView);
                     }
                 };
-                navbarRight.setAlignment(NavbarAlignment.RIGHT);
+                navbarRight.add(new CssClassAppender(new Spacing(
+                        Spacing.Property.MARGIN,
+                        Spacing.Side.RIGHT,
+                        Spacing.Size.AUTO
+                )));
                 collapseItemView.add(navbarRight);
             }
         };

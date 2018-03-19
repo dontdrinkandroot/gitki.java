@@ -16,7 +16,7 @@ import org.apache.wicket.model.Model;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Render(Role.COMMITTER)
-public class RemoveFileModalItem extends AjaxLinkItem
+public class RemoveFileModalItem extends AjaxLinkItem<Void>
 {
     private final IModel<FilePath> pathModel;
 

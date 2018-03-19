@@ -25,7 +25,7 @@ public class FeedbackTestPage extends DecoratorPage<Void>
 
         this.getSession().info("This is an initial message");
 
-        AjaxButton infoButton = new AjaxButton("info")
+        AjaxButton<Void> infoButton = new AjaxButton<Void>("info")
         {
             @Override
             public void onClick(AjaxRequestTarget target)
@@ -36,7 +36,7 @@ public class FeedbackTestPage extends DecoratorPage<Void>
         infoButton.setButtonStyle(ButtonStyle.INFO);
         this.add(infoButton);
 
-        AjaxButton successButton = new AjaxButton("success")
+        AjaxButton<Void> successButton = new AjaxButton<Void>("success")
         {
             @Override
             public void onClick(AjaxRequestTarget target)
@@ -47,7 +47,7 @@ public class FeedbackTestPage extends DecoratorPage<Void>
         successButton.setButtonStyle(ButtonStyle.SUCCESS);
         this.add(successButton);
 
-        AjaxButton warnButton = new AjaxButton("warn")
+        AjaxButton<Void> warnButton = new AjaxButton<Void>("warn")
         {
             @Override
             public void onClick(AjaxRequestTarget target)
@@ -58,7 +58,7 @@ public class FeedbackTestPage extends DecoratorPage<Void>
         warnButton.setButtonStyle(ButtonStyle.WARNING);
         this.add(warnButton);
 
-        AjaxButton errorButton = new AjaxButton("error")
+        AjaxButton<Void> errorButton = new AjaxButton<Void>("error")
         {
             @Override
             public void onClick(AjaxRequestTarget target)

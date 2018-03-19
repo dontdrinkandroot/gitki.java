@@ -9,7 +9,7 @@ import org.apache.wicket.model.StringResourceModel;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-public class SignoutItem extends AjaxLinkItem
+public class SignoutItem extends AjaxLinkItem<Void>
 {
     public SignoutItem(String id)
     {

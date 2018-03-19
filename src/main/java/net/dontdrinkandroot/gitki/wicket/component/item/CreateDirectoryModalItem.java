@@ -16,7 +16,7 @@ import org.apache.wicket.model.StringResourceModel;
  * @author Philip Washington Sorst <philip@sorst.net>
  */
 @Render(Role.COMMITTER)
-public class CreateDirectoryModalItem extends AjaxLinkItem
+public class CreateDirectoryModalItem extends AjaxLinkItem<Void>
 {
     private final IModel<DirectoryPath> pathModel;
 

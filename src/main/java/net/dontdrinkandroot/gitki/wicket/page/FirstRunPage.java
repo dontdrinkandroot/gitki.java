@@ -56,7 +56,7 @@ public class FirstRunPage extends DecoratorPage<User>
     {
         super.onInitialize();
 
-        RepeatingAjaxForm form = new RepeatingAjaxForm("form")
+        RepeatingAjaxForm<Void> form = new RepeatingAjaxForm<Void>("form")
         {
             @Override
             protected void populateFormGroups(RepeatingView formGroupView)

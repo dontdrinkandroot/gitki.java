@@ -80,9 +80,9 @@ public class TextEditPage extends EditPage
         AjaxSubmitButton submitButton = new AjaxSubmitButton("submit", Model.of("Save"))
         {
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+            protected void onSubmit(AjaxRequestTarget target)
             {
-                super.onSubmit(target, form);
+                super.onSubmit(target);
                 try {
                     TextEditPage.this.getWikiService()
                             .saveAndUnlock(
@@ -97,9 +97,9 @@ public class TextEditPage extends EditPage
             }
 
             @Override
-            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
+            protected void onAfterSubmit(AjaxRequestTarget target)
             {
-                super.onAfterSubmit(target, form);
+                super.onAfterSubmit(target);
                 this.setResponsePage(
                         SimpleViewPage.class,
                         PageParameterUtils.from(TextEditPage.this.getModelObject())

@@ -35,7 +35,7 @@ public class UserActionColumn extends AbstractColumn<User, String>
         };
         editButton.add(new IconBehavior(FontAwesomeIconClass.PENCIL.createIcon().setFixedWidth(true)));
         editButton.setBody(Model.of(""));
-        editButton.setButtonSize(ButtonSize.EXTRA_SMALL);
+        editButton.setButtonSize(ButtonSize.SMALL);
         cellItem.add(editButton);
     }
 }

@@ -1,10 +1,8 @@
 package net.dontdrinkandroot.gitki.wicket.page;
 
-import net.dontdrinkandroot.gitki.wicket.headeritem.StyleCssHeaderItem;
 import net.dontdrinkandroot.wicket.bootstrap.headeritem.FontAwesomeCssHeaderItem;
 import net.dontdrinkandroot.wicket.bootstrap.page.BootstrapPage;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
@@ -38,11 +36,11 @@ public abstract class ScaffoldPage<T> extends BootstrapPage<T>
         return new Label(id, this.titleModel);
     }
 
-    @Override
-    protected HeaderItem getBootstrapCssHeaderItem()
-    {
-        return new StyleCssHeaderItem();
-    }
+    //    @Override
+    //    protected HeaderItem getBootstrapCssHeaderItem()
+    //    {
+    //        return new StyleCssHeaderItem();
+    //    }
 
     @Override
     public void renderHead(IHeaderResponse response)
