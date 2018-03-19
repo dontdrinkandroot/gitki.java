@@ -1,0 +1,8 @@
+$enable-rounded: false;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Oxygen, Ubuntu, 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+@import "../lib/bootstrap/scss/bootstrap.scss";
+
+body {
+  padding-top: 56px;
+}

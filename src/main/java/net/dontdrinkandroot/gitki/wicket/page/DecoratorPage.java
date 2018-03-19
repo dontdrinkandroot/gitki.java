@@ -11,6 +11,7 @@ import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav;
+import net.dontdrinkandroot.wicket.bootstrap.css.BackgroundColor;
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition;
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing;
 import net.dontdrinkandroot.wicket.util.NonStatelessPrintingVisitor;
@@ -71,6 +72,11 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
                         DecoratorPage.this.populateNavbarLeftItems(itemView);
                     }
                 };
+                navbarLeft.add(new CssClassAppender(new Spacing(
+                        Spacing.Property.MARGIN,
+                        Spacing.Side.RIGHT,
+                        Spacing.Size.AUTO
+                )));
                 collapseItemView.add(navbarLeft);
 
                 RepeatingNavbarNav<Void> navbarRight = new RepeatingNavbarNav<Void>(collapseItemView.newChildId())
@@ -82,14 +88,10 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
                         DecoratorPage.this.populateNavbarRightItems(itemView);
                     }
                 };
-                navbarRight.add(new CssClassAppender(new Spacing(
-                        Spacing.Property.MARGIN,
-                        Spacing.Side.RIGHT,
-                        Spacing.Size.AUTO
-                )));
                 collapseItemView.add(navbarRight);
             }
         };
+        navbar.add(new CssClassAppender(BackgroundColor.LIGHT));
         navbar.setPosition(NavbarPosition.FIXED_TOP);
         this.add(navbar);
 

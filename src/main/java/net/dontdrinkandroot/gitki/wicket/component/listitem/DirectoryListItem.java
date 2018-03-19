@@ -10,6 +10,7 @@ import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage;
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils;
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender;
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize;
+import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle;
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment;
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass;
 import net.dontdrinkandroot.wicket.model.java.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel;
@@ -44,6 +45,7 @@ public class DirectoryListItem extends GenericPanel<DirectoryPath>
         actionsDropDownButton.getIconBehavior()
                 .setAppendIcon(FontAwesomeIconClass.FOLDER.createIcon().setFixedWidth(true));
         actionsDropDownButton.setButtonSize(ButtonSize.SMALL);
+        actionsDropDownButton.setButtonStyle(ButtonStyle.OUTLINE_SECONDARY);
         actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT);
         this.add(actionsDropDownButton);
 
