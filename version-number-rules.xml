@@ -8,11 +8,6 @@
         <ignoreVersion type="regex">.*[aA]lpha.*</ignoreVersion>
     </ignoreVersions>
     <rules>
-        <rule groupId="com.giffing.wicket.spring.boot.starter" artifactId="wicket-spring-boot-starter">
-            <ignoreVersions>
-                <ignoreVersion type="regex">2\..*</ignoreVersion>
-            </ignoreVersions>
-        </rule>
         <rule groupId="org.apache.wicket">
             <ignoreVersions>
                 <ignoreVersion type="regex">.*-M[0-9]+</ignoreVersion>

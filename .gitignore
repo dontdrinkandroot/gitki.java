@@ -5,3 +5,5 @@
 /.bowerrc
 /bower.json
 /bower
+*.iml
+/.idea/
