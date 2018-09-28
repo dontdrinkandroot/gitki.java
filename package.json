@@ -1,11 +1,11 @@
 {
-  "name": "gitki.java",
-  "version": "0.1.0",
-  "description": "Node dependencies for Gitki",
-  "author": "Philip Washington Sorst <philip@sorst.net>",
-  "license": "Apache-2",
-  "private": true,
-  "dependencies": {
-    "bootstrap": "^4.0.0"
-  }
+    "name": "gitki.java",
+    "version": "0.1.0",
+    "description": "Node dependencies for Gitki",
+    "author": "Philip Washington Sorst <philip@sorst.net>",
+    "license": "Apache-2",
+    "private": true,
+    "dependencies": {
+        "bootstrap": "^4.0.0"
+    }
 }

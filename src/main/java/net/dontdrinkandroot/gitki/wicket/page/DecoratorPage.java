@@ -13,6 +13,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar;
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav;
 import net.dontdrinkandroot.wicket.bootstrap.css.BackgroundColor;
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition;
+import net.dontdrinkandroot.wicket.bootstrap.css.NavbarStyle;
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing;
 import net.dontdrinkandroot.wicket.util.NonStatelessPrintingVisitor;
 import org.apache.wicket.Component;
@@ -28,8 +29,6 @@ import org.apache.wicket.util.visit.Visits;
 public abstract class DecoratorPage<T> extends ScaffoldPage<T>
 {
     public static final String MODAL_ID = "modal";
-
-    private IModel<String> titleModel;
 
     public DecoratorPage()
     {
@@ -91,7 +90,8 @@ public abstract class DecoratorPage<T> extends ScaffoldPage<T>
                 collapseItemView.add(navbarRight);
             }
         };
-        navbar.add(new CssClassAppender(BackgroundColor.LIGHT));
+        navbar.setStyle(NavbarStyle.DARK);
+        navbar.add(new CssClassAppender(BackgroundColor.DARK));
         navbar.setPosition(NavbarPosition.FIXED_TOP);
         this.add(navbar);
 
