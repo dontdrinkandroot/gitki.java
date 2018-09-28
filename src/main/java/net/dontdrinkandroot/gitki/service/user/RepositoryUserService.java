@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Iterator;
+import java.util.Optional;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -37,9 +38,9 @@ public class RepositoryUserService implements UserService
 
     @Override
     @Transactional(readOnly = true)
-    public User find(Long id)
+    public Optional<User> find(Long id)
     {
-        return this.userRepository.findOne(id);
+        return this.userRepository.findById(id);
     }
 
     @Override
@@ -96,8 +97,7 @@ public class RepositoryUserService implements UserService
     @Transactional
     public void removeAll()
     {
-        Iterable<User> users = this.userRepository.findAll();
-        this.userRepository.delete(users);
+        this.userRepository.deleteAll();
     }
 
     @Override

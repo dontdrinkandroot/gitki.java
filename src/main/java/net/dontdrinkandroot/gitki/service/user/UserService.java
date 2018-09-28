@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -22,5 +23,5 @@ public interface UserService extends UserDetailsService
 
     void remove(User user);
 
-    User find(Long id);
+    Optional<User> find(Long id);
 }

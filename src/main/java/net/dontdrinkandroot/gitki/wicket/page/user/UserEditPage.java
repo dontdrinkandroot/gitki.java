@@ -15,6 +15,8 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import java.util.Optional;
+
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
@@ -28,8 +30,12 @@ public class UserEditPage extends UserPage<User>
     {
         super(parameters);
 
-        User user = this.userService.find(GitkiWebSession.get().getUser().getId());
-        this.setModel(Model.of(user));
+        Optional<User> user = this.userService.find(GitkiWebSession.get().getUser().getId());
+        if (user.isPresent()) {
+            this.setModel(Model.of(user.get()));
+        } else {
+            throw new RuntimeException("The user of the session could not be found in the database");
+        }
     }
 
     public UserEditPage(IModel<User> model)

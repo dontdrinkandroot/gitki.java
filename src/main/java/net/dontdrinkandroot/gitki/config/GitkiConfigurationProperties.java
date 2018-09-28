@@ -3,11 +3,11 @@ package net.dontdrinkandroot.gitki.config;
 import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel;
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage;
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
