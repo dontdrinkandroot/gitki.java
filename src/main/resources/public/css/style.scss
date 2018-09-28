@@ -1,7 +1,13 @@
 $enable-rounded: false;
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Oxygen, Ubuntu, 'Droid Sans', 'Helvetica Neue', sans-serif;
 
+$fa-font-path: '../lib/@fortawesome/fontawesome-free/webfonts';
+
 @import "../lib/bootstrap/scss/bootstrap.scss";
+@import "../lib/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../lib/@fortawesome/fontawesome-free/scss/brands.scss";
+@import "../lib/@fortawesome/fontawesome-free/scss/regular.scss";
+@import "../lib/@fortawesome/fontawesome-free/scss/solid.scss";
 
 html {
     font-size: 14px;
@@ -20,4 +26,12 @@ body {
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
+}
+
+.caret-off::before {
+    display: none;
+}
+
+.caret-off::after {
+    display: none;
 }

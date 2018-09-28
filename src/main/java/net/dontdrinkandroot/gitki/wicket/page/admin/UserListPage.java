@@ -60,6 +60,7 @@ public class UserListPage extends UserPage<List<User>>
         table.addTopToolbar(new HeadersToolbar<>(table, dataProvider));
         table.add(new CssClassAppender(BootstrapCssClass.TABLE));
         table.add(new CssClassAppender(TableStyle.STRIPED));
+        table.add(new CssClassAppender(TableStyle.SMALL));
         this.add(table);
     }
 }

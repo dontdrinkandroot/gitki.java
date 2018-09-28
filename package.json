@@ -6,6 +6,7 @@
     "license": "Apache-2",
     "private": true,
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.3.1",
         "bootstrap": "^4.0.0"
     }
 }

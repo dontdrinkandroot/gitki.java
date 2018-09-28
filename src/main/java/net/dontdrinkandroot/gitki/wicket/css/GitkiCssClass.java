@@ -7,10 +7,11 @@ import net.dontdrinkandroot.wicket.css.CssClass;
  */
 public enum GitkiCssClass implements CssClass
 {
-    FILE("file"),
+    CARET_OFF("caret-off"),
     DIRECTORY("directory"),
-    LOCK_INFO("lock-info"),
-    FLASH_MESSAGES("flash-messages");
+    FILE("file"),
+    FLASH_MESSAGES("flash-messages"),
+    LOCK_INFO("lock-info");
 
     private String classString;
 
