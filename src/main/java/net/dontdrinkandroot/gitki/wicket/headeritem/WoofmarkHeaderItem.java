@@ -23,10 +23,7 @@ public class WoofmarkHeaderItem extends JavaScriptReferenceHeaderItem
                                 .getContextPath() + "/lib/woofmark/dist/woofmark.js")
                 ),
                 null,
-                "woofmark.js",
-                false,
-                null,
-                null
+                "woofmark.js"
         );
     }
 

@@ -10,8 +10,7 @@ import org.apache.wicket.request.resource.UrlResourceReference;
  */
 public class DomadorHeaderItem extends JavaScriptReferenceHeaderItem
 {
-    public DomadorHeaderItem()
-    {
+    public DomadorHeaderItem() {
         super(
                 new UrlResourceReference(
                         Url.parse(GitkiWebApplication.get()
@@ -19,10 +18,7 @@ public class DomadorHeaderItem extends JavaScriptReferenceHeaderItem
                                 .getContextPath() + "/lib/domador/dist/domador.min.js")
                 ),
                 null,
-                "domador.js",
-                false,
-                null,
-                null
+                "domador.js"
         );
     }
 }

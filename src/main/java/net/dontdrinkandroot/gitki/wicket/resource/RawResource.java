@@ -12,14 +12,13 @@ import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.resource.AbstractResource;
 import org.apache.wicket.request.resource.PartWriterCallback;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
-import org.apache.wicket.util.time.Time;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.Duration;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
@@ -31,8 +30,7 @@ public class RawResource extends AbstractResource
     private GitService gitService;
 
     @Override
-    protected ResourceResponse newResourceResponse(Attributes attributes)
-    {
+    protected ResourceResponse newResourceResponse(Attributes attributes) {
         FilePath filePath = PageParameterUtils.toFilePath(attributes.getParameters());
         Path fileSystemPath = null;
         try {
@@ -49,8 +47,8 @@ public class RawResource extends AbstractResource
             resourceResponse.setContentType(this.getMimeType(fileSystemPath));
             resourceResponse.setAcceptRange(ContentRangeType.BYTES);
             resourceResponse.setContentLength(size);
-            resourceResponse.setLastModified(Time.millis(fileAttributes.lastModifiedTime().toMillis()));
-            resourceResponse.setCacheDuration(Duration.milliseconds(1));
+            resourceResponse.setLastModified(fileAttributes.lastModifiedTime().toInstant());
+            resourceResponse.setCacheDuration(Duration.ofMillis(1));
             RequestCycle cycle = RequestCycle.get();
             Long startbyte = cycle.getMetaData(CONTENT_RANGE_STARTBYTE);
             Long endbyte = cycle.getMetaData(CONTENT_RANGE_ENDBYTE);
@@ -63,8 +61,7 @@ public class RawResource extends AbstractResource
         }
     }
 
-    protected String getMimeType(Path path) throws IOException
-    {
+    protected String getMimeType(Path path) throws IOException {
         String mimeType = null;
 
         if (Application.exists()) {

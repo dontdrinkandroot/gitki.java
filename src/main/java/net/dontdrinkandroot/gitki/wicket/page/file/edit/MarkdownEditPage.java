@@ -20,17 +20,16 @@ import org.apache.wicket.ajax.attributes.ThrottlingSettings;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Collections;
 
 /**
@@ -74,14 +73,11 @@ public class MarkdownEditPage extends EditPage
         }
         this.commitMessageModel = Model.of("Editing " + this.getModelObject().toAbsoluteString());
 
-        Label preview = new Label("preview", new AbstractReadOnlyModel<String>()
-        {
-            @Override
-            public String getObject()
-            {
-                return MarkdownEditPage.this.markdownService.parseToHtml(MarkdownEditPage.this.contentModel.getObject());
-            }
-        });
+        Label preview = new Label(
+                "preview",
+                (IModel<Object>) () -> MarkdownEditPage.this.markdownService.parseToHtml(MarkdownEditPage.this.contentModel
+                        .getObject())
+        );
         preview.setEscapeModelStrings(false);
         preview.setOutputMarkupId(true);
         this.add(preview);
@@ -100,7 +96,7 @@ public class MarkdownEditPage extends EditPage
                 super.updateAjaxAttributes(attributes);
                 attributes.setThrottlingSettings(new ThrottlingSettings(
                         "markdownpreview",
-                        Duration.milliseconds(250),
+                        Duration.ofMillis(250),
                         true
                 ));
             }

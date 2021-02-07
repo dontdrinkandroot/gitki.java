@@ -19,10 +19,7 @@ public class MegamarkHeaderItem extends JavaScriptReferenceHeaderItem
                                 .getContextPath() + "/lib/megamark/dist/megamark.min.js")
                 ),
                 null,
-                "megamark.js",
-                false,
-                null,
-                null
+                "megamark.js"
         );
     }
 }
