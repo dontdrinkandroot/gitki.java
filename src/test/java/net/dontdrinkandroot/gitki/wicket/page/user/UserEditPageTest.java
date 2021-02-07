@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.page.user;
 
 import net.dontdrinkandroot.gitki.test.AbstractWicketTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Philip Washington Sorst <philip@sorst.net>

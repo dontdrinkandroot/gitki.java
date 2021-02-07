@@ -8,9 +8,9 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class GitTest
 {
     public static final String REPO_PATH = "/tmp/gitki_test_repo/";
 
-    @Before
+    @BeforeEach
     public void before() throws IOException
     {
         FileUtils.deleteDirectory(new File(REPO_PATH));
@@ -43,12 +43,12 @@ public class GitTest
         git.commit().setMessage("Test message").setAuthor("Test Author", "test@example.com").call();
 
         List<RevCommit> commits = IterableUtils.toList(git.log().call());
-        Assert.assertEquals(1, commits.size());
+        Assertions.assertEquals(1, commits.size());
 
         RevCommit revCommit = commits.get(0);
-        Assert.assertEquals("Test message", revCommit.getFullMessage());
+        Assertions.assertEquals("Test message", revCommit.getFullMessage());
         PersonIdent author = revCommit.getAuthorIdent();
-        Assert.assertEquals("Test Author", author.getName());
-        Assert.assertEquals("test@example.com", author.getEmailAddress());
+        Assertions.assertEquals("Test Author", author.getName());
+        Assertions.assertEquals("test@example.com", author.getEmailAddress());
     }
 }

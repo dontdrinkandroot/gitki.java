@@ -5,9 +5,9 @@ import net.dontdrinkandroot.gitki.test.AbstractWicketTest;
 import net.dontdrinkandroot.gitki.wicket.GitkiWebSession;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class MarkdownEditPageTest extends AbstractWicketTest
 {
-    @Before
+    @BeforeEach
     public void initRepo() throws IOException, GitAPIException
     {
         this.logger.info("Initializing repository");
@@ -49,6 +49,6 @@ public class MarkdownEditPageTest extends AbstractWicketTest
         GitkiWebSession.get().signIn(this.userCommitter);
         this.getWicketTester()
                 .startPage(MarkdownEditPage.class, new PageParameters().set(0, "test.md").set("action", "edit"));
-        Assert.assertEquals(423, this.getWicketTester().getLastResponse().getStatus());
+        Assertions.assertEquals(423, this.getWicketTester().getLastResponse().getStatus());
     }
 }

@@ -4,8 +4,8 @@ import net.dontdrinkandroot.gitki.model.FilePath;
 import net.dontdrinkandroot.gitki.model.GitUser;
 import net.dontdrinkandroot.gitki.model.LockInfo;
 import net.dontdrinkandroot.gitki.model.SimpleGitUser;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
@@ -28,15 +28,15 @@ public class MapLockServiceTest
         try {
             lockService.lock(path1, user1);
         } catch (LockedException e) {
-            Assert.fail("Should not be locked");
+            Assertions.fail("Should not be locked");
         }
 
         LockInfo lockInfo1 = lockService.check(path1);
         Instant lockInfo1Expiry = lockInfo1.getExpiry();
-        Assert.assertNotNull(lockInfo1);
-        Assert.assertEquals(user1, lockInfo1.getUser());
-        Assert.assertEquals(path1, lockInfo1.getPath());
-        Assert.assertNotNull(lockInfo1.getExpiry());
+        Assertions.assertNotNull(lockInfo1);
+        Assertions.assertEquals(user1, lockInfo1.getUser());
+        Assertions.assertEquals(path1, lockInfo1.getPath());
+        Assertions.assertNotNull(lockInfo1.getExpiry());
 
         try {
             try {
@@ -46,38 +46,38 @@ public class MapLockServiceTest
             }
             LockInfo lockInfo2 = lockService.lock(path1, user1);
             Instant newExpiry = lockInfo2.getExpiry();
-            Assert.assertTrue(newExpiry.isAfter(lockInfo1Expiry));
+            Assertions.assertTrue(newExpiry.isAfter(lockInfo1Expiry));
         } catch (LockedException e) {
-            Assert.fail("Should not be locked");
+            Assertions.fail("Should not be locked");
         }
 
         try {
             lockService.lock(path1, user2);
-            Assert.fail("Should be locked");
+            Assertions.fail("Should be locked");
         } catch (LockedException e) {
             /* Expected */
         }
 
         try {
             lockService.release(path1, user2);
-            Assert.fail("Should be locked");
+            Assertions.fail("Should be locked");
         } catch (LockedException e) {
             /* Expected */
         }
 
         try {
             lockService.release(path1, user1);
-            Assert.assertNull(lockService.check(path1));
+            Assertions.assertNull(lockService.check(path1));
         } catch (LockedException e) {
-            Assert.fail("Should not be locked");
+            Assertions.fail("Should not be locked");
         }
 
         try {
             LockInfo lockInfo3 = lockService.lock(path2, user2);
             lockInfo3.setExpiry(Instant.now().minusSeconds(1));
-            Assert.assertNull(lockService.check(path2));
+            Assertions.assertNull(lockService.check(path2));
         } catch (LockedException e) {
-            Assert.fail("Should not be locked");
+            Assertions.fail("Should not be locked");
         }
     }
 }

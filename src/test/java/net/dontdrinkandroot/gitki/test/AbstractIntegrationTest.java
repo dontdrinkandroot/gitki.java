@@ -1,5 +1,6 @@
 package net.dontdrinkandroot.gitki.test;
 
+import net.dontdrinkandroot.gitki.Application;
 import net.dontdrinkandroot.gitki.model.Role;
 import net.dontdrinkandroot.gitki.model.User;
 import net.dontdrinkandroot.gitki.service.configuration.DefaultConfigurationService;
@@ -8,8 +9,7 @@ import net.dontdrinkandroot.gitki.service.lock.LockService;
 import net.dontdrinkandroot.gitki.service.user.UserService;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +28,8 @@ import java.util.Comparator;
 /**
  * @author Philip Washington Sorst <philip@sorst.net>
  */
-@RunWith(SpringRunner.class)
 @ActiveProfiles("test")
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 public abstract class AbstractIntegrationTest
 {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -54,7 +52,7 @@ public abstract class AbstractIntegrationTest
     @Autowired
     protected DefaultConfigurationService configurationService;
 
-    @Before
+    @BeforeEach
     public void initUsers()
     {
         this.logger.info("Initializing Users");
@@ -75,7 +73,7 @@ public abstract class AbstractIntegrationTest
         this.userAdmin = this.userService.save(user, "admin");
     }
 
-    @Before
+    @BeforeEach
     public void resetRepository() throws IOException
     {
         this.logger.info("Resetting repository");

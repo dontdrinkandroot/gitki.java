@@ -66,7 +66,7 @@ public class RepositoryUserService implements UserService
     @Transactional(readOnly = true)
     public Iterator<User> find(long first, long count, String property, boolean ascending)
     {
-        PageRequest pageRequest = new PageRequest(
+        PageRequest pageRequest = PageRequest.of(
                 Math.toIntExact(first / count),
                 Math.toIntExact(count),
                 ascending ? Sort.Direction.ASC : Sort.Direction.DESC,

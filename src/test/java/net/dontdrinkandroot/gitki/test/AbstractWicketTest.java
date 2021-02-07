@@ -9,8 +9,8 @@ import org.apache.wicket.Page;
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,7 +25,7 @@ public abstract class AbstractWicketTest extends AbstractIntegrationTest
 
     private WicketTester wicketTester;
 
-    @Before
+    @BeforeEach
     public void before()
     {
         this.wicketTester = new WicketTester(this.wicketApplication);
@@ -67,7 +67,7 @@ public abstract class AbstractWicketTest extends AbstractIntegrationTest
         }
         try {
             this.startPage(pageClass, parameters);
-            Assert.fail("UnauthorizedInstantiationException expected");
+            Assertions.fail("UnauthorizedInstantiationException expected");
         } catch (UnauthorizedInstantiationException e) {
             /* Expected */
         }
