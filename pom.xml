@@ -69,7 +69,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Dependency versions -->
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <wicket.version>8.1.0</wicket.version>
         <net.dontdrinkandroot.wicket.version>0.7.0-SNAPSHOT</net.dontdrinkandroot.wicket.version>
         <com.atlassian.commonmark.version>0.10.0</com.atlassian.commonmark.version>
