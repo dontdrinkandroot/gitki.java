@@ -65,12 +65,13 @@
     <properties>
 
         <!-- Build properties -->
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Dependency versions -->
-        <java.version>11</java.version>
         <wicket.version>9.2.0</wicket.version>
+        <kotlin.version>1.4.21</kotlin.version>
         <net.dontdrinkandroot.wicket.version>0.8.0-SNAPSHOT</net.dontdrinkandroot.wicket.version>
         <com.atlassian.commonmark.version>0.10.0</com.atlassian.commonmark.version>
         <org.eclipse.jgit.version>4.8.0.201706111038-r</org.eclipse.jgit.version>
@@ -86,7 +87,44 @@
     </properties>
 
     <build>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+
         <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <configuration>
+                    <args>
+                        <arg>-Xjsr305=strict</arg>
+                    </args>
+                    <compilerPlugins>
+                        <plugin>spring</plugin>
+                        <plugin>no-arg</plugin>
+                    </compilerPlugins>
+                    <pluginOptions>
+                        <!--                        <option>no-arg:annotation=org.neo4j.ogm.annotation.NodeEntity</option>-->
+                    </pluginOptions>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -172,12 +210,12 @@
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>src/main/java</directory>
+                <directory>src/main/kotlin</directory>
                 <includes>
                     <include>**</include>
                 </includes>
                 <excludes>
-                    <exclude>**/*.java</exclude>
+                    <exclude>**/*.kt</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -214,6 +252,18 @@
     </repositories>
 
     <dependencies>
+
+        <!-- Kotlin -->
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+        </dependency>
 
         <!-- Spring Boot -->
 
