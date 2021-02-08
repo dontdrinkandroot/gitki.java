@@ -7,9 +7,6 @@ import net.dontdrinkandroot.wicket.model.AbstractChainedInjectedLoadableDetachab
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-/**
- * @author Philip Washington Sorst <philip@sorst.net>
- */
 public class FilePathLockInfoModel extends AbstractChainedInjectedLoadableDetachableModel<FilePath, LockInfo>
 {
     @SpringBean

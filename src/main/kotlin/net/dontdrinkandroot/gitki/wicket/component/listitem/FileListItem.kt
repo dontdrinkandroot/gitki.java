@@ -14,9 +14,9 @@ import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
-import net.dontdrinkandroot.wicket.model.java.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
-import net.dontdrinkandroot.wicket.model.java.nio.file.attribute.BasicFileAttributesSizeModel
-import net.dontdrinkandroot.wicket.model.java.nio.file.attribute.FileTimeInstantModel
+import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
+import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesSizeModel
+import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.link.BookmarkablePageLink
 import org.apache.wicket.markup.html.panel.GenericPanel
