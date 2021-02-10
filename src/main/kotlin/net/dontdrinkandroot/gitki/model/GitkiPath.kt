@@ -9,11 +9,16 @@ import java.nio.file.Path as NioPath
 interface GitkiPath : Comparable<GitkiPath>, Serializable {
 
     val root: Boolean
+
     val parent: DirectoryPath?
+
     val directoryPath: Boolean
+
     val isFilePath: Boolean
         get() = !directoryPath
+
     val name: String?
+
     val absoluteString: String
         get() = AbstractPath.SEPARATOR + this.toString()
 

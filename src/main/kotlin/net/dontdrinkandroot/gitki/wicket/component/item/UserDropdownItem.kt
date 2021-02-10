@@ -14,9 +14,10 @@ class UserDropdownItem(id: String) : RepeatingDropdownItem<Any>(id, CurrentUserF
 
     override fun populateItems(itemView: RepeatingView) {
         itemView.add(
-            BookmarkablePageLinkItem<Void, UserEditPage>(
-                itemView.newChildId(), StringResourceModel("gitki.profile"),
-                UserEditPage::class.java
+            BookmarkablePageLinkItem<Void>(
+                itemView.newChildId(),
+                labelModel = StringResourceModel("gitki.profile"),
+                pageClass = UserEditPage::class.java
             )
         )
         itemView.add(SignoutItem(itemView.newChildId()))

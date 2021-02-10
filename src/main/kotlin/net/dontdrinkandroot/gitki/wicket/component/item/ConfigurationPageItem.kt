@@ -8,4 +8,8 @@ import org.apache.wicket.model.StringResourceModel
 
 @Render(Role.ADMIN)
 class ConfigurationPageItem(id: String) :
-    BookmarkablePageLinkItem<Void>(id, StringResourceModel("gitki.configuration"), ConfigurationPage::class.java)
+    BookmarkablePageLinkItem<Void>(
+        id,
+        labelModel = StringResourceModel("gitki.configuration"),
+        pageClass = ConfigurationPage::class.java
+    )

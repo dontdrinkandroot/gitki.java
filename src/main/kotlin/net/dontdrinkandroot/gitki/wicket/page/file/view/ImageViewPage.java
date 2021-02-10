@@ -7,9 +7,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.SharedResourceReference;
 
-/**
- * @author Philip Washington Sorst <philip@sorst.net>
- */
 public class ImageViewPage extends ViewPage
 {
     public ImageViewPage(PageParameters parameters) {

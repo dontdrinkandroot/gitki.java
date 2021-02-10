@@ -29,9 +29,7 @@ class TextEditPage : EditPage {
 
     constructor(model: IModel<FilePath>) : super(model)
 
-    override fun createTitleModel(): IModel<String> {
-        return AbstractPathNameModel(this.model)
-    }
+    override fun createTitleModel() = AbstractPathNameModel(this.model)
 
     override fun onInitialize() {
         super.onInitialize()

@@ -9,8 +9,6 @@ import net.dontdrinkandroot.gitki.wicket.css.GitkiCssClass
 import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.model.FilePathLockInfoModel
 import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel
-import net.dontdrinkandroot.gitki.wicket.model.lockinfo.LockInfoExpiryModel
-import net.dontdrinkandroot.gitki.wicket.model.lockinfo.LockInfoUserModel
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
@@ -18,6 +16,7 @@ import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
 import net.dontdrinkandroot.wicket.bootstrap.css.TextAlignment
 import net.dontdrinkandroot.wicket.model.ToStringModel
+import net.dontdrinkandroot.wicket.model.property
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.StringResourceModel
@@ -55,8 +54,8 @@ open class EditPage : FilePage {
         super.onInitialize()
         val lockInfoModel: IModel<LockInfo> = FilePathLockInfoModel(this.model)
         val lockLabelModel = StringResourceModel("gitki.locked").setParameters(
-            ToStringModel(LockInfoUserModel(lockInfoModel)),
-            TemporalAccessorStringModel(LockInfoExpiryModel(lockInfoModel))
+            ToStringModel(lockInfoModel.property(LockInfo::user)),
+            TemporalAccessorStringModel(lockInfoModel.property(LockInfo::expiry))
         )
         lockLabel = Label("lockInfo", lockLabelModel)
         lockLabel.outputMarkupId = true

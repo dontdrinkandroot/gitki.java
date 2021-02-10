@@ -17,17 +17,17 @@ class AdminDropdownItem(id: String) : RepeatingDropdownItem<Void>(id, StringReso
         itemView.add(UserListPageItem(itemView.newChildId()))
         itemView.add(ConfigurationPageItem(itemView.newChildId()))
         itemView.add(
-            BookmarkablePageLinkItem<Void, LockListPage>(
+            BookmarkablePageLinkItem<Void>(
                 itemView.newChildId(),
-                StringResourceModel("gitki.locks"),
-                LockListPage::class.java
+                labelModel = StringResourceModel("gitki.locks"),
+                pageClass = LockListPage::class.java
             )
         )
         itemView.add(
-            BookmarkablePageLinkItem<Void, ErrorTestPage>(
+            BookmarkablePageLinkItem<Void>(
                 itemView.newChildId(),
-                Model.of("Errors"),
-                ErrorTestPage::class.java
+                labelModel = Model.of("Errors"),
+                pageClass = ErrorTestPage::class.java
             )
         )
     }

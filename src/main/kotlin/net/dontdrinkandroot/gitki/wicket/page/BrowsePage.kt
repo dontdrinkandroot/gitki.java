@@ -3,7 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.page
 import net.dontdrinkandroot.gitki.model.GitkiPath
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.wicket.component.PathBreadcrumb
-import net.dontdrinkandroot.gitki.wicket.model.AbstractPathAbsoluteStringModel
+import net.dontdrinkandroot.wicket.model.chain
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
@@ -18,9 +18,7 @@ open class BrowsePage<T : GitkiPath> : DecoratorPage<T> {
 
     constructor(model: IModel<T>) : super(model)
 
-    override fun createTitleModel(): IModel<String> {
-        return AbstractPathAbsoluteStringModel(this.model)
-    }
+    override fun createTitleModel() = this.model.chain({ it?.absoluteString })
 
     override fun onInitialize() {
         super.onInitialize()
@@ -30,7 +28,7 @@ open class BrowsePage<T : GitkiPath> : DecoratorPage<T> {
         this.add(PathBreadcrumb("breadcrumb", model))
     }
 
-    protected open fun populatePrimaryButtons(view: RepeatingView?) {
+    protected open fun populatePrimaryButtons(view: RepeatingView) {
         /* Hook */
     }
 }

@@ -8,4 +8,8 @@ import org.apache.wicket.model.StringResourceModel
 
 @Render(Role.ADMIN)
 class UserListPageItem(id: String) :
-    BookmarkablePageLinkItem<Any>(id, StringResourceModel("gitki.users"), UserListPage::class.java)
+    BookmarkablePageLinkItem<Any>(
+        id,
+        labelModel = StringResourceModel("gitki.users"),
+        pageClass = UserListPage::class.java
+    )

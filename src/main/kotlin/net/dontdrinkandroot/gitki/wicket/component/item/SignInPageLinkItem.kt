@@ -6,7 +6,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.item.BookmarkablePageLink
 import org.apache.wicket.model.ResourceModel
 
 class SignInPageLinkItem(id: String) :
-    BookmarkablePageLinkItem<Any>(id, ResourceModel("gitki.signin"), SignInPage::class.java) {
+    BookmarkablePageLinkItem<Any>(id, labelModel = ResourceModel("gitki.signin"), pageClass = SignInPage::class.java) {
 
     override fun onConfigure() {
         super.onConfigure()

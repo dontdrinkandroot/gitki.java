@@ -29,19 +29,19 @@ class PathBreadcrumb<T : GitkiPath>(id: String, model: IModel<T>) : GenericPanel
                 if (path.root) {
                     linkItem = RootPathLinkItem(segmentView.newChildId())
                 } else {
-                    linkItem = BookmarkablePageLinkItem<Any, DirectoryPage>(
+                    linkItem = BookmarkablePageLinkItem<Void>(
                         segmentView.newChildId(),
-                        Model.of(path.name),
-                        DirectoryPage::class.java,
-                        PageParameterUtils.from(path)
+                        labelModel = Model.of(path.name),
+                        pageClass = DirectoryPage::class.java,
+                        pageParameters = PageParameterUtils.from(path)
                     )
                 }
             } else {
-                linkItem = BookmarkablePageLinkItem<Any, ViewPage>(
+                linkItem = BookmarkablePageLinkItem<Void>(
                     segmentView.newChildId(),
-                    Model.of(path.name),
-                    ViewPage::class.java,
-                    PageParameterUtils.from(path as FilePath)
+                    labelModel = Model.of(path.name),
+                    pageClass = ViewPage::class.java,
+                    pageParameters = PageParameterUtils.from(path as FilePath)
                 )
             }
             if (path == this.modelObject) {

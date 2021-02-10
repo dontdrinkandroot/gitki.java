@@ -11,7 +11,6 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
 import net.dontdrinkandroot.wicket.bootstrap.component.button.Button
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea
-import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes
@@ -137,7 +136,6 @@ class MarkdownEditPage : EditPage {
                 }
             }
         }
-        saveButton.buttonStyle = ButtonStyle.PRIMARY
         editForm.add(saveButton)
         val cancelButton: Button<Void> = object : Button<Void>("cancel") {
             override fun onClick() {

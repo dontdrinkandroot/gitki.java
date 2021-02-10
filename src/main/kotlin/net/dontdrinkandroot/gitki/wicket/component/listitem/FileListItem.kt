@@ -14,6 +14,7 @@ import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.model.model
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesSizeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
@@ -28,11 +29,14 @@ class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>
     private val attributesModel: IModel<BasicFileAttributes>
     override fun onInitialize() {
         super.onInitialize()
-        val actionsDropDownButton = FileActionsDropdownButton("actions", this.model)
+        val actionsDropDownButton = FileActionsDropdownButton(
+            "actions",
+            this.model,
+            buttonStyleModel = ButtonStyle.OUTLINE_SECONDARY.model(),
+            buttonSizeModel = ButtonSize.SMALL.model()
+        )
         actionsDropDownButton.iconBehavior.appendIcon =
             FontAwesomeIconClass.FILE_TEXT_O.createIcon().setFixedWidth(true)
-        actionsDropDownButton.buttonSize = ButtonSize.SMALL
-        actionsDropDownButton.buttonStyle = ButtonStyle.OUTLINE_SECONDARY
         actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT)
         this.add(actionsDropDownButton)
         val link: BookmarkablePageLink<Void> = BookmarkablePageLink(

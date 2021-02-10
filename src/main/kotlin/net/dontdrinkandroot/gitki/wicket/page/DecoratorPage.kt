@@ -43,15 +43,7 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
                             populateNavbarLeftItems(itemView)
                         }
                     }
-                navbarLeft.add(
-                    CssClassAppender(
-                        Spacing(
-                            Spacing.Property.MARGIN,
-                            Spacing.Side.RIGHT,
-                            Spacing.Size.AUTO
-                        )
-                    )
-                )
+                navbarLeft.add(CssClassAppender(Spacing(Spacing.Property.MARGIN, Spacing.Size.AUTO, Spacing.Side.END)))
                 collapseItemView.add(navbarLeft)
                 val navbarRight: RepeatingNavbarNav<Void> =
                     object : RepeatingNavbarNav<Void>(collapseItemView.newChildId()) {

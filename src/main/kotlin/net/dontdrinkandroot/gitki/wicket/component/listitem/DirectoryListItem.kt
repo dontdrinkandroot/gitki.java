@@ -13,6 +13,7 @@ import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.model.model
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
 import org.apache.wicket.markup.html.basic.Label
@@ -27,11 +28,13 @@ class DirectoryListItem(id: String, model: IModel<DirectoryPath>) : GenericPanel
 
     override fun onInitialize() {
         super.onInitialize()
-        val actionsDropDownButton = DirectoryActionsDropdownButton("actions", this.model)
-        actionsDropDownButton.iconBehavior.appendIcon =
-            FontAwesomeIconClass.FOLDER.createIcon().setFixedWidth(true)
-        actionsDropDownButton.buttonSize = ButtonSize.SMALL
-        actionsDropDownButton.buttonStyle = ButtonStyle.OUTLINE_SECONDARY
+        val actionsDropDownButton = DirectoryActionsDropdownButton(
+            "actions",
+            this.model,
+            buttonStyleModel = ButtonStyle.OUTLINE_SECONDARY.model(),
+            buttonSizeModel = ButtonSize.SMALL.model()
+        )
+        actionsDropDownButton.iconBehavior.appendIcon = FontAwesomeIconClass.FOLDER.createIcon().setFixedWidth(true)
         actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT)
         this.add(actionsDropDownButton)
         val link: BookmarkablePageLink<Void> = BookmarkablePageLink(

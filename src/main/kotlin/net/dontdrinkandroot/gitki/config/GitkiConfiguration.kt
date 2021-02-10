@@ -24,7 +24,5 @@ class GitkiConfiguration {
     //        return new ResourceServerProperties();
     //    }
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 }
