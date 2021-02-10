@@ -9,6 +9,7 @@ import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea
+import net.dontdrinkandroot.wicket.model.nullable
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.form.Form
@@ -29,14 +30,14 @@ class TextEditPage : EditPage {
 
     constructor(model: IModel<FilePath>) : super(model)
 
-    override fun createTitleModel() = AbstractPathNameModel(this.model)
+    override fun createTitleModel() = AbstractPathNameModel(this.model).nullable()
 
     override fun onInitialize() {
         super.onInitialize()
-        try {
-            contentModel = Model.of(this.gitService.getContentAsString(this.modelObject))
+        contentModel = try {
+            Model.of(this.gitService.getContentAsString(this.modelObject))
         } catch (e: FileNotFoundException) {
-            contentModel = Model.of("")
+            Model.of("")
         } catch (e: IOException) {
             throw WicketRuntimeException(e)
         }

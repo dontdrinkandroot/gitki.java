@@ -22,11 +22,11 @@ import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.link.BookmarkablePageLink
 import org.apache.wicket.markup.html.panel.GenericPanel
 import org.apache.wicket.model.IModel
-import java.nio.file.attribute.BasicFileAttributes
 
 class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>(id, model) {
 
-    private val attributesModel: IModel<BasicFileAttributes>
+    private val attributesModel = AbstractPathBasicFileAttributesModel(model)
+
     override fun onInitialize() {
         super.onInitialize()
         val actionsDropDownButton = FileActionsDropdownButton(
@@ -66,9 +66,5 @@ class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>
         )
         this.add(lastModifiedLabel)
         this.add(CssClassAppender(GitkiCssClass.FILE))
-    }
-
-    init {
-        attributesModel = AbstractPathBasicFileAttributesModel(model)
     }
 }

@@ -5,13 +5,14 @@ import net.dontdrinkandroot.gitki.service.configuration.ConfigurationService
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
-import net.dontdrinkandroot.wicket.model.model
 import org.apache.wicket.markup.html.basic.Label
+import org.apache.wicket.model.Model
+import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
 import org.springframework.core.env.Environment
 
 @Instantiate(Role.ADMIN)
-class ConfigurationPage : DecoratorPage<Void>() {
+class ConfigurationPage(parameters: PageParameters) : DecoratorPage<Void>(parameters) {
 
     @SpringBean
     private lateinit var gitService: GitService
@@ -22,7 +23,7 @@ class ConfigurationPage : DecoratorPage<Void>() {
     @SpringBean
     private lateinit var configurationService: ConfigurationService
 
-    override fun createTitleModel() = "Configuration".model()
+    override fun createTitleModel() = Model("Configuration")
 
     override fun onInitialize() {
         super.onInitialize()

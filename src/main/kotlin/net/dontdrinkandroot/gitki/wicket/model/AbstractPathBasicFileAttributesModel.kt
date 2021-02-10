@@ -9,8 +9,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean
 import java.io.IOException
 import java.nio.file.attribute.BasicFileAttributes
 
-class AbstractPathBasicFileAttributesModel(parentModel: IModel<out GitkiPath?>?) :
-    AbstractChainedInjectedLoadableDetachableModel<GitkiPath?, BasicFileAttributes?>(parentModel) {
+class AbstractPathBasicFileAttributesModel(parentModel: IModel<out GitkiPath>) :
+    AbstractChainedInjectedLoadableDetachableModel<GitkiPath, BasicFileAttributes>(parentModel) {
 
     @SpringBean
     private lateinit var gitService: GitService

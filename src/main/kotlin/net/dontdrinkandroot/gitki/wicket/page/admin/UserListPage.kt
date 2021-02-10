@@ -15,7 +15,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolb
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider
-import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import java.util.*
@@ -23,9 +22,7 @@ import java.util.*
 @Instantiate(Role.ADMIN)
 class UserListPage(parameters: PageParameters) : UserPage<List<User>>(parameters) {
 
-    override fun createTitleModel(): IModel<String> {
-        return Model.of("Users")
-    }
+    override fun createTitleModel() = Model("Users")
 
     override fun onInitialize() {
         super.onInitialize()

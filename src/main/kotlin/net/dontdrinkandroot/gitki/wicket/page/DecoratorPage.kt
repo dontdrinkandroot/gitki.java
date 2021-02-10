@@ -25,8 +25,8 @@ import org.apache.wicket.util.visit.Visits
 
 abstract class DecoratorPage<T> : ScaffoldPage<T> {
 
-    constructor()
     constructor(parameters: PageParameters) : super(parameters)
+
     constructor(model: IModel<T>) : super(model)
 
     override fun onInitialize() {

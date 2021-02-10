@@ -12,7 +12,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 
 abstract class ScaffoldPage<T> : BootstrapPage<T> {
 
-    private var titleModel: IModel<String>? = null
+    private lateinit var titleModel: IModel<String?>
 
     constructor(parameters: PageParameters) : super(parameters)
 
@@ -31,5 +31,5 @@ abstract class ScaffoldPage<T> : BootstrapPage<T> {
         response.render(FontAwesomeCssHeaderItem())
     }
 
-    protected abstract fun createTitleModel(): IModel<String>
+    protected abstract fun createTitleModel(): IModel<String?>
 }

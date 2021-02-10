@@ -26,29 +26,22 @@ class BrowseRequestMapper : AbstractBookmarkableMapper() {
     override fun parseRequest(request: Request): UrlInfo? {
         val url = request.url
         val segments = url.segments
-        if (segments.size < 1 || segments[0] != "browse") {
-            return null
-        }
+        if (segments.size < 1 || segments[0] != "browse") return null
         val pageComponentInfo = MapperUtils.getPageComponentInfo(request.url)
         val lastSegment = segments[segments.size - 1]
 
-        /* Directory Page */if ("" == lastSegment) {
+        /* Directory Page */
+        if ("" == lastSegment) {
             val parameters = PageParameters()
-            for (i in 1 until segments.size) {
-                parameters[i - 1] = segments[i]
-            }
+            for (i in 1 until segments.size) parameters[i - 1] = segments[i]
             return UrlInfo(pageComponentInfo, DirectoryPage::class.java, parameters)
         }
 
         /* File Page */
         val parameters = PageParameters()
-        for (i in 1 until segments.size) {
-            parameters[i - 1] = segments[i]
-        }
+        for (i in 1 until segments.size) parameters[i - 1] = segments[i]
         val actionValue = url.getQueryParameterValue("action")
-        if (!actionValue.isNull && !actionValue.isEmpty) {
-            parameters["action"] = actionValue.toString()
-        }
+        if (!actionValue.isNull && !actionValue.isEmpty) parameters["action"] = actionValue.toString()
         return UrlInfo(
             pageComponentInfo,
             resolveFilePageClass(lastSegment, actionValue),
@@ -56,52 +49,44 @@ class BrowseRequestMapper : AbstractBookmarkableMapper() {
         )
     }
 
-    override fun buildUrl(info: UrlInfo): Url? {
-        if (DirectoryPage::class.java.isAssignableFrom(info.pageClass)) {
+    override fun buildUrl(info: UrlInfo): Url? = when {
+        DirectoryPage::class.java.isAssignableFrom(info.pageClass) -> {
             val url = Url()
             url.segments.add("browse")
             encodePageComponentInfo(url, info.pageComponentInfo)
             val copy = PageParameters(info.pageParameters)
-            if (copy.indexedCount == 0) {
-                copy[0] = ""
-            }
-            return encodePageParameters(url, copy, pageParametersEncoder)
+            if (copy.indexedCount == 0) copy[0] = ""
+            encodePageParameters(url, copy, pageParametersEncoder)
         }
-        if (FilePage::class.java.isAssignableFrom(info.pageClass)) {
+        FilePage::class.java.isAssignableFrom(info.pageClass) -> {
             val url = Url()
             url.segments.add("browse")
             encodePageComponentInfo(url, info.pageComponentInfo)
             val copy = PageParameters(info.pageParameters)
-            return encodePageParameters(url, copy, pageParametersEncoder)
+            encodePageParameters(url, copy, pageParametersEncoder)
         }
-        return null
+        else -> null
     }
 
-    override fun mapHandler(requestHandler: IRequestHandler): Url {
+    override fun mapHandler(requestHandler: IRequestHandler): Url? {
         var url = super.mapHandler(requestHandler)
 
         /* TODO: Recheck */
         if (url == null && requestHandler is ListenerRequestHandler && recreateMountedPagesAfterExpiry) {
-            val handler = requestHandler
-            val page = handler.page
+            val page = requestHandler.page
             if (checkPageInstance(page)) {
                 var renderCount: Int? = null
-                if (handler.includeRenderCount()) {
-                    renderCount = handler.renderCount
-                }
-                val pageInfo = getPageInfo(handler)
+                if (requestHandler.includeRenderCount()) renderCount = requestHandler.renderCount
+                val pageInfo = getPageInfo(requestHandler)
                 val componentInfo = ComponentInfo(
                     renderCount,
-                    handler.componentPath,
-                    handler.behaviorIndex
+                    requestHandler.componentPath,
+                    requestHandler.behaviorIndex
                 )
                 val pageComponentInfo = PageComponentInfo(pageInfo, componentInfo)
                 val parameters = PageParameters(page.pageParameters)
-                val urlInfo = UrlInfo(
-                    pageComponentInfo,
-                    page.javaClass,
-                    parameters.mergeWith(handler.pageParameters)
-                )
+                val urlInfo =
+                    UrlInfo(pageComponentInfo, page.javaClass, parameters.mergeWith(requestHandler.pageParameters))
                 url = buildUrl(urlInfo)
             }
         }
@@ -111,28 +96,22 @@ class BrowseRequestMapper : AbstractBookmarkableMapper() {
     val recreateMountedPagesAfterExpiry: Boolean
         get() = WebApplication.get().pageSettings.recreateBookmarkablePagesAfterExpiry
 
-    protected fun resolveFilePageClass(fileName: String?, actionValue: StringValue): Class<out FilePage?> {
+    protected fun resolveFilePageClass(fileName: String, actionValue: StringValue): Class<out FilePage> {
         val action = actionValue.toString("view")
         val extension = FilenameUtils.getExtension(fileName)
-        val pageClass: Class<out FilePage?>?
+        val pageClass: Class<out FilePage>?
         when (action) {
             "view" -> {
                 pageClass = requestMappingRegistry.resolveViewMapping(extension)
-                if (null != pageClass) {
-                    return pageClass
-                }
+                if (null != pageClass) return pageClass
             }
             "edit" -> {
                 pageClass = requestMappingRegistry.resolveEditMapping(extension)
-                if (null != pageClass) {
-                    return pageClass
-                }
+                if (null != pageClass) return pageClass
             }
         }
         return SimpleViewPage::class.java
     }
 
-    override fun pageMustHaveBeenCreatedBookmarkable(): Boolean {
-        return false
-    }
+    override fun pageMustHaveBeenCreatedBookmarkable(): Boolean = false
 }

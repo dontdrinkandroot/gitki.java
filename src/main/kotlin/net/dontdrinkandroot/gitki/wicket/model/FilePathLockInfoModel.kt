@@ -7,8 +7,8 @@ import net.dontdrinkandroot.wicket.model.AbstractChainedInjectedLoadableDetachab
 import org.apache.wicket.model.IModel
 import org.apache.wicket.spring.injection.annot.SpringBean
 
-class FilePathLockInfoModel(parentModel: IModel<out FilePath?>?) :
-    AbstractChainedInjectedLoadableDetachableModel<FilePath?, LockInfo?>(parentModel) {
+class FilePathLockInfoModel(parentModel: IModel<out FilePath>) :
+    AbstractChainedInjectedLoadableDetachableModel<FilePath, LockInfo>(parentModel) {
 
     @SpringBean
     private lateinit var wikiService: WikiService

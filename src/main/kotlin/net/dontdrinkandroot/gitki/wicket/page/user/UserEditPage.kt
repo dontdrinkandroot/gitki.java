@@ -21,7 +21,7 @@ class UserEditPage : UserPage<User> {
     @SpringBean
     private lateinit var userService: UserService
 
-    constructor(parameters: PageParameters?) : super(parameters) {
+    constructor(parameters: PageParameters) : super(parameters) {
         val user = userService.find(getGitkiSession().user!!.id!!)
         if (user.isPresent) {
             this.model = Model.of(user.get())
@@ -32,9 +32,7 @@ class UserEditPage : UserPage<User> {
 
     constructor(model: IModel<User>) : super(model)
 
-    override fun createTitleModel(): IModel<String> {
-        return StringResourceModel("gitki.user_edit")
-    }
+    override fun createTitleModel() = StringResourceModel("gitki.user_edit")
 
     override fun onInitialize() {
         super.onInitialize()

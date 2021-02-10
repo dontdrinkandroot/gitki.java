@@ -21,9 +21,9 @@ class MarkdownViewPage : ViewPage {
     @SpringBean
     private lateinit var markdownService: MarkdownService
 
-    constructor(parameters: PageParameters?) : super(parameters)
+    constructor(parameters: PageParameters) : super(parameters)
 
-    constructor(model: IModel<FilePath?>?) : super(model)
+    constructor(model: IModel<FilePath>) : super(model)
 
     override fun onInitialize() {
         super.onInitialize()
@@ -37,8 +37,8 @@ class MarkdownViewPage : ViewPage {
         }
     }
 
-    override fun populatePrimaryButtons(view: RepeatingView?) {
-        view!!.add(EditButton(view.newChildId(), this.model))
+    override fun populatePrimaryButtons(view: RepeatingView) {
+        view.add(EditButton(view.newChildId(), this.model))
         view.add(PrintButton(view.newChildId()))
         super.populatePrimaryButtons(view)
     }

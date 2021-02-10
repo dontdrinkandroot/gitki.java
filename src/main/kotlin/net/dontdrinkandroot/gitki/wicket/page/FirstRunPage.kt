@@ -22,10 +22,10 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<User>(parameters)
 
     @SpringBean
     private val userService: UserService? = null
+
     private val passwordModel: IModel<String> = Model()
-    override fun createTitleModel(): IModel<String> {
-        return Model.of("Initial Configuration")
-    }
+
+    override fun createTitleModel() = Model.of("Initial Configuration")
 
     override fun onInitialize() {
         super.onInitialize()
