@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.wicket.headeritem
+package net.dontdrinkandroot.gitki.wicket.head
 
 import org.apache.wicket.markup.head.HeaderItem
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem

@@ -11,7 +11,7 @@ import net.dontdrinkandroot.gitki.wicket.page.test.FeedbackTestPage
 import net.dontdrinkandroot.gitki.wicket.page.user.UserEditPage
 import net.dontdrinkandroot.gitki.wicket.requestmapper.BrowseRequestMapper
 import net.dontdrinkandroot.gitki.wicket.requestmapper.RawRequestMapper
-import net.dontdrinkandroot.gitki.wicket.resource.ExternalJQueryResourceReference
+import net.dontdrinkandroot.gitki.wicket.resource.JQueryResourceReference
 import net.dontdrinkandroot.gitki.wicket.resource.RawResource
 import net.dontdrinkandroot.gitki.wicket.security.GitkiAuthorizationStrategy
 import org.apache.wicket.Application
@@ -30,7 +30,7 @@ class GitkiWebApplication : WicketBootSecuredWebApplication() {
 
     override fun init() {
         super.init()
-        javaScriptLibrarySettings.jQueryReference = ExternalJQueryResourceReference()
+        javaScriptLibrarySettings.jQueryReference = JQueryResourceReference()
         securitySettings.authorizationStrategy = applicationContext.getBean(
             GitkiAuthorizationStrategy::class.java
         )

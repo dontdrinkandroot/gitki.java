@@ -3,7 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.component.bspanel.index
 import net.dontdrinkandroot.gitki.model.FilePath
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService
-import net.dontdrinkandroot.gitki.wicket.headeritem.HighlightInitHeaderItem
+import net.dontdrinkandroot.gitki.wicket.head.HighlightInitHeaderItem
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import org.apache.wicket.Component
 import org.apache.wicket.WicketRuntimeException

@@ -3,7 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.page.file.view
 import net.dontdrinkandroot.gitki.model.FilePath
 import net.dontdrinkandroot.gitki.wicket.component.button.EditButton
 import net.dontdrinkandroot.gitki.wicket.component.button.PrintButton
-import net.dontdrinkandroot.gitki.wicket.headeritem.HighlightInitHeaderItem
+import net.dontdrinkandroot.gitki.wicket.head.HighlightInitHeaderItem
 import net.dontdrinkandroot.gitki.wicket.model.FilePathStringContentModel
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.html.basic.Label

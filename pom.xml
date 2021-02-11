@@ -170,31 +170,18 @@
                             <goal>exec</goal>
                         </goals>
                     </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>nl.geodienstencentrum.maven</groupId>
-                <artifactId>sass-maven-plugin</artifactId>
-                <version>${sass-maven-plugin.version}</version>
-                <configuration>
-                    <resources>
-                        <resource>
-                            <source>
-                                <directory>${basedir}/src/main/resources/public/css/</directory>
-                                <includes>
-                                    <include>**/*.scss</include>
-                                </includes>
-                            </source>
-                            <destination>${basedir}/src/main/resources/public/css/</destination>
-                        </resource>
-                    </resources>
-                </configuration>
-                <executions>
                     <execution>
-                        <id>generate-css-using-sass</id>
+                        <id>exec-yarn-encore</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <executable>yarn</executable>
+                            <arguments>
+                                <argument>encore</argument>
+                                <argument>prod</argument>
+                            </arguments>
+                        </configuration>
                         <goals>
-                            <goal>update-stylesheets</goal>
+                            <goal>exec</goal>
                         </goals>
                     </execution>
                 </executions>

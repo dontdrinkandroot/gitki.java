@@ -1,9 +1,6 @@
 /target/
-/src/main/resources/public/css/style.css
-/src/main/resources/public/css/style.css.map
-/src/main/resources/public/lib/
-/.bowerrc
-/bower.json
-/bower
+/src/main/resources/public/build/
 *.iml
 /.idea/
+/yarn-error.log
+/node_modules/
