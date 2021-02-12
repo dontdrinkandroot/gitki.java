@@ -10,16 +10,11 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 
 abstract class ScaffoldPage<T> : BootstrapPage<T> {
 
-    private lateinit var titleModel: IModel<String?>
-
     constructor(parameters: PageParameters) : super(parameters)
 
     constructor(model: IModel<T>) : super(model)
 
-    override fun createPageTitle(id: String): Component {
-        titleModel = createTitleModel()
-        return Label(id, titleModel)
-    }
+    override fun createPageTitle(id: String): Component = Label(id, createTitleModel())
 
     override val bootstrapHeaderItem: HeaderItem
         get() = AppCssHeaderItem()

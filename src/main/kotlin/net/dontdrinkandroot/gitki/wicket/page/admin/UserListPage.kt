@@ -7,8 +7,7 @@ import net.dontdrinkandroot.gitki.wicket.component.button.UserAddButton
 import net.dontdrinkandroot.gitki.wicket.dataprovider.UserDataProvider
 import net.dontdrinkandroot.gitki.wicket.page.user.UserPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
-import net.dontdrinkandroot.wicket.behavior.CssClassAppender
-import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass
+import net.dontdrinkandroot.wicket.bootstrap.behavior.TableBehavior
 import net.dontdrinkandroot.wicket.bootstrap.css.TableStyle
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
@@ -26,7 +25,9 @@ class UserListPage(parameters: PageParameters) : UserPage<List<User>>(parameters
 
     override fun onInitialize() {
         super.onInitialize()
+
         this.add(UserAddButton("addButton"))
+
         val dataProvider: SortableDataProvider<User, String> = UserDataProvider()
         val columns: MutableList<IColumn<User, String>> = ArrayList()
         columns.add(PropertyColumn(Model.of("Id"), "id", "id"))
@@ -37,9 +38,7 @@ class UserListPage(parameters: PageParameters) : UserPage<List<User>>(parameters
         columns.add(UserActionColumn())
         val table = DataTable("table", columns, dataProvider, 20)
         table.addTopToolbar(HeadersToolbar(table, dataProvider))
-        table.add(CssClassAppender(BootstrapCssClass.TABLE))
-        table.add(CssClassAppender(TableStyle.STRIPED))
-        table.add(CssClassAppender(TableStyle.SMALL))
+        table.add(TableBehavior(null, TableStyle.STRIPED, TableStyle.SMALL))
         this.add(table)
     }
 }

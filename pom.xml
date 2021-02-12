@@ -71,9 +71,9 @@
 
         <!-- Dependency versions -->
         <wicket.version>9.2.0</wicket.version>
-        <kotlin.version>1.4.21</kotlin.version>
+        <kotlin.version>1.4.30</kotlin.version>
         <net.dontdrinkandroot.wicket.version>0.8.0-SNAPSHOT</net.dontdrinkandroot.wicket.version>
-        <com.atlassian.commonmark.version>0.10.0</com.atlassian.commonmark.version>
+        <com.atlassian.commonmark.version>0.17.0</com.atlassian.commonmark.version>
         <org.eclipse.jgit.version>4.8.0.201706111038-r</org.eclipse.jgit.version>
         <wicket-spring-boot-starter.version>3.0.4</wicket-spring-boot-starter.version>
         <commons-lang3.version>3.6</commons-lang3.version>

@@ -10,6 +10,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
+import net.dontdrinkandroot.wicket.css.CssClass
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
@@ -18,8 +19,10 @@ import org.apache.wicket.model.Model
 class FileActionsDropdownButton(
     id: String, model: IModel<FilePath>,
     buttonStyleModel: IModel<ButtonStyle> = Model(ButtonStyle.SECONDARY),
-    buttonSizeModel: IModel<ButtonSize> = Model(null)
-) : DropdownButton<FilePath>(id, model, null, buttonStyleModel, buttonSizeModel) {
+    buttonSizeModel: IModel<ButtonSize> = Model(null),
+    prependIconModel: IModel<CssClass> = Model(null),
+    appendIconModel: IModel<CssClass> = Model(null),
+) : DropdownButton<FilePath>(id, model, null, buttonStyleModel, buttonSizeModel, prependIconModel, appendIconModel) {
 
     override fun populateItems(itemView: RepeatingView) {
         itemView.add(EditFileItem(itemView.newChildId(), this.model))

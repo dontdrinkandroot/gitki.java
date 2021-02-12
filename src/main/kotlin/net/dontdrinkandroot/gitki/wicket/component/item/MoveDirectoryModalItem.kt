@@ -5,7 +5,7 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.wicket.component.modal.MoveDirectoryModal
 import net.dontdrinkandroot.gitki.wicket.security.Render
 import net.dontdrinkandroot.wicket.bootstrap.component.item.AjaxLinkItem
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
 import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest
 import net.dontdrinkandroot.wicket.model.model
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -18,7 +18,7 @@ class MoveDirectoryModalItem(id: String, private val pathModel: IModel<Directory
     AjaxLinkItem<Void>(
         id,
         labelModel = StringResourceModel("gitki.move"),
-        prependIconModel = FontAwesomeIconClass.ARROWS_H.createIcon().setFixedWidth(true).model()
+        prependIconModel = FontAwesome5IconClass.ARROWS_ALT_H.createIcon().apply { fixedWidth = true }.model()
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {

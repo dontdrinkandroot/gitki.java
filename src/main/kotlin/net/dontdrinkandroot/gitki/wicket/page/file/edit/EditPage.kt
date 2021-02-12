@@ -13,7 +13,7 @@ import net.dontdrinkandroot.gitki.wicket.page.file.FilePage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
 import net.dontdrinkandroot.wicket.bootstrap.css.TextAlignment
 import net.dontdrinkandroot.wicket.model.ToStringModel
 import net.dontdrinkandroot.wicket.model.property
@@ -60,7 +60,7 @@ open class EditPage : FilePage {
         lockLabel = Label("lockInfo", lockLabelModel)
         lockLabel.outputMarkupId = true
         lockLabel.add(CssClassAppender(GitkiCssClass.LOCK_INFO))
-        lockLabel.add(IconBehavior(FontAwesomeIconClass.LOCK.createIcon()))
+        lockLabel.add(IconBehavior(FontAwesome4IconClass.LOCK.createIcon()))
         lockLabel.add(CssClassAppender(TextAlignment.CENTER))
         this.add(lockLabel)
     }

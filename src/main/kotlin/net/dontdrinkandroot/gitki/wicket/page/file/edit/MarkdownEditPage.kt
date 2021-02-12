@@ -8,7 +8,7 @@ import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
-import net.dontdrinkandroot.wicket.bootstrap.component.button.Button
+import net.dontdrinkandroot.wicket.bootstrap.component.button.ButtonLink
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea
 import org.apache.wicket.WicketRuntimeException
@@ -137,7 +137,7 @@ class MarkdownEditPage : EditPage {
             }
         }
         editForm.add(saveButton)
-        val cancelButton: Button<Void> = object : Button<Void>("cancel") {
+        val cancelButton: ButtonLink<Void> = object : ButtonLink<Void>("cancel") {
             override fun onClick() {
                 try {
                     wikiService.unlock(this@MarkdownEditPage.modelObject, getGitkiSession().user!!)

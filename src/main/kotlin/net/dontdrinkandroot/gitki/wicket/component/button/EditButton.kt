@@ -7,7 +7,7 @@ import net.dontdrinkandroot.gitki.wicket.security.Render
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
 import net.dontdrinkandroot.wicket.bootstrap.component.button.BookmarkablePageButton
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
 import org.apache.wicket.model.IModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
 
@@ -22,6 +22,6 @@ class EditButton(id: String, model: IModel<FilePath>) : BookmarkablePageButton<F
 
     init {
         this.model = model
-        this.add(IconBehavior(FontAwesomeIconClass.PENCIL.createIcon().setFixedWidth(true)))
+        this.add(IconBehavior(FontAwesome4IconClass.PENCIL.createIcon().apply { fixedWidth = true }))
     }
 }

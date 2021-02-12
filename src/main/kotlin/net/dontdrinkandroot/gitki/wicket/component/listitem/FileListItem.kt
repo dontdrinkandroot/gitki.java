@@ -10,10 +10,7 @@ import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
-import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
-import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
-import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.*
 import net.dontdrinkandroot.wicket.model.model
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesSizeModel
@@ -22,6 +19,7 @@ import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.link.BookmarkablePageLink
 import org.apache.wicket.markup.html.panel.GenericPanel
 import org.apache.wicket.model.IModel
+import org.apache.wicket.model.Model
 
 class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>(id, model) {
 
@@ -32,13 +30,13 @@ class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>
         val actionsDropDownButton = FileActionsDropdownButton(
             "actions",
             this.model,
-            buttonStyleModel = ButtonStyle.OUTLINE_SECONDARY.model(),
-            buttonSizeModel = ButtonSize.SMALL.model()
+            buttonStyleModel = Model(null),
+            buttonSizeModel = ButtonSize.SMALL.model(),
+            prependIconModel = FontAwesome5IconClass.ELLIPSIS_V.createIcon().apply { fixedWidth = true }.model()
         )
-        actionsDropDownButton.iconBehavior.appendIcon =
-            FontAwesomeIconClass.FILE_TEXT_O.createIcon().setFixedWidth(true)
         actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT)
         this.add(actionsDropDownButton)
+
         val link: BookmarkablePageLink<Void> = BookmarkablePageLink(
             "link",
             SimpleViewPage::class.java,
@@ -46,25 +44,16 @@ class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>
         )
         link.body = AbstractPathNameModel(this.model)
         this.add(link)
-        val sizeLabel = Label(
-            "size", FileSizeStringModel(
-                BasicFileAttributesSizeModel(
-                    attributesModel
-                )
-            )
-        )
+
+        val sizeLabel = Label("size", FileSizeStringModel(BasicFileAttributesSizeModel(attributesModel)))
         this.add(sizeLabel)
+
         val lastModifiedLabel = Label(
             "lastmodified",
-            TemporalAccessorStringModel(
-                FileTimeInstantModel(
-                    BasicFileAttributesLastModifiedTimeModel(
-                        attributesModel
-                    )
-                )
-            )
+            TemporalAccessorStringModel(FileTimeInstantModel(BasicFileAttributesLastModifiedTimeModel(attributesModel)))
         )
         this.add(lastModifiedLabel)
+
         this.add(CssClassAppender(GitkiCssClass.FILE))
     }
 }

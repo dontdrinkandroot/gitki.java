@@ -5,7 +5,7 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.wicket.component.modal.MoveFileModal
 import net.dontdrinkandroot.gitki.wicket.security.Render
 import net.dontdrinkandroot.wicket.bootstrap.component.item.AjaxLinkItem
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
 import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest
 import net.dontdrinkandroot.wicket.model.model
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -18,7 +18,7 @@ class MoveFileModalItem(id: String, private val pathModel: IModel<FilePath>) :
     AjaxLinkItem<Any>(
         id,
         labelModel = Model.of("Move File"),
-        prependIconModel = FontAwesomeIconClass.ARROWS_H.createIcon().setFixedWidth(true).model()
+        prependIconModel = FontAwesome4IconClass.ARROWS_H.createIcon().apply { fixedWidth = true }.model()
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {

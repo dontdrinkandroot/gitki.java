@@ -24,7 +24,7 @@ class UserActionColumn : AbstractColumn<User, String>(Model.of("")) {
                         itemView.newChildId(),
                         rowModel,
                         StringResourceModel("gitki.edit"),
-                        prependIconModel = FontAwesome5IconClass.EDIT.createIcon().setFixedWidth(true).model()
+                        prependIconModel = FontAwesome5IconClass.EDIT.createIcon().apply { fixedWidth = true }.model()
                     ) {
                         override fun onClick() {
                             this.setResponsePage(UserEditPage(this.model))

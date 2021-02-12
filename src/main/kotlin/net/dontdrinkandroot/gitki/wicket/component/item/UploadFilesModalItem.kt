@@ -5,7 +5,7 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.wicket.component.modal.UploadFilesModal
 import net.dontdrinkandroot.gitki.wicket.security.Render
 import net.dontdrinkandroot.wicket.bootstrap.component.item.AjaxLinkItem
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
 import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest
 import net.dontdrinkandroot.wicket.model.model
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -18,7 +18,7 @@ class UploadFilesModalItem(id: String, private val pathModel: IModel<DirectoryPa
     AjaxLinkItem<Any>(
         id,
         labelModel = StringResourceModel("gitki.files.upload"),
-        prependIconModel = FontAwesomeIconClass.UPLOAD.createIcon().setFixedWidth(true).model()
+        prependIconModel = FontAwesome4IconClass.UPLOAD.createIcon().apply { fixedWidth = true }.model()
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {

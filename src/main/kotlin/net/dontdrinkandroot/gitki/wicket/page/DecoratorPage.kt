@@ -11,9 +11,7 @@ import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav
-import net.dontdrinkandroot.wicket.bootstrap.css.BackgroundColor
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition
-import net.dontdrinkandroot.wicket.bootstrap.css.NavbarStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
 import net.dontdrinkandroot.wicket.util.NonStatelessPrintingVisitor
 import org.apache.wicket.Component
@@ -55,8 +53,6 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
                 collapseItemView.add(navbarRight)
             }
         }
-        navbar.setStyle(NavbarStyle.DARK)
-        navbar.add(CssClassAppender(BackgroundColor.DARK))
         navbar.setPosition(NavbarPosition.FIXED_TOP)
         this.add(navbar)
         this.add(FlashMessagePanel("flashMessages"))

@@ -15,7 +15,7 @@ import net.dontdrinkandroot.gitki.wicket.model.DirectoryPathEntriesModel
 import net.dontdrinkandroot.gitki.wicket.page.BrowsePage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesomeIconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
 import org.apache.wicket.Component
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.event.IEvent
@@ -37,7 +37,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
     @SpringBean
     private lateinit var wikiService: WikiService
 
-    private var entriesPanel: DirectoryEntriesPanel? = null
+    private lateinit var entriesPanel: DirectoryEntriesPanel
 
     constructor(model: IModel<DirectoryPath>) : super(model) {
         PageParameterUtils.from(model.getObject(), pageParameters)
@@ -52,18 +52,19 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
         super.onInitialize()
         this.add(Label("heading", AbstractPathNameModel(this.model)))
         entriesPanel = DirectoryEntriesPanel("entries", DirectoryPathEntriesModel(this.model))
-        entriesPanel!!.outputMarkupId = true
+        entriesPanel.outputMarkupId = true
         this.add(entriesPanel)
         val indexFileComponent = createIndexFileComponent("indexFile")
         this.add(indexFileComponent)
     }
 
     private fun createIndexFileComponent(id: String): Component {
-        val indexFilePath = wikiService.resolveIndexFile(this.modelObject!!)
+        val indexFilePath = wikiService.resolveIndexFile(this.model.getObject())
             ?: return WebMarkupContainer(id).setVisible(false)
         val clazz = requestMappingRegistry.resolveIndexFilePanel(indexFilePath.extension)
             ?: return WebMarkupContainer(id).setVisible(false)
         val indexFilePathModel: IModel<FilePath> = Model.of(indexFilePath)
+
         return try {
             val constructor = clazz.getDeclaredConstructor(String::class.java, IModel::class.java)
             constructor.newInstance(id, indexFilePathModel)
@@ -80,33 +81,37 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
 
     override fun populatePrimaryButtons(view: RepeatingView) {
         super.populatePrimaryButtons(view)
-        val directoryActionsButton = DirectoryActionsDropdownButton(view.newChildId(), this.model)
-        directoryActionsButton.iconBehavior.appendIcon =
-            FontAwesomeIconClass.ELLIPSIS_V.createIcon().setFixedWidth(true)
+        val directoryActionsButton = DirectoryActionsDropdownButton(
+            view.newChildId(),
+            this.model,
+            buttonStyleModel = Model(null),
+            prependIconModel = Model(FontAwesome4IconClass.ELLIPSIS_V.createIcon().apply { fixedWidth = true })
+        )
         view.add(directoryActionsButton)
     }
 
     override fun onEvent(event: IEvent<*>) {
         super.onEvent(event)
-        val payload = event.payload
-        if (payload is FileDeletedEvent) {
-            val directoryPath = gitService.findExistingDirectoryPath(payload.filePath)
-            if (directoryPath == this.modelObject) {
+        when (val payload = event.payload) {
+            is FileDeletedEvent -> {
+                val directoryPath = gitService.findExistingDirectoryPath(payload.filePath)
+                if (directoryPath == this.modelObject) {
+                    payload.target!!.add(entriesPanel)
+                    return
+                }
+                this.setResponsePage(DirectoryPage(Model.of(directoryPath)))
+                return
+            }
+            is FileMovedEvent -> {
                 payload.target!!.add(entriesPanel)
                 return
             }
-            this.setResponsePage(DirectoryPage(Model.of(directoryPath)))
-            return
-        }
-        if (payload is FileMovedEvent) {
-            payload.target!!.add(entriesPanel)
-            return
-        }
-        if (payload is DirectoryMovedEvent) {
-            if (payload.directoryPath.equals(this.modelObject)) {
-                this.setResponsePage(DirectoryPage(Model.of(payload.targetPath)))
-            } else {
-                payload.target!!.add(entriesPanel)
+            is DirectoryMovedEvent -> {
+                if (payload.directoryPath.equals(this.modelObject)) {
+                    this.setResponsePage(DirectoryPage(Model.of(payload.targetPath)))
+                } else {
+                    payload.target!!.add(entriesPanel)
+                }
             }
         }
     }
