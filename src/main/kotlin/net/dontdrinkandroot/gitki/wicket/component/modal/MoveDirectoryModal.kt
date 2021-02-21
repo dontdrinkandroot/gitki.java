@@ -13,6 +13,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupSelect
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal
+import net.dontdrinkandroot.wicket.model.ldm
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.event.Broadcast
@@ -29,35 +30,34 @@ import java.io.IOException
 class MoveDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal<DirectoryPath>(id, model) {
 
     @SpringBean
-    private val gitService: GitService? = null
+    private lateinit var gitService: GitService
+
     private val commitMessageModel: IModel<String>
-    private val targetDirectoryModel: IModel<DirectoryPath?>
-    private val targetNameModel: IModel<String?>
+
+    private val targetDirectoryModel: IModel<DirectoryPath>
+
+    private val targetNameModel: IModel<String>
+
     override fun createHeadingModel(): IModel<String> {
         return StringResourceModel("gitki.move")
     }
 
     override fun populateFormGroups(formGroupView: RepeatingView) {
         super.populateFormGroups(formGroupView)
-        val availableDirectories: List<DirectoryPath?>
-        availableDirectories = try {
-            gitService!!.listAllDirectories()
-        } catch (e: IOException) {
-            throw WicketRuntimeException(e)
-        }
+        val availableDirectoriesModel = { gitService.listAllDirectories() }.ldm()
         val formGroupTargetName = FormGroupInputText(
             formGroupView.newChildId(),
-            StringResourceModel("gitki.name"),
-            targetNameModel
+            targetNameModel,
+            StringResourceModel("gitki.name")
         )
         formGroupTargetName.setRequired(true)
         formGroupView.add(formGroupTargetName)
         val formGroupTargetPath = FormGroupSelect(
             formGroupView.newChildId(),
-            StringResourceModel("gitki.targetpath"),
             targetDirectoryModel,
-            availableDirectories,
-            AbstractPathAbsoluteStringChoiceRenderer<DirectoryPath?>()
+            StringResourceModel("gitki.targetpath"),
+            availableDirectoriesModel,
+            AbstractPathAbsoluteStringChoiceRenderer()
         )
         formGroupTargetPath.setRequired(true)
         formGroupView.add(formGroupTargetPath)
@@ -66,7 +66,7 @@ class MoveDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormMod
             StringResourceModel("gitki.commitmessage"),
             commitMessageModel
         )
-        formGroupCommitMessage.addDefaultAjaxInputValidation()
+        formGroupCommitMessage.addAjaxValidation()
         formGroupCommitMessage.setRequired(true)
         formGroupView.add(formGroupCommitMessage)
     }
@@ -94,10 +94,10 @@ class MoveDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormMod
         send(this.page, Broadcast.BREADTH, DirectoryMovedEvent(sourcePath, target, targetPath))
     }
 
-    override fun onSubmit(target: AjaxRequestTarget) {
+    override fun onSubmit(target: AjaxRequestTarget?) {
         super.onSubmit(target)
         try {
-            gitService!!.moveAndCommit(
+            gitService.moveAndCommit(
                 this@MoveDirectoryModal.modelObject!!,
                 targetPath,
                 getGitkiSession().user!!,
@@ -110,7 +110,7 @@ class MoveDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormMod
         }
     }
 
-    override fun onAfterSubmit(target: AjaxRequestTarget) {
+    override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
         onDirectoryMoved(
             target,

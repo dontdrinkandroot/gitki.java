@@ -3,7 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.page.admin
 import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
-import net.dontdrinkandroot.wicket.bootstrap.component.button.ButtonLink
+import net.dontdrinkandroot.wicket.bootstrap.component.button.Button
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException
 import org.apache.wicket.request.mapper.parameter.PageParameters
@@ -17,25 +17,22 @@ class ErrorTestPage(parameters: PageParameters) : DecoratorPage<Void>(parameters
 
         super.onInitialize()
 
-        val notFoundButton = object : ButtonLink<Void>("notFound") {
-            override fun onClick() {
-                throw AbortWithHttpErrorCodeException(404)
-            }
-        }.setBody(Model.of("Not Found"))
+        val notFoundButton = Button<Void>(
+            "notFound",
+            bodyModel = Model("Not Found"),
+            onClickHandler = { throw AbortWithHttpErrorCodeException(404) })
         this.add(notFoundButton)
 
-        val lockedButton = object : ButtonLink<Void>("locked") {
-            override fun onClick() {
-                throw AbortWithHttpErrorCodeException(423)
-            }
-        }.setBody(Model.of("Locked"))
+        val lockedButton = Button<Void>(
+            "locked",
+            bodyModel = Model("Locked"),
+            onClickHandler = { throw AbortWithHttpErrorCodeException(423) })
         this.add(lockedButton)
 
-        val runtimeButton = object : ButtonLink<Void>("runtime") {
-            override fun onClick() {
-                throw RuntimeException("This is a runtime exception message")
-            }
-        }.setBody(Model.of("Runtime"))
+        val runtimeButton = Button<Void>(
+            "runtime",
+            bodyModel = Model("Runtime"),
+            onClickHandler = { throw RuntimeException("This is a runtime exception message") })
         this.add(runtimeButton)
     }
 }

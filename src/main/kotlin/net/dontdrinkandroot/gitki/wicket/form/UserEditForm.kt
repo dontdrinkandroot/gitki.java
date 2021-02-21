@@ -18,6 +18,7 @@ import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.model.StringResourceModel
+import org.apache.wicket.model.util.ListModel
 import org.apache.wicket.spring.injection.annot.SpringBean
 import java.time.ZoneId
 import java.util.*
@@ -32,53 +33,55 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
     override fun populateFormGroups(formGroupView: RepeatingView) {
         val formGroupFirstName = FormGroupInputText(
             formGroupView.newChildId(),
-            Model.of("First Name"),
-            PropertyModel(this.model, "firstName")
+            PropertyModel(this.model, "firstName"),
+            Model.of("First Name")
         )
         formGroupFirstName.setRequired(true)
-        formGroupFirstName.addDefaultAjaxInputValidation()
+        formGroupFirstName.addAjaxValidation()
         formGroupView.add(formGroupFirstName)
         val formGroupLastName = FormGroupInputText(
             formGroupView.newChildId(),
-            Model.of("Last Name"),
-            PropertyModel(this.model, "lastName")
+            PropertyModel(this.model, "lastName"),
+            Model.of("Last Name")
         )
         formGroupLastName.setRequired(true)
-        formGroupLastName.addDefaultAjaxInputValidation()
+        formGroupLastName.addAjaxValidation()
         formGroupView.add(formGroupLastName)
         val formGroupEmail = FormGroupInputEmail(
             formGroupView.newChildId(),
-            Model.of("Email"),
-            PropertyModel(this.model, "email")
+            PropertyModel(this.model, "email"),
+            Model.of("Email")
         )
         formGroupEmail.setRequired(true)
-        formGroupEmail.addDefaultAjaxInputValidation()
+        formGroupEmail.addAjaxValidation()
         formGroupView.add(formGroupEmail)
         val formGroupLanguage = FormGroupSelect(
             formGroupView.newChildId(),
-            Model.of("Language"),
             PropertyModel(this.model, "language"),
-            Arrays.asList(*Locale.getISOLanguages()),
+            Model.of("Language"),
+            ListModel(Arrays.asList(*Locale.getISOLanguages())),
             IsoLanguageChoiceRenderer()
         )
         formGroupLanguage.setRequired(true)
         formGroupView.add(formGroupLanguage)
-        val availableZoneIds: List<String> = ArrayList(ZoneId.getAvailableZoneIds())
-        availableZoneIds.sortedWith { obj: String, anotherString: String -> obj.compareTo(anotherString) }
+        val availableZoneIdsModel: IModel<List<String>> = ListModel(
+            ZoneId.getAvailableZoneIds().toList()
+                .sortedWith { obj: String, anotherString: String -> obj.compareTo(anotherString) }
+        )
         val formGroupZoneId = FormGroupSelect(
             formGroupView.newChildId(),
-            StringResourceModel("gitki.timezone"),
             PropertyModel(this.model, "zoneId"),
-            availableZoneIds,
+            StringResourceModel("gitki.timezone"),
+            availableZoneIdsModel,
             ZoneIdChoiceRenderer()
         )
         formGroupZoneId.setRequired(true)
         formGroupView.add(formGroupZoneId)
         val formGroupRole = FormGroupSelect(
             formGroupView.newChildId(),
-            Model.of("Role"),
             PropertyModel(this.model, "role"),
-            Arrays.asList(*Role.values())
+            Model.of("Role"),
+            ListModel(Arrays.asList(*Role.values()))
         )
         formGroupRole.setNullValid(false)
         formGroupRole.setRequired(true)
@@ -94,7 +97,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         buttonView.add(SubmitLabelButton(buttonView.newChildId(), StringResourceModel("gitki.save")))
     }
 
-    override fun onSubmit(target: AjaxRequestTarget) {
+    override fun onSubmit(target: AjaxRequestTarget?) {
         super.onSubmit(target)
         var user = this.modelObject
         user = userService.save(user!!, newPasswordModel.getObject())

@@ -14,8 +14,8 @@ class FilePathStringContentModel(parentModel: IModel<out FilePath>) :
     @Inject
     private lateinit var gitService: GitService
 
-    override fun load() = try {
-        gitService.getContentAsString(this.parentObject!!)
+    override fun load(parentValue: FilePath?) = try {
+        gitService.getContentAsString(parentValue!!)
     } catch (e: IOException) {
         throw WicketRuntimeException(e)
     }

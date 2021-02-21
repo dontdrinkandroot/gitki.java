@@ -22,10 +22,12 @@ class CreateFileModalItem(id: String, private val pathModel: IModel<DirectoryPat
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {
-        send(
-            this.page,
-            Broadcast.DEPTH,
-            CreateAndOpenModalRequest(target, CreateFileModal::class.java, pathModel)
-        )
+        target?.let {
+            send(
+                this.page,
+                Broadcast.DEPTH,
+                CreateAndOpenModalRequest(target, CreateFileModal::class, pathModel)
+            )
+        }
     }
 }

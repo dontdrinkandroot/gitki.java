@@ -24,21 +24,22 @@ import org.eclipse.jgit.api.errors.GitAPIException
 import java.io.IOException
 
 @Instantiate(Role.COMMITTER)
-class RemoveFileModal(id: String?, model: IModel<FilePath>) : AjaxFormModal<FilePath>(id, model) {
+class RemoveFileModal(id: String, model: IModel<FilePath>) : AjaxFormModal<FilePath>(id, model) {
 
     @SpringBean
-    private val gitService: GitService? = null
-    private var commitMessageModel: IModel<String>? = null
+    private lateinit var gitService: GitService
+
+    private var commitMessageModel: IModel<String> = Model.of("Removing " + this.modelObject.absoluteString)
+
     override fun createHeadingModel(): IModel<String> {
         return Model.of("Confirm File Removal")
     }
 
     override fun populateFormGroups(formGroupView: RepeatingView) {
         super.populateFormGroups(formGroupView)
-        commitMessageModel = Model.of("Removing " + this.modelObject!!.absoluteString)
         val formGroupCommitMessage =
-            FormGroupInputText(formGroupView.newChildId(), Model.of("Commit Message"), commitMessageModel)
-        formGroupCommitMessage.addDefaultAjaxInputValidation()
+            FormGroupInputText(formGroupView.newChildId(), commitMessageModel, Model.of("Commit Message"))
+        formGroupCommitMessage.addAjaxValidation()
         formGroupCommitMessage.setRequired(true)
         formGroupView.add(formGroupCommitMessage)
     }
@@ -56,13 +57,13 @@ class RemoveFileModal(id: String?, model: IModel<FilePath>) : AjaxFormModal<File
         send(this.page, Broadcast.BREADTH, FileDeletedEvent(this.modelObject, target))
     }
 
-    override fun onSubmit(target: AjaxRequestTarget) {
+    override fun onSubmit(target: AjaxRequestTarget?) {
         super.onSubmit(target)
         try {
-            gitService!!.removeAndCommit(
+            gitService.removeAndCommit(
                 this@RemoveFileModal.modelObject!!,
                 getGitkiSession().user!!,
-                commitMessageModel!!.getObject()
+                commitMessageModel.getObject()
             )
         } catch (e: IOException) {
             throw WicketRuntimeException(e)
@@ -71,7 +72,7 @@ class RemoveFileModal(id: String?, model: IModel<FilePath>) : AjaxFormModal<File
         }
     }
 
-    override fun onAfterSubmit(target: AjaxRequestTarget) {
+    override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
         onFileDeleted(target, this@RemoveFileModal.modelObject)
     }

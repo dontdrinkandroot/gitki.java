@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.component.bspanel
 
 import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel
-import net.dontdrinkandroot.wicket.bootstrap.component.panel.SimplePanel
+import net.dontdrinkandroot.wicket.bootstrap.component.card.SimpleCard
 import net.dontdrinkandroot.wicket.model.chain
 import net.dontdrinkandroot.wicket.model.function
 import org.apache.wicket.markup.html.basic.Label
@@ -10,7 +10,7 @@ import org.eclipse.jgit.lib.PersonIdent
 import org.eclipse.jgit.revwalk.RevCommit
 
 class RevCommitPanel(id: String, model: IModel<RevCommit>) :
-    SimplePanel<RevCommit>(id, model, headingModel = model.function(RevCommit::getFullMessage)) {
+    SimpleCard<RevCommit>(id, model, headingModel = model.function(RevCommit::getFullMessage)) {
 
     override fun onInitialize() {
         super.onInitialize()
@@ -21,5 +21,3 @@ class RevCommitPanel(id: String, model: IModel<RevCommit>) :
         this.add(Label("authorDate", TemporalAccessorStringModel(authorDateModel)))
     }
 }
-
-

@@ -13,5 +13,5 @@ class FilePathLockInfoModel(parentModel: IModel<out FilePath>) :
     @SpringBean
     private lateinit var wikiService: WikiService
 
-    override fun load(): LockInfo = wikiService.getLockInfo(this.parentObject!!)
+    override fun load(parentValue: FilePath?) = wikiService.getLockInfo(parentValue!!)
 }

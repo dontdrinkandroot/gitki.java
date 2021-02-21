@@ -22,10 +22,12 @@ class RemoveFileModalItem(id: String, private val pathModel: IModel<FilePath>) :
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {
-        send(
-            this.page,
-            Broadcast.DEPTH,
-            CreateAndOpenModalRequest(target, RemoveFileModal::class.java, pathModel)
-        )
+        target?.let {
+            send(
+                this.page,
+                Broadcast.DEPTH,
+                CreateAndOpenModalRequest(it, RemoveFileModal::class, pathModel)
+            )
+        }
     }
 }

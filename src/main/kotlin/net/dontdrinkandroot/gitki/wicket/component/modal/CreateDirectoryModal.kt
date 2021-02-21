@@ -24,21 +24,22 @@ import java.io.IOException
 class CreateDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal<DirectoryPath>(id, model) {
 
     @SpringBean
-    private val gitService: GitService? = null
-    private var nameModel: IModel<String>? = null
+    private lateinit var gitService: GitService
+
+    private var nameModel: IModel<String> = Model()
+
     override fun createHeadingModel(): IModel<String> {
         return StringResourceModel("gitki.directory.create")
     }
 
     override fun populateFormGroups(formGroupView: RepeatingView) {
         super.populateFormGroups(formGroupView)
-        nameModel = Model()
         val formGroupName = FormGroupInputText(
             formGroupView.newChildId(),
+            nameModel,
             StringResourceModel("gitki.name"),
-            nameModel
         )
-        formGroupName.addDefaultAjaxInputValidation()
+        formGroupName.addAjaxValidation()
         formGroupName.setRequired(true)
         formGroupView.add(formGroupName)
     }
@@ -52,20 +53,20 @@ class CreateDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormM
         formActionView.add(cancelButton)
     }
 
-    override fun onSubmit(target: AjaxRequestTarget) {
+    override fun onSubmit(target: AjaxRequestTarget?) {
         super.onSubmit(target)
         try {
-            gitService!!.createDirectory(newPath)
+            gitService.createDirectory(newPath)
         } catch (e: IOException) {
             throw WicketRuntimeException(e)
         }
     }
 
-    override fun onAfterSubmit(target: AjaxRequestTarget) {
+    override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
         this.setResponsePage(DirectoryPage(Model.of(newPath)))
     }
 
     private val newPath: DirectoryPath
-        private get() = this@CreateDirectoryModal.modelObject.appendDirectoryName(nameModel!!.getObject())
+        private get() = this@CreateDirectoryModal.modelObject.appendDirectoryName(nameModel.getObject())
 }

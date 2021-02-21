@@ -10,7 +10,7 @@ import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.StringResourceModel
 
 @Render(Role.WATCHER)
-class UserDropdownItem(id: String) : RepeatingDropdownItem<Any>(id, CurrentUserFullNameModel()) {
+class UserDropdownItem(id: String) : RepeatingDropdownItem<Any>(id, labelModel = CurrentUserFullNameModel()) {
 
     override fun populateItems(itemView: RepeatingView) {
         itemView.add(

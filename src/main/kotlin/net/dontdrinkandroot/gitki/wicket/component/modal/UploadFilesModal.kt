@@ -34,7 +34,7 @@ class UploadFilesModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal
 
     private val fileUploadsModel: IModel<List<FileUpload>> = ListModel(ArrayList())
 
-    private var commitMessageModel: IModel<String>? = null
+    private var commitMessageModel: IModel<String> = Model.of("Uploading files to " + this.modelObject!!.absoluteString)
 
     override fun createHeadingModel(): IModel<String> {
         return Model.of("Upload Files")
@@ -42,12 +42,11 @@ class UploadFilesModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal
 
     override fun populateFormGroups(formGroupView: RepeatingView) {
         super.populateFormGroups(formGroupView)
-        commitMessageModel = Model.of("Uploading files to " + this.modelObject!!.absoluteString)
-        val formGroupFile = FormGroupInputFile(formGroupView.newChildId(), Model.of("Files"), fileUploadsModel)
+        val formGroupFile = FormGroupInputFile(formGroupView.newChildId(), fileUploadsModel, Model.of("Files"))
         formGroupFile.setMultiple(true)
         formGroupView.add(formGroupFile)
         val formGroupCommitMessage =
-            FormGroupInputText(formGroupView.newChildId(), Model.of("Commit Message"), commitMessageModel)
+            FormGroupInputText(formGroupView.newChildId(), commitMessageModel, Model.of("Commit Message"))
         formGroupCommitMessage.setRequired(true)
         formGroupView.add(formGroupCommitMessage)
     }
@@ -66,7 +65,7 @@ class UploadFilesModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal
         formActionView.add(cancelButton)
     }
 
-    override fun onSubmit(target: AjaxRequestTarget) {
+    override fun onSubmit(target: AjaxRequestTarget?) {
         super.onSubmit(target)
         for (fileUpload in fileUploadsModel.getObject()) {
             val path = this@UploadFilesModal.modelObject
@@ -79,14 +78,15 @@ class UploadFilesModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal
                 throw WicketRuntimeException(e)
             }
         }
+
         try {
-            gitService.commit(getGitkiSession().user!!, commitMessageModel!!.getObject())
+            gitService.commit(getGitkiSession().user!!, commitMessageModel.getObject())
         } catch (e: GitAPIException) {
             throw WicketRuntimeException(e)
         }
     }
 
-    override fun onAfterSubmit(target: AjaxRequestTarget) {
+    override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
         this.setResponsePage(DirectoryPage(this@UploadFilesModal.model))
     }

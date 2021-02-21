@@ -5,7 +5,6 @@ import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.service.user.UserService
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.RepeatingAjaxForm
-import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputEmail
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputPassword
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.model.writableProperty
@@ -29,39 +28,43 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<User>(parameters)
 
     override fun onInitialize() {
         super.onInitialize()
-        val form: RepeatingAjaxForm<Void> = object : RepeatingAjaxForm<Void>("form") {
+        val form: RepeatingAjaxForm<User> = object : RepeatingAjaxForm<User>("form", model) {
             override fun populateFormGroups(formGroupView: RepeatingView) {
                 val formGroupFirstName = FormGroupInputText(
                     formGroupView.newChildId(),
-                    Model.of("First name"),
-                    this@FirstRunPage.model.writableProperty(User::firstName)
+                    model.writableProperty(User::firstName),
+                    Model.of("First name")
                 )
                 formGroupFirstName.setRequired(true)
-                formGroupFirstName.addDefaultAjaxInputValidation()
+                formGroupFirstName.addAjaxValidation()
                 formGroupView.add(formGroupFirstName)
+
                 val formGroupLastName = FormGroupInputText(
                     formGroupView.newChildId(),
-                    Model.of("Last name"),
-                    this@FirstRunPage.model.writableProperty(User::lastName)
+                    model.writableProperty(User::lastName),
+                    Model.of("Last name")
                 )
                 formGroupLastName.setRequired(true)
-                formGroupLastName.addDefaultAjaxInputValidation()
+                formGroupLastName.addAjaxValidation()
                 formGroupView.add(formGroupLastName)
-                val formGroupEmail = FormGroupInputEmail(
-                    formGroupView.newChildId(),
-                    Model.of("Email"),
-                    this@FirstRunPage.model.writableProperty(User::email)
-                )
-                formGroupEmail.setRequired(true)
-                formGroupEmail.addDefaultAjaxInputValidation()
-                formGroupView.add(formGroupEmail)
+
+                // TODO: readd
+//                val formGroupEmail = FormGroupInputEmail(
+//                    formGroupView.newChildId(),
+//                    model.writableProperty(User::email),
+//                    Model.of("Email")
+//                )
+//                formGroupEmail.setRequired(true)
+//                formGroupEmail.addAjaxValidation()
+//                formGroupView.add(formGroupEmail)
+
                 val formGroupPassword = FormGroupInputPassword(
                     formGroupView.newChildId(),
-                    Model.of("Password"),
-                    passwordModel
+                    passwordModel,
+                    Model.of("Password")
                 )
                 formGroupPassword.setRequired(true)
-                formGroupPassword.addDefaultAjaxInputValidation()
+                formGroupPassword.addAjaxValidation()
                 formGroupView.add(formGroupPassword)
             }
 
@@ -69,13 +72,13 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<User>(parameters)
                 buttonView.add(SubmitLabelButton(buttonView.newChildId(), Model.of("Create")))
             }
 
-            override fun onSubmit(target: AjaxRequestTarget) {
+            override fun onSubmit(target: AjaxRequestTarget?) {
                 super.onSubmit(target)
                 var admin = this@FirstRunPage.modelObject
                 admin = userService!!.save(admin!!, passwordModel.getObject())
             }
 
-            override fun onAfterSubmit(target: AjaxRequestTarget) {
+            override fun onAfterSubmit(target: AjaxRequestTarget?) {
                 super.onAfterSubmit(target)
                 this@FirstRunPage.setResponsePage(SignInPage::class.java)
             }

@@ -2,15 +2,11 @@ package net.dontdrinkandroot.gitki.wicket.component.bspanel.index
 
 import net.dontdrinkandroot.gitki.model.FilePath
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel
-import net.dontdrinkandroot.wicket.bootstrap.component.panel.PanelHeading
-import net.dontdrinkandroot.wicket.bootstrap.component.panel.PlainPanel
+import net.dontdrinkandroot.wicket.bootstrap.component.card.PlainCard
 import net.dontdrinkandroot.wicket.component.basic.Heading
-import org.apache.wicket.Component
 import org.apache.wicket.model.IModel
 
-abstract class IndexFilePanel(id: String, model: IModel<FilePath>) : PlainPanel<FilePath>(id, model) {
+abstract class IndexFilePanel(id: String, model: IModel<FilePath>) : PlainCard<FilePath>(id, model) {
 
-    override fun createHeading(id: String): Component {
-        return PanelHeading(id, AbstractPathNameModel(this.model), Heading.Level.H2)
-    }
+    override fun createHeader(id: String) = Heading(id, AbstractPathNameModel(this.model), Heading.Level.H2)
 }

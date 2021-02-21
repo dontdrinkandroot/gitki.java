@@ -15,8 +15,8 @@ class AbstractPathBasicFileAttributesModel(parentModel: IModel<out GitkiPath>) :
     @SpringBean
     private lateinit var gitService: GitService
 
-    override fun load(): BasicFileAttributes = try {
-        gitService.getBasicFileAttributes(this.parentObject!!)
+    override fun load(parentValue: GitkiPath?) = try {
+        gitService.getBasicFileAttributes(parentValue!!)
     } catch (e: IOException) {
         throw WicketRuntimeException(e)
     }

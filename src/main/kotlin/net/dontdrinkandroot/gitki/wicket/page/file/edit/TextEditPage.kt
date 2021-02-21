@@ -44,13 +44,13 @@ class TextEditPage : EditPage {
         commitMessageModel = Model.of("Editing " + this.modelObject.absoluteString)
         val editForm = Form("editForm", contentModel)
         this.add(editForm)
-        val formGroupContent = FormGroupTextArea("content", Model.of("Content"), contentModel)
+        val formGroupContent = FormGroupTextArea("content", contentModel, Model.of("Content"))
         formGroupContent.setRows(20)
         editForm.add(formGroupContent)
         val formGroupCommitMessage = FormGroupInputText("commitMessage", Model.of("Commit message"), commitMessageModel)
         formGroupCommitMessage.setRequired(true)
         editForm.add(formGroupCommitMessage)
-        val submitButton: AjaxSubmitButton = object : AjaxSubmitButton("submit", Model.of("Save")) {
+        val submitButton: AjaxSubmitButton = object : AjaxSubmitButton("submit", labelModel = Model.of("Save")) {
             override fun onSubmit(target: AjaxRequestTarget) {
                 super.onSubmit(target)
                 try {

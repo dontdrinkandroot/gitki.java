@@ -12,7 +12,8 @@ import org.apache.wicket.model.IModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
 
 @Render(Role.COMMITTER)
-class EditButton(id: String, model: IModel<FilePath>) : BookmarkablePageButton<FilePath>(id, EditPage::class.java) {
+class EditButton(id: String, model: IModel<FilePath>) :
+    BookmarkablePageButton<FilePath>(id, pageClass = EditPage::class.java) {
 
     override fun getPageParameters(): PageParameters {
         val pageParameters = PageParameterUtils.from(this.modelObject)

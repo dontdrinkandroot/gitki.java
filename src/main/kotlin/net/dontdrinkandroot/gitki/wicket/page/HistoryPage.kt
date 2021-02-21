@@ -33,9 +33,11 @@ class HistoryPage(parameters: PageParameters) : DecoratorPage<Void>(parameters) 
         commitView.itemsPerPage = 20
         commitContainer.add(commitView)
         val pagination: AjaxPaginationPanel = object : AjaxPaginationPanel("pagination", commitView) {
-            override fun onPageChanged(target: AjaxRequestTarget) {
-                target.add(this)
-                target.add(commitContainer)
+            override fun onPageChanged(target: AjaxRequestTarget?) {
+                target?.let {
+                    it.add(this)
+                    it.add(commitContainer)
+                }
             }
         }
         this.add(pagination)

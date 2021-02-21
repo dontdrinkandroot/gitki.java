@@ -17,13 +17,16 @@ import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
+import org.apache.wicket.model.util.ListModel
 import java.util.*
 
 @Instantiate(Role.COMMITTER)
 class CreateFileModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal<DirectoryPath>(id, model) {
 
     private val nameModel: IModel<String> = Model()
+
     private val fileTypeModel: IModel<FileType> = Model.of(FileType.MARKDOWN)
+
     override fun createHeadingModel(): IModel<String> {
         return StringResourceModel("gitki.file.create")
     }
@@ -35,14 +38,14 @@ class CreateFileModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal<
             StringResourceModel("gitki.name"),
             nameModel
         )
-        formGroupName.addDefaultAjaxInputValidation()
+        formGroupName.addAjaxValidation()
         formGroupName.setRequired(true)
         formGroupView.add(formGroupName)
         val formGroupFileType = FormGroupSelect(
             formGroupView.newChildId(),
-            StringResourceModel("gitki.file.type"),
             fileTypeModel,
-            Arrays.asList(*FileType.values()),
+            StringResourceModel("gitki.file.type"),
+            ListModel(Arrays.asList(*FileType.values())),
             FileTypeChoiceRenderer()
         )
         formGroupFileType.addAjaxValidation("change")
@@ -57,7 +60,7 @@ class CreateFileModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal<
         formActionView.add(ModalCancelButton(formActionView.newChildId(), this))
     }
 
-    override fun onAfterSubmit(target: AjaxRequestTarget) {
+    override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
         val fileType = fileTypeModel.getObject()
         val fullName = nameModel.getObject().toString() + "." + fileType.extension

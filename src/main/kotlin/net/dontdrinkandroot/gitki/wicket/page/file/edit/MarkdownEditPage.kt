@@ -8,7 +8,7 @@ import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
-import net.dontdrinkandroot.wicket.bootstrap.component.button.ButtonLink
+import net.dontdrinkandroot.wicket.bootstrap.component.button.Button
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea
 import org.apache.wicket.WicketRuntimeException
@@ -60,7 +60,7 @@ class MarkdownEditPage : EditPage {
         this.add(preview)
         val editForm = Form("editForm", contentModel)
         this.add(editForm)
-        formGroupContent = FormGroupTextArea("content", StringResourceModel("gitki.content"), contentModel)
+        formGroupContent = FormGroupTextArea("content", contentModel, StringResourceModel("gitki.content"))
         formGroupContent!!.setRows(20)
         formGroupContent!!.formComponent.add(object : AjaxFormComponentUpdatingBehavior("input") {
             override fun updateAjaxAttributes(attributes: AjaxRequestAttributes) {
@@ -85,7 +85,7 @@ class MarkdownEditPage : EditPage {
         formGroupCommitMessage.setRequired(true)
         editForm.add(formGroupCommitMessage)
         val saveAndBackButton: AjaxSubmitButton =
-            object : AjaxSubmitButton("saveandback", StringResourceModel("gitki.saveandback")) {
+            object : AjaxSubmitButton("saveandback", labelModel = StringResourceModel("gitki.saveandback")) {
                 override fun onSubmit(target: AjaxRequestTarget) {
                     try {
                         wikiService
@@ -113,45 +113,48 @@ class MarkdownEditPage : EditPage {
                 }
             }
         editForm.add(saveAndBackButton)
-        val saveButton: AjaxSubmitButton = object : AjaxSubmitButton("save", StringResourceModel("gitki.save")) {
-            override fun onSubmit(target: AjaxRequestTarget) {
-                try {
-                    wikiService
-                        .save(
-                            this@MarkdownEditPage.modelObject,
-                            getGitkiSession().user!!,
-                            commitMessageModel.getObject(),
-                            contentModel.getObject()
-                        )
-                    this.session.info(this.getString("gitki.saved"))
-                    target.add(lockLabel)
-                } catch (e: LockedException) {
-                    throw WicketRuntimeException(e)
-                } catch (e: LockMissingException) {
-                    throw WicketRuntimeException(e)
-                } catch (e: GitAPIException) {
-                    throw WicketRuntimeException(e)
-                } catch (e: IOException) {
-                    throw WicketRuntimeException(e)
+        val saveButton: AjaxSubmitButton =
+            object : AjaxSubmitButton("save", labelModel = StringResourceModel("gitki.save")) {
+                override fun onSubmit(target: AjaxRequestTarget) {
+                    try {
+                        wikiService
+                            .save(
+                                this@MarkdownEditPage.modelObject,
+                                getGitkiSession().user!!,
+                                commitMessageModel.getObject(),
+                                contentModel.getObject()
+                            )
+                        this.session.info(this.getString("gitki.saved"))
+                        target.add(lockLabel)
+                    } catch (e: LockedException) {
+                        throw WicketRuntimeException(e)
+                    } catch (e: LockMissingException) {
+                        throw WicketRuntimeException(e)
+                    } catch (e: GitAPIException) {
+                        throw WicketRuntimeException(e)
+                    } catch (e: IOException) {
+                        throw WicketRuntimeException(e)
+                    }
                 }
             }
-        }
         editForm.add(saveButton)
-        val cancelButton: ButtonLink<Void> = object : ButtonLink<Void>("cancel") {
-            override fun onClick() {
-                try {
-                    wikiService.unlock(this@MarkdownEditPage.modelObject, getGitkiSession().user!!)
-                    this.setResponsePage(
-                        SimpleViewPage::class.java,
-                        PageParameterUtils.from(this@MarkdownEditPage.modelObject)
-                    )
-                } catch (e: LockedException) {
-                    throw WicketRuntimeException(e)
-                }
-            }
-        }
-        cancelButton.body = StringResourceModel("gitki.cancel")
-        editForm.add(cancelButton)
+
+        editForm.add(
+            Button<Void>(
+                "cancel",
+                bodyModel = StringResourceModel("gitki.cancel"),
+                onClickHandler = {
+                    try {
+                        wikiService.unlock(this@MarkdownEditPage.modelObject, getGitkiSession().user!!)
+                        this.setResponsePage(
+                            SimpleViewPage::class.java,
+                            PageParameterUtils.from(this@MarkdownEditPage.modelObject)
+                        )
+                    } catch (e: LockedException) {
+                        throw WicketRuntimeException(e)
+                    }
+                })
+        )
     }
 
     /**

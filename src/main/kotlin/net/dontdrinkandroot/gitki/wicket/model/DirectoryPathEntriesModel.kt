@@ -17,13 +17,11 @@ class DirectoryPathEntriesModel(parentModel: IModel<out DirectoryPath>) :
     @SpringBean
     private lateinit var gitService: GitService
 
-    override fun load(): List<GitkiPath> {
-        return try {
-            gitService.listDirectory(this.parentObject!!)
-        } catch (e: FileNotFoundException) {
-            throw AbortWithHttpErrorCodeException(404)
-        } catch (e: IOException) {
-            throw WicketRuntimeException(e)
-        }
+    override fun load(parentValue: DirectoryPath?) = try {
+        gitService.listDirectory(parentValue!!)
+    } catch (e: FileNotFoundException) {
+        throw AbortWithHttpErrorCodeException(404)
+    } catch (e: IOException) {
+        throw WicketRuntimeException(e)
     }
 }

@@ -22,10 +22,12 @@ class MoveFileModalItem(id: String, private val pathModel: IModel<FilePath>) :
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {
-        send(
-            this.page,
-            Broadcast.DEPTH,
-            CreateAndOpenModalRequest(target, MoveFileModal::class.java, pathModel)
-        )
+        target?.let {
+            send(
+                this.page,
+                Broadcast.DEPTH,
+                CreateAndOpenModalRequest(it, MoveFileModal::class, pathModel)
+            )
+        }
     }
 }

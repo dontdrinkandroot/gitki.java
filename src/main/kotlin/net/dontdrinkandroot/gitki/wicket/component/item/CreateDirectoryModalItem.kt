@@ -22,10 +22,12 @@ class CreateDirectoryModalItem(id: String, private val pathModel: IModel<Directo
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {
-        send(
-            this.page,
-            Broadcast.DEPTH,
-            CreateAndOpenModalRequest(target, CreateDirectoryModal::class.java, pathModel)
-        )
+        target?.let {
+            send(
+                this.page,
+                Broadcast.DEPTH,
+                CreateAndOpenModalRequest(it, CreateDirectoryModal::class, pathModel)
+            )
+        }
     }
 }

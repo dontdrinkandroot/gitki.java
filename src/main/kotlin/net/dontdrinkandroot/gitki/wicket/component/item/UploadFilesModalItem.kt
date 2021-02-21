@@ -22,10 +22,12 @@ class UploadFilesModalItem(id: String, private val pathModel: IModel<DirectoryPa
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {
-        send(
-            this.page,
-            Broadcast.DEPTH,
-            CreateAndOpenModalRequest(target, UploadFilesModal::class.java, pathModel)
-        )
+        target?.let {
+            send(
+                this.page,
+                Broadcast.DEPTH,
+                CreateAndOpenModalRequest(target, UploadFilesModal::class, pathModel)
+            )
+        }
     }
 }

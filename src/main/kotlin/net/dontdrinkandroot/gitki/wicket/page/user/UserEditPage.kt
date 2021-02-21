@@ -37,7 +37,7 @@ class UserEditPage : UserPage<User> {
     override fun onInitialize() {
         super.onInitialize()
         val form: UserEditForm = object : UserEditForm("form", this.model) {
-            override fun onAfterSubmit(target: AjaxRequestTarget) {
+            override fun onAfterSubmit(target: AjaxRequestTarget?) {
                 super.onAfterSubmit(target)
                 if (getGitkiSession().hasRole(Role.ADMIN)) {
                     this.setResponsePage(UserListPage::class.java)

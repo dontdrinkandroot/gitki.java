@@ -11,7 +11,8 @@ import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
 
 @Render(Role.ADMIN)
-class AdminDropdownItem(id: String) : RepeatingDropdownItem<Void>(id, StringResourceModel("gitki.administration")) {
+class AdminDropdownItem(id: String) :
+    RepeatingDropdownItem<Void>(id, labelModel = StringResourceModel("gitki.administration")) {
 
     override fun populateItems(itemView: RepeatingView) {
         itemView.add(UserListPageItem(itemView.newChildId()))
