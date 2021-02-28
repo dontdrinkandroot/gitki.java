@@ -35,20 +35,14 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
             override fun populateCollapseItems(collapseItemView: RepeatingView) {
                 super.populateCollapseItems(collapseItemView)
                 val navbarLeft: RepeatingNavbarNav<Void> =
-                    object : RepeatingNavbarNav<Void>(collapseItemView.newChildId()) {
-                        override fun populateItems(itemView: RepeatingView) {
-                            super.populateItems(itemView)
-                            populateNavbarLeftItems(itemView)
-                        }
+                    RepeatingNavbarNav(collapseItemView.newChildId()) { itemView ->
+                        populateNavbarLeftItems(itemView)
                     }
                 navbarLeft.add(CssClassAppender(Spacing(Spacing.Property.MARGIN, Spacing.Size.AUTO, Spacing.Side.END)))
                 collapseItemView.add(navbarLeft)
                 val navbarRight: RepeatingNavbarNav<Void> =
-                    object : RepeatingNavbarNav<Void>(collapseItemView.newChildId()) {
-                        override fun populateItems(itemView: RepeatingView) {
-                            super.populateItems(itemView)
-                            populateNavbarRightItems(itemView)
-                        }
+                    RepeatingNavbarNav(collapseItemView.newChildId()) { itemView ->
+                        populateNavbarRightItems(itemView)
                     }
                 collapseItemView.add(navbarRight)
             }

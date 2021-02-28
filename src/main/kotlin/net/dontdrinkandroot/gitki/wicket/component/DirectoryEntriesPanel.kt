@@ -13,17 +13,16 @@ import org.apache.wicket.model.Model
 
 class DirectoryEntriesPanel(id: String, model: IModel<List<GitkiPath>>) : PlainCard<List<GitkiPath>>(id, model) {
 
-    override fun createAfterBody(id: String): Component {
-        return object : ListGroup<GitkiPath>(id, this.model) {
-            override fun createListComponent(id: String, model: IModel<GitkiPath>): Component {
-                val path = model.getObject()
-                return if (path.directoryPath) {
-                    val pathModel: IModel<DirectoryPath> = Model.of(path as DirectoryPath)
-                    DirectoryListItem(id, pathModel)
-                } else {
-                    val pathModel: IModel<FilePath> = Model.of(path as FilePath)
-                    FileListItem(id, pathModel)
-                }
+    override fun createAfterBody(id: String): Component = ListGroup(id, this.model) { id, model ->
+        val path = model.getObject()
+        when {
+            path.directoryPath -> {
+                val pathModel: IModel<DirectoryPath> = Model(path as DirectoryPath)
+                DirectoryListItem(id, pathModel)
+            }
+            else -> {
+                val pathModel: IModel<FilePath> = Model(path as FilePath)
+                FileListItem(id, pathModel)
             }
         }
     }

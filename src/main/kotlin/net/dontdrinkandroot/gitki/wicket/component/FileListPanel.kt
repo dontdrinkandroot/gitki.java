@@ -13,11 +13,7 @@ class FileListPanel(id: String, model: IModel<List<FilePath>>) : PlainCard<List<
 
     override fun createHeader(id: String) = Heading(id, Model("Files"), Heading.Level.H2)
 
-    override fun createAfterBody(id: String): Component {
-        return object : ListGroup<FilePath>(id, model) {
-            override fun createListComponent(id: String, model: IModel<FilePath>): Component {
-                return FileListItem(id, Model.of(model.getObject()))
-            }
-        }
+    override fun createAfterBody(id: String): Component = ListGroup(id, model) { id, model ->
+        FileListItem(id, Model.of(model.getObject()))
     }
 }
