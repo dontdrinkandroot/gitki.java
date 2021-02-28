@@ -39,6 +39,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         formGroupFirstName.setRequired(true)
         formGroupFirstName.addAjaxValidation()
         formGroupView.add(formGroupFirstName)
+
         val formGroupLastName = FormGroupInputText(
             formGroupView.newChildId(),
             PropertyModel(this.model, "lastName"),
@@ -47,6 +48,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         formGroupLastName.setRequired(true)
         formGroupLastName.addAjaxValidation()
         formGroupView.add(formGroupLastName)
+
         val formGroupEmail = FormGroupInputEmail(
             formGroupView.newChildId(),
             PropertyModel(this.model, "email"),
@@ -55,6 +57,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         formGroupEmail.setRequired(true)
         formGroupEmail.addAjaxValidation()
         formGroupView.add(formGroupEmail)
+
         val formGroupLanguage = FormGroupSelect(
             formGroupView.newChildId(),
             PropertyModel(this.model, "language"),
@@ -64,6 +67,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         )
         formGroupLanguage.setRequired(true)
         formGroupView.add(formGroupLanguage)
+
         val availableZoneIdsModel: IModel<List<String>> = ListModel(
             ZoneId.getAvailableZoneIds().toList()
                 .sortedWith { obj: String, anotherString: String -> obj.compareTo(anotherString) }
@@ -77,6 +81,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         )
         formGroupZoneId.setRequired(true)
         formGroupView.add(formGroupZoneId)
+
         val formGroupRole = FormGroupSelect(
             formGroupView.newChildId(),
             PropertyModel(this.model, "role"),
@@ -87,8 +92,9 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         formGroupRole.setRequired(true)
         formGroupRole.isVisible = getGitkiSession().hasRole(Role.ADMIN)
         formGroupView.add(formGroupRole)
+
         val formGroupPassword =
-            FormGroupInputPassword(formGroupView.newChildId(), Model.of("Password"), newPasswordModel)
+            FormGroupInputPassword(formGroupView.newChildId(), newPasswordModel, Model.of("Password"))
         formGroupPassword.setRequired(false)
         formGroupView.add(formGroupPassword)
     }

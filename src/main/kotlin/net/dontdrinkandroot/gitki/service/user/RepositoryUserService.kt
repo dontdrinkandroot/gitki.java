@@ -5,11 +5,11 @@ import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.repository.UserRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 import javax.inject.Inject
 
 @Service
@@ -19,20 +19,14 @@ class RepositoryUserService @Inject constructor(
 ) : UserService {
 
     @Transactional(readOnly = true)
-    override fun find(id: Long): Optional<User> {
-        return userRepository.findById(id)
-    }
+    override fun find(id: Long): User? = userRepository.findByIdOrNull(id)
 
     @Transactional(readOnly = true)
     @Throws(UsernameNotFoundException::class)
-    override fun loadUserByUsername(username: String): User {
-        return userRepository.findByEmail(username)
-    }
+    override fun loadUserByUsername(username: String): User = userRepository.findByEmail(username)
 
     @Transactional(readOnly = true)
-    override fun findCount(): Long {
-        return userRepository.count()
-    }
+    override fun findCount(): Long = userRepository.count()
 
     @Transactional(readOnly = true)
     override fun find(first: Long, count: Long, property: String, ascending: Boolean): Iterator<User> {
@@ -46,26 +40,17 @@ class RepositoryUserService @Inject constructor(
     }
 
     @Transactional(readOnly = true)
-    override fun hasAdminUser(): Boolean {
-        val numAdminUsers = userRepository.countByRole(Role.ADMIN)
-        return numAdminUsers > 0
-    }
+    override fun hasAdminUser(): Boolean = userRepository.countByRole(Role.ADMIN) > 0
 
     @Transactional
     override fun save(user: User, password: String?): User {
-        if (null != password) {
-            user.setPassword(passwordEncoder.encode(password))
-        }
+        if (null != password) user.setPassword(passwordEncoder.encode(password))
         return userRepository.save(user)
     }
 
     @Transactional
-    override fun removeAll() {
-        userRepository.deleteAll()
-    }
+    override fun removeAll() = userRepository.deleteAll()
 
     @Transactional
-    override fun remove(user: User) {
-        userRepository.delete(user)
-    }
+    override fun remove(user: User) = userRepository.delete(user)
 }

@@ -23,11 +23,8 @@ class UserEditPage : UserPage<User> {
 
     constructor(parameters: PageParameters) : super(parameters) {
         val user = userService.find(getGitkiSession().user!!.id!!)
-        if (user.isPresent) {
-            this.model = Model.of(user.get())
-        } else {
-            throw RuntimeException("The user of the session could not be found in the database")
-        }
+            ?: throw RuntimeException("The user of the session could not be found in the database")
+        this.model = Model(user)
     }
 
     constructor(model: IModel<User>) : super(model)
