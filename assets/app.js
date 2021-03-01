@@ -1,2 +1,3 @@
 require('./app.scss');
-require('bootstrap');
+const bootstrap = require('bootstrap');
+global.bootstrap = bootstrap

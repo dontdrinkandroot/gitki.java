@@ -7,11 +7,7 @@ import org.apache.wicket.request.resource.UrlResourceReference
 
 class DomadorHeaderItem : JavaScriptReferenceHeaderItem(
     UrlResourceReference(
-        Url.parse(
-            getGitkiApplication()
-                .servletContext
-                .contextPath + "/lib/domador/dist/domador.min.js"
-        )
+        Url.parse(getGitkiApplication().servletContext.contextPath + "/lib/domador/dist/domador.min.js")
     ),
     null,
     "domador.js"
