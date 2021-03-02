@@ -26,7 +26,7 @@ class CreateDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormM
     @SpringBean
     private lateinit var gitService: GitService
 
-    private var nameModel: IModel<String> = Model()
+    private var nameModel: IModel<String?> = Model()
 
     override fun createHeadingModel(): IModel<String> {
         return StringResourceModel("gitki.directory.create")
@@ -68,5 +68,5 @@ class CreateDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormM
     }
 
     private val newPath: DirectoryPath
-        private get() = this@CreateDirectoryModal.modelObject.appendDirectoryName(nameModel.getObject())
+        private get() = this@CreateDirectoryModal.modelObject.appendDirectoryName(nameModel.getObject()!!)
 }

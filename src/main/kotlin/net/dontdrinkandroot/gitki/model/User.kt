@@ -6,77 +6,48 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-class User : UserDetails, GitUser {
+data class User(
+    @Column(nullable = false)
+    var firstName: String,
+    @Column(nullable = false)
+    var lastName: String,
+    @Column(nullable = false, unique = true)
+    override var email: String,
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    var role: Role,
+    @Column
+    private var password: String? = null,
+    @Column(nullable = false)
+    var language: String = "en",
+    @Column(nullable = false)
+    var zoneId: String = "UTC"
+) : UserDetails, GitUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
 
-    @Column(nullable = false)
-    var firstName: String? = null
-
-    @Column(nullable = false)
-    var lastName: String? = null
-
-    @Column(nullable = false, unique = true)
-    override var email: String = "user@example.com"
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    var role = Role.WATCHER
-
-    @Column
-    private var password: String? = null
-
-    @Column(nullable = false)
-    var language = "en"
-
-    @Column(nullable = false)
-    var zoneId = "UTC"
-
-    constructor()
-
-    constructor(firstName: String, lastName: String, email: String, role: Role) {
-        this.firstName = firstName
-        this.lastName = lastName
-        this.email = email
-        this.role = role
-    }
-
     override val fullName: String
-        get() = firstName + " " + lastName
+        get() = "$firstName $lastName"
 
-    override fun getAuthorities(): Collection<GrantedAuthority?> {
-        return role.rolesRecursive
-    }
+    override fun getAuthorities(): Collection<GrantedAuthority> = role.rolesRecursive
 
-    override fun getPassword(): String {
-        return password!!
-    }
+    override fun getPassword(): String? = password
 
     fun setPassword(password: String?) {
         this.password = password
     }
 
-    override fun getUsername(): String {
-        return email
-    }
+    override fun getUsername(): String = email
 
-    override fun isAccountNonExpired(): Boolean {
-        return true
-    }
+    override fun isAccountNonExpired(): Boolean = true
 
-    override fun isAccountNonLocked(): Boolean {
-        return true
-    }
+    override fun isAccountNonLocked(): Boolean = true
 
-    override fun isCredentialsNonExpired(): Boolean {
-        return true
-    }
+    override fun isCredentialsNonExpired(): Boolean = true
 
-    override fun isEnabled(): Boolean {
-        return true
-    }
+    override fun isEnabled(): Boolean = true
 
     val locale: Locale
         get() = Locale(language)
@@ -89,10 +60,8 @@ class User : UserDetails, GitUser {
     }
 
     override fun hashCode(): Int {
-        return if (id != null) id.hashCode() else 0
+        return id?.hashCode() ?: 0
     }
 
-    override fun toString(): String {
-        return fullName + "<" + email + ">"
-    }
+    override fun toString(): String = "$fullName<$email>"
 }

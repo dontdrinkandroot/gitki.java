@@ -36,7 +36,7 @@ class MoveDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormMod
 
     private val targetDirectoryModel: IModel<DirectoryPath>
 
-    private val targetNameModel: IModel<String>
+    private val targetNameModel: IModel<String?>
 
     override fun createHeadingModel(): IModel<String> {
         return StringResourceModel("gitki.move")

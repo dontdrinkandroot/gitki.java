@@ -106,11 +106,8 @@
                     </args>
                     <compilerPlugins>
                         <plugin>spring</plugin>
-                        <plugin>no-arg</plugin>
+                        <plugin>jpa</plugin>
                     </compilerPlugins>
-                    <pluginOptions>
-                        <!--                        <option>no-arg:annotation=org.neo4j.ogm.annotation.NodeEntity</option>-->
-                    </pluginOptions>
                 </configuration>
                 <dependencies>
                     <dependency>
