@@ -1,6 +1,6 @@
 package net.dontdrinkandroot.gitki.service.requestmapping
 
-import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel
+import net.dontdrinkandroot.gitki.wicket.component.card.index.IndexFileCard
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage
 import org.springframework.beans.factory.annotation.Value
@@ -11,7 +11,7 @@ import javax.inject.Inject
 class DefaultRequestMappingRegistry @Inject constructor(
     @Value("#{gitkiConfigurationProperties.viewMappings}") private var viewMappings: MutableMap<String, Class<out ViewPage>>,
     @Value("#{gitkiConfigurationProperties.editMappings}") private var editMappings: MutableMap<String, Class<out EditPage>>,
-    @Value("#{gitkiConfigurationProperties.indexFileMappings}") private var indexFileMappings: Map<String, Class<out IndexFilePanel>>
+    @Value("#{gitkiConfigurationProperties.indexFileMappings}") private var indexFileMappings: Map<String, Class<out IndexFileCard>>
 ) : RequestMappingRegistry {
 
     override fun setViewMappings(mappings: MutableMap<String, Class<out ViewPage>>) {
@@ -22,7 +22,7 @@ class DefaultRequestMappingRegistry @Inject constructor(
         editMappings = mappings
     }
 
-    override fun setIndexFileMappings(mappings: Map<String, Class<out IndexFilePanel>>) {
+    override fun setIndexFileMappings(mappings: Map<String, Class<out IndexFileCard>>) {
         indexFileMappings = mappings
     }
 
@@ -40,6 +40,6 @@ class DefaultRequestMappingRegistry @Inject constructor(
     override fun resolveEditMapping(extension: String): Class<out EditPage>? =
         if (!editMappings.containsKey(extension)) null else editMappings[extension]
 
-    override fun resolveIndexFilePanel(extension: String): Class<out IndexFilePanel>? =
+    override fun resolveIndexFilePanel(extension: String): Class<out IndexFileCard>? =
         if (!indexFileMappings.containsKey(extension)) null else indexFileMappings[extension]
 }

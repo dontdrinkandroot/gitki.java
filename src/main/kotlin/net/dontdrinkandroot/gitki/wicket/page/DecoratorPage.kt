@@ -6,7 +6,6 @@ import net.dontdrinkandroot.gitki.wicket.component.item.AdminDropdownItem
 import net.dontdrinkandroot.gitki.wicket.component.item.HistoryPageItem
 import net.dontdrinkandroot.gitki.wicket.component.item.SignInPageLinkItem
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.behavior.OutputMarkupIdBehavior
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior
@@ -53,7 +52,7 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
 
     override fun onBeforeRender() {
         super.onBeforeRender()
-        if (null == getGitkiSession().user) {
+        if (null == net.dontdrinkandroot.gitki.wicket.getGitkiSession().user) {
             // TODO: Remove
             Visits.visit(this, NonStatelessPrintingVisitor())
         }

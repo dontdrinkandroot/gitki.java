@@ -32,7 +32,8 @@ open class SignInPage(parameters: PageParameters) : SignInPage(parameters) {
     override val signedIn: Boolean
         get() = null != getGitkiSession().user
 
-    override fun signIn(username: String, password: String): Boolean = getGitkiSession().signIn(username, password)
+    override fun signIn(username: String, password: String): Boolean = getGitkiSession()
+        .signIn(username, password)
 
     override val bootstrapHeaderItem: HeaderItem
         get() = AppCssHeaderItem()

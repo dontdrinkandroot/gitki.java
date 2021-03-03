@@ -5,8 +5,8 @@ import net.dontdrinkandroot.gitki.service.configuration.ConfigurationService
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
+import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import org.apache.wicket.markup.html.basic.Label
-import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
 import org.springframework.core.env.Environment
@@ -23,7 +23,7 @@ class ConfigurationPage(parameters: PageParameters) : DecoratorPage<Void>(parame
     @SpringBean
     private lateinit var configurationService: ConfigurationService
 
-    override fun createTitleModel() = Model("Configuration")
+    override fun createTitleModel() = ValueKModel("Configuration")
 
     override fun onInitialize() {
         super.onInitialize()

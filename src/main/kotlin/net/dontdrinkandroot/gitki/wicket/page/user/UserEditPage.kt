@@ -8,6 +8,8 @@ import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.bootstrap.css.grid.ColumnSizeStack
+import net.dontdrinkandroot.wicket.kmodel.kModel
+import net.dontdrinkandroot.wicket.kmodel.wrap
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
@@ -29,11 +31,11 @@ class UserEditPage : UserPage<User> {
 
     constructor(model: IModel<User>) : super(model)
 
-    override fun createTitleModel() = StringResourceModel("gitki.user_edit")
+    override fun createTitleModel() = StringResourceModel("gitki.user_edit").wrap()
 
     override fun onInitialize() {
         super.onInitialize()
-        val form: UserEditForm = object : UserEditForm("form", this.model) {
+        val form: UserEditForm = object : UserEditForm("form", kModel) {
             override fun onAfterSubmit(target: AjaxRequestTarget?) {
                 super.onAfterSubmit(target)
                 if (getGitkiSession().hasRole(Role.ADMIN)) {

@@ -12,6 +12,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputFile
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal
+import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.basic.Label
@@ -88,6 +89,6 @@ class UploadFilesModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal
 
     override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
-        this.setResponsePage(DirectoryPage(this@UploadFilesModal.model))
+        this.setResponsePage(DirectoryPage(this@UploadFilesModal.kModel))
     }
 }

@@ -19,17 +19,14 @@ fun getGitkiSession() = Session.get() as GitkiWebSession
 class GitkiWebSession(request: Request?) : SecureWebSession(request) {
 
     @SpringBean
-    private val configurationService: ConfigurationService? = null
+    private lateinit var configurationService: ConfigurationService
+
     val user: User?
         get() {
-            if (!this.isSignedIn) {
-                return null
-            }
+            if (!this.isSignedIn) return null
             val authentication = SecurityContextHolder.getContext().authentication
             val principal = authentication.principal
-            if (null != principal && principal is User) {
-                return principal
-            }
+            if (null != principal && principal is User) return principal
             signOut()
             return null
         }
@@ -52,7 +49,7 @@ class GitkiWebSession(request: Request?) : SecureWebSession(request) {
     }
 
     fun checkAnonymousBrowsing(): Boolean {
-        if (configurationService!!.isAnonymousBrowsingEnabled) {
+        if (configurationService.isAnonymousBrowsingEnabled) {
             return true
         }
         val user = user

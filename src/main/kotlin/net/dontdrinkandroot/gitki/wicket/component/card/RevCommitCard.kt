@@ -1,4 +1,4 @@
-package net.dontdrinkandroot.gitki.wicket.component.bspanel
+package net.dontdrinkandroot.gitki.wicket.component.card
 
 import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel
 import net.dontdrinkandroot.wicket.bootstrap.component.card.SimpleCard
@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel
 import org.eclipse.jgit.lib.PersonIdent
 import org.eclipse.jgit.revwalk.RevCommit
 
-class RevCommitPanel(id: String, model: IModel<RevCommit>) :
+class RevCommitCard(id: String, model: IModel<RevCommit>) :
     SimpleCard<RevCommit>(id, model, headingModel = model.function(RevCommit::getFullMessage)) {
 
     override fun onInitialize() {

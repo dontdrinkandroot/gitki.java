@@ -29,10 +29,9 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<Void>(parameters)
 
     private val passwordModel: KModel<String?> = ValueKModel(null)
 
-    override fun createTitleModel() = ValueKModel<String?>("Initial Configuration")
+    override fun createTitleModel() = ValueKModel("Initial Configuration")
 
     init {
-
         /* This page is only accessible when no admin user has been created */
         if (userService.hasAdminUser()) throw AbortWithHttpErrorCodeException(HttpServletResponse.SC_FORBIDDEN)
 

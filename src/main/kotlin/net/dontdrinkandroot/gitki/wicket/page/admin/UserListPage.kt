@@ -9,6 +9,7 @@ import net.dontdrinkandroot.gitki.wicket.page.user.UserPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.bootstrap.behavior.TableBehavior
 import net.dontdrinkandroot.wicket.bootstrap.css.TableStyle
+import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn
@@ -19,9 +20,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters
 import java.util.*
 
 @Instantiate(Role.ADMIN)
-class UserListPage(parameters: PageParameters) : UserPage<List<User>>(parameters) {
+class UserListPage(parameters: PageParameters = PageParameters()) : UserPage<List<User>>(parameters) {
 
-    override fun createTitleModel() = Model("Users")
+    override fun createTitleModel() = ValueKModel("Users")
 
     override fun onInitialize() {
         super.onInitialize()

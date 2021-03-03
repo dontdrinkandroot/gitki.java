@@ -16,13 +16,15 @@ import net.dontdrinkandroot.gitki.wicket.page.BrowsePage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
+import net.dontdrinkandroot.wicket.kmodel.KModel
+import net.dontdrinkandroot.wicket.kmodel.ValueKModel
+import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.Component
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.event.IEvent
 import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.repeater.RepeatingView
-import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
@@ -39,7 +41,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
 
     private lateinit var entriesPanel: DirectoryEntriesPanel
 
-    constructor(model: IModel<DirectoryPath>) : super(model) {
+    constructor(model: KModel<DirectoryPath>) : super(model) {
         PageParameterUtils.from(model.getObject(), pageParameters)
     }
 
@@ -50,7 +52,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
 
     override fun onInitialize() {
         super.onInitialize()
-        this.add(Label("heading", AbstractPathNameModel(this.model)))
+        this.add(Label("heading", AbstractPathNameModel(this.kModel)))
         entriesPanel = DirectoryEntriesPanel("entries", DirectoryPathEntriesModel(this.model))
         entriesPanel.outputMarkupId = true
         this.add(entriesPanel)
@@ -59,14 +61,14 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
     }
 
     private fun createIndexFileComponent(id: String): Component {
-        val indexFilePath = wikiService.resolveIndexFile(this.model.getObject())
-            ?: return WebMarkupContainer(id).setVisible(false)
+        val indexFilePath =
+            wikiService.resolveIndexFile(this.model.getObject()) ?: return WebMarkupContainer(id).setVisible(false)
         val clazz = requestMappingRegistry.resolveIndexFilePanel(indexFilePath.extension)
             ?: return WebMarkupContainer(id).setVisible(false)
-        val indexFilePathModel: IModel<FilePath> = Model.of(indexFilePath)
+        val indexFilePathModel: KModel<FilePath> = ValueKModel(indexFilePath)
 
         return try {
-            val constructor = clazz.getDeclaredConstructor(String::class.java, IModel::class.java)
+            val constructor = clazz.getDeclaredConstructor(String::class.java, KModel::class.java)
             constructor.newInstance(id, indexFilePathModel)
         } catch (e: NoSuchMethodException) {
             throw WicketRuntimeException(e)
@@ -99,7 +101,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
                     payload.target!!.add(entriesPanel)
                     return
                 }
-                this.setResponsePage(DirectoryPage(Model.of(directoryPath)))
+                this.setResponsePage(DirectoryPage(ValueKModel(directoryPath)))
                 return
             }
             is FileMovedEvent -> {
@@ -108,7 +110,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
             }
             is DirectoryMovedEvent -> {
                 if (payload.directoryPath.equals(this.modelObject)) {
-                    this.setResponsePage(DirectoryPage(Model.of(payload.targetPath)))
+                    this.setResponsePage(DirectoryPage(ValueKModel(payload.targetPath)))
                 } else {
                     payload.target!!.add(entriesPanel)
                 }

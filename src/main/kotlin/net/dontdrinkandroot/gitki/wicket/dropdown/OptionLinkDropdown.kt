@@ -7,28 +7,31 @@ import net.dontdrinkandroot.wicket.bootstrap.component.dropdown.DropdownMenu
 import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
-import org.apache.wicket.Component
-import org.apache.wicket.markup.html.WebMarkupContainer
+import net.dontdrinkandroot.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.markup.repeater.RepeatingView
+import org.apache.wicket.model.Model
 
-abstract class OptionLinkDropdown(id: String) : Panel(id) {
+class OptionLinkDropdown(
+    id: String,
+    populateItemsHandler: OptionLinkDropdown.(itemView: RepeatingView) -> Any?
+) : Panel(id) {
 
-    override fun onInitialize() {
-        super.onInitialize()
+    init {
         this.add(CssClassAppender(BootstrapCssClass.DROPDOWN))
-        val link: Component = WebMarkupContainer("link")
-        link.add(IconBehavior(FontAwesome5IconClass.ELLIPSIS_V.createIcon().apply { fixedWidth = true }))
-        link.add(DropdownToggleBehavior())
-        this.add(link)
-        val dropdownMenu: DropdownMenu = object : DropdownMenu("dropdownMenu") {
+        this.add(
+            WebMarkupContainer<Void>(
+                "link",
+                behaviors = listOf(
+                    DropdownToggleBehavior(),
+                    IconBehavior(FontAwesome5IconClass.ELLIPSIS_V.createIcon().apply { fixedWidth = true })
+                )
+            )
+        )
+        this.add(object : DropdownMenu("dropdownMenu", Model(DropdownAlignment.END)) {
             override fun populateItems(itemView: RepeatingView) {
-                this@OptionLinkDropdown.populateItems(itemView)
+                populateItemsHandler(itemView)
             }
-        }
-        dropdownMenu.setAlignment(DropdownAlignment.RIGHT)
-        this.add(dropdownMenu)
+        })
     }
-
-    protected abstract fun populateItems(itemView: RepeatingView)
 }

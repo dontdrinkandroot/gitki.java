@@ -1,21 +1,21 @@
-package net.dontdrinkandroot.gitki.wicket.component.bspanel.index
+package net.dontdrinkandroot.gitki.wicket.component.card.index
 
 import net.dontdrinkandroot.gitki.model.FilePath
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService
 import net.dontdrinkandroot.gitki.wicket.head.HighlightInitHeaderItem
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
+import net.dontdrinkandroot.wicket.kmodel.KModel
 import org.apache.wicket.Component
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.html.basic.Label
-import org.apache.wicket.model.IModel
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException
 import org.apache.wicket.spring.injection.annot.SpringBean
 import java.io.FileNotFoundException
 import java.io.IOException
 
-class MarkdownIndexFilePanel(id: String, model: IModel<FilePath>) : IndexFilePanel(id, model) {
+class MarkdownIndexFileCard(id: String, model: KModel<FilePath>) : IndexFileCard(id, model) {
 
     @SpringBean
     private val gitService: GitService? = null

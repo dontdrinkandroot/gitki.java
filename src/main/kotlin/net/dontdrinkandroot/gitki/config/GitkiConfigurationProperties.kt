@@ -1,6 +1,6 @@
 package net.dontdrinkandroot.gitki.config
 
-import net.dontdrinkandroot.gitki.wicket.component.bspanel.index.IndexFilePanel
+import net.dontdrinkandroot.gitki.wicket.component.card.index.IndexFileCard
 import net.dontdrinkandroot.gitki.wicket.page.file.edit.EditPage
 import net.dontdrinkandroot.gitki.wicket.page.file.view.ViewPage
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -20,7 +20,7 @@ class GitkiConfigurationProperties {
     var viewMappings: Map<String, Class<out ViewPage?>> = HashMap()
     var editMappings: Map<String, Class<out EditPage?>> = HashMap()
     var indexFiles: List<String> = ArrayList()
-    var indexFileMappings: Map<String, Class<out IndexFilePanel?>> = HashMap()
+    var indexFileMappings: Map<String, Class<out IndexFileCard?>> = HashMap()
 
     class Git {
 

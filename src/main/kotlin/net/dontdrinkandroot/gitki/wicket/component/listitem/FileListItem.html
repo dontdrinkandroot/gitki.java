@@ -2,11 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <body>
 <wicket:panel>
-    <span class="far fa-file fa-fw"></span>
-    <a wicket:id="link"></a>
-    <span class="size" wicket:id="size"></span>
-    <span class="lastmodified" wicket:id="lastmodified"></span>
-    <div wicket:id="actions"></div>
+    <div class="row">
+        <div class="col-7">
+            <span class="far fa-file fa-fw"></span>
+            <a wicket:id="link"></a>
+        </div>
+        <div class="col-2 text-end">
+            <span class="size" wicket:id="size"></span>
+        </div>
+        <div class="col-2 text-end">
+            <span class="lastmodified" wicket:id="lastmodified"></span>
+        </div>
+        <div class="col-1 text-end">
+            <div wicket:id="actions"></div>
+        </div>
+    </div>
 </wicket:panel>
 </body>
 </html>

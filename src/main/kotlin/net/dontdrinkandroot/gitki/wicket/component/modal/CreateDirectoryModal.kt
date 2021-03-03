@@ -3,16 +3,15 @@ package net.dontdrinkandroot.gitki.wicket.component.modal
 import net.dontdrinkandroot.gitki.model.DirectoryPath
 import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.service.git.GitService
+import net.dontdrinkandroot.gitki.wicket.component.button.ModalCancelButton
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
-import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior
-import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal
+import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
-import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
@@ -47,10 +46,7 @@ class CreateDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormM
     override fun populateFormActions(formActionView: RepeatingView) {
         super.populateFormActions(formActionView)
         formActionView.add(SubmitLabelButton(formActionView.newChildId(), StringResourceModel("gitki.create")))
-        val cancelButton = Label(formActionView.newChildId(), StringResourceModel("gitki.cancel"))
-        cancelButton.add(ButtonBehavior())
-        cancelButton.add(OnClickScriptBehavior(this.hideScript))
-        formActionView.add(cancelButton)
+        formActionView.add(ModalCancelButton(formActionView.newChildId(), this))
     }
 
     override fun onSubmit(target: AjaxRequestTarget?) {
@@ -64,7 +60,7 @@ class CreateDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormM
 
     override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
-        this.setResponsePage(DirectoryPage(Model.of(newPath)))
+        this.setResponsePage(DirectoryPage(ValueKModel(newPath)))
     }
 
     private val newPath: DirectoryPath

@@ -11,10 +11,10 @@ import net.dontdrinkandroot.gitki.wicket.page.file.FilePage
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
+import net.dontdrinkandroot.wicket.kmodel.KModel
+import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import org.apache.wicket.event.IEvent
 import org.apache.wicket.markup.repeater.RepeatingView
-import org.apache.wicket.model.IModel
-import org.apache.wicket.model.Model
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException
 import org.apache.wicket.request.mapper.parameter.PageParameters
 
@@ -27,8 +27,8 @@ open class ViewPage : FilePage {
         }
     }
 
-    constructor(model: IModel<FilePath>) : super(model) {
-        if (!gitService.exists(model.getObject()!!)) {
+    constructor(model: KModel<FilePath>) : super(model) {
+        if (!gitService.exists(model.getObject())) {
             throw AbortWithHttpErrorCodeException(404)
         }
     }
@@ -44,7 +44,7 @@ open class ViewPage : FilePage {
         val payload = event.payload
         if (payload is FileDeletedEvent) {
             val directoryPath = gitService.findExistingDirectoryPath(payload.filePath)
-            this.setResponsePage(DirectoryPage(Model.of(directoryPath)))
+            this.setResponsePage(DirectoryPage(ValueKModel(directoryPath)))
         }
         if (payload is FileMovedEvent) {
             this.setResponsePage(SimpleViewPage::class.java, PageParameterUtils.from(payload.targetPath))

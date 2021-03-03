@@ -22,15 +22,21 @@ class FileActionsDropdownButton(
     buttonSizeModel: IModel<ButtonSize> = Model(null),
     prependIconModel: IModel<CssClass> = Model(null),
     appendIconModel: IModel<CssClass> = Model(null),
-) : DropdownButton<FilePath>(id, model, null, buttonStyleModel, buttonSizeModel, prependIconModel, appendIconModel) {
+    dropdownAlignmentModel: IModel<DropdownAlignment?> = Model(null)
+) : DropdownButton<FilePath>(
+    id,
+    model,
+    null,
+    buttonStyleModel,
+    buttonSizeModel,
+    prependIconModel,
+    appendIconModel,
+    dropdownAlignmentModel
+) {
 
     override fun populateItems(itemView: RepeatingView) {
         itemView.add(EditFileItem(itemView.newChildId(), this.model))
         itemView.add(MoveFileModalItem(itemView.newChildId(), this.model))
         itemView.add(RemoveFileModalItem(itemView.newChildId(), this.model))
-    }
-
-    init {
-        setDropdownAlignment(DropdownAlignment.RIGHT)
     }
 }

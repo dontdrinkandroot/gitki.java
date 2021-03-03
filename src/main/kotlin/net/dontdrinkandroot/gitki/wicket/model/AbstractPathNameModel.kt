@@ -1,12 +1,14 @@
 package net.dontdrinkandroot.gitki.wicket.model
 
 import net.dontdrinkandroot.gitki.model.GitkiPath
-import net.dontdrinkandroot.wicket.model.AbstractChainedModel
-import org.apache.wicket.model.IModel
+import net.dontdrinkandroot.wicket.kmodel.KModel
 
-class AbstractPathNameModel(parent: IModel<out GitkiPath>) : AbstractChainedModel<GitkiPath, String>(parent) {
+class AbstractPathNameModel(private val parentModel: KModel<out GitkiPath>) : KModel<String> {
 
-    override fun getValue(parentValue: GitkiPath?): String? = parentValue?.let {
-        return if (it.root) "/" else it.name!!
+    override val value: String
+        get() = parentModel.value.let { return if (it.root) "/" else it.name!! }
+
+    override fun detach() {
+        parentModel.detach()
     }
 }

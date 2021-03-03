@@ -8,9 +8,10 @@ import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
-import net.dontdrinkandroot.wicket.bootstrap.component.button.Button
+import net.dontdrinkandroot.wicket.bootstrap.component.button.button
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea
+import net.dontdrinkandroot.wicket.kmodel.KModel
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes
@@ -42,7 +43,7 @@ class MarkdownEditPage : EditPage {
 
     constructor(parameters: PageParameters) : super(parameters)
 
-    constructor(model: IModel<FilePath>) : super(model)
+    constructor(model: KModel<FilePath>) : super(model)
 
     override fun onInitialize() {
         super.onInitialize()
@@ -140,20 +141,17 @@ class MarkdownEditPage : EditPage {
         editForm.add(saveButton)
 
         editForm.add(
-            Button<Void>(
-                "cancel",
-                bodyModel = StringResourceModel("gitki.cancel"),
-                onClickHandler = {
-                    try {
-                        wikiService.unlock(this@MarkdownEditPage.modelObject, getGitkiSession().user!!)
-                        this.setResponsePage(
-                            SimpleViewPage::class.java,
-                            PageParameterUtils.from(this@MarkdownEditPage.modelObject)
-                        )
-                    } catch (e: LockedException) {
-                        throw WicketRuntimeException(e)
-                    }
-                })
+            button<Void>("cancel", bodyModel = StringResourceModel("gitki.cancel")) {
+                try {
+                    wikiService.unlock(this@MarkdownEditPage.modelObject, getGitkiSession().user!!)
+                    this.setResponsePage(
+                        SimpleViewPage::class.java,
+                        PageParameterUtils.from(this@MarkdownEditPage.modelObject)
+                    )
+                } catch (e: LockedException) {
+                    throw WicketRuntimeException(e)
+                }
+            }
         )
     }
 

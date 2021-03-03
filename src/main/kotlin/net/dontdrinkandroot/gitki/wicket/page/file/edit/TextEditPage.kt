@@ -9,7 +9,8 @@ import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea
-import net.dontdrinkandroot.wicket.model.nullable
+import net.dontdrinkandroot.wicket.kmodel.KModel
+import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.form.Form
@@ -28,9 +29,9 @@ class TextEditPage : EditPage {
 
     constructor(parameters: PageParameters) : super(parameters)
 
-    constructor(model: IModel<FilePath>) : super(model)
+    constructor(model: KModel<FilePath>) : super(model)
 
-    override fun createTitleModel() = AbstractPathNameModel(this.model).nullable()
+    override fun createTitleModel() = AbstractPathNameModel(this.kModel)
 
     override fun onInitialize() {
         super.onInitialize()

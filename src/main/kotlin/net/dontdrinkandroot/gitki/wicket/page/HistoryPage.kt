@@ -1,9 +1,10 @@
 package net.dontdrinkandroot.gitki.wicket.page
 
-import net.dontdrinkandroot.gitki.wicket.component.bspanel.RevCommitPanel
+import net.dontdrinkandroot.gitki.wicket.component.card.RevCommitCard
 import net.dontdrinkandroot.gitki.wicket.dataprovider.HistoryDataProvider
 import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.wicket.bootstrap.component.pagination.AjaxPaginationPanel
+import net.dontdrinkandroot.wicket.kmodel.wrap
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.WebMarkupContainer
 import org.apache.wicket.markup.repeater.Item
@@ -18,7 +19,7 @@ class HistoryPage(parameters: PageParameters) : DecoratorPage<Void>(parameters) 
         getGitkiSession().assertAnonymousBrowsing(HistoryPage::class.java)
     }
 
-    override fun createTitleModel() = StringResourceModel("gitki.history")
+    override fun createTitleModel() = StringResourceModel("gitki.history").wrap()
 
     override fun onInitialize() {
         super.onInitialize()
@@ -27,7 +28,7 @@ class HistoryPage(parameters: PageParameters) : DecoratorPage<Void>(parameters) 
         this.add(commitContainer)
         val commitView: DataView<RevCommit> = object : DataView<RevCommit>("commit", HistoryDataProvider()) {
             override fun populateItem(item: Item<RevCommit>) {
-                item.add(RevCommitPanel("detail", item.model))
+                item.add(RevCommitCard("detail", item.model))
             }
         }
         commitView.itemsPerPage = 20

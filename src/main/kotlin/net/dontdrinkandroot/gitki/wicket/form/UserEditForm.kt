@@ -6,17 +6,21 @@ import net.dontdrinkandroot.gitki.service.user.UserService
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.IsoLanguageChoiceRenderer
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.ZoneIdChoiceRenderer
 import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.RepeatingAjaxForm
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputEmail
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputPassword
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupSelect
+import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
+import net.dontdrinkandroot.wicket.kmodel.kModel
+import net.dontdrinkandroot.wicket.kmodel.kModelValue
+import net.dontdrinkandroot.wicket.kmodel.writableProperty
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
-import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.model.util.ListModel
 import org.apache.wicket.spring.injection.annot.SpringBean
@@ -33,8 +37,8 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
     override fun populateFormGroups(formGroupView: RepeatingView) {
         val formGroupFirstName = FormGroupInputText(
             formGroupView.newChildId(),
-            PropertyModel(this.model, "firstName"),
-            Model.of("First Name")
+            kModel.writableProperty(User::firstName),
+            StringResourceModel("gitki.user.firstName")
         )
         formGroupFirstName.setRequired(true)
         formGroupFirstName.addAjaxValidation()
@@ -42,8 +46,8 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
 
         val formGroupLastName = FormGroupInputText(
             formGroupView.newChildId(),
-            PropertyModel(this.model, "lastName"),
-            Model.of("Last Name")
+            kModel.writableProperty(User::lastName),
+            StringResourceModel("gitki.user.lastName")
         )
         formGroupLastName.setRequired(true)
         formGroupLastName.addAjaxValidation()
@@ -51,7 +55,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
 
         val formGroupEmail = FormGroupInputEmail(
             formGroupView.newChildId(),
-            PropertyModel(this.model, "email"),
+            kModel.writableProperty(User::email),
             Model.of("Email")
         )
         formGroupEmail.setRequired(true)
@@ -60,9 +64,9 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
 
         val formGroupLanguage = FormGroupSelect(
             formGroupView.newChildId(),
-            PropertyModel(this.model, "language"),
-            Model.of("Language"),
-            ListModel(Arrays.asList(*Locale.getISOLanguages())),
+            kModel.writableProperty(User::language),
+            StringResourceModel("gitki.user.language"),
+            ListModel(Locale.getISOLanguages().toList()),
             IsoLanguageChoiceRenderer()
         )
         formGroupLanguage.setRequired(true)
@@ -74,7 +78,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         )
         val formGroupZoneId = FormGroupSelect(
             formGroupView.newChildId(),
-            PropertyModel(this.model, "zoneId"),
+            kModel.writableProperty(User::zoneId),
             StringResourceModel("gitki.timezone"),
             availableZoneIdsModel,
             ZoneIdChoiceRenderer()
@@ -84,19 +88,24 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
 
         val formGroupRole = FormGroupSelect(
             formGroupView.newChildId(),
-            PropertyModel(this.model, "role"),
-            Model.of("Role"),
-            ListModel(Arrays.asList(*Role.values()))
+            kModel.writableProperty(User::role),
+            StringResourceModel("gitki.user.role"),
+            ListModel(Role.values().toList())
         )
         formGroupRole.setNullValid(false)
         formGroupRole.setRequired(true)
         formGroupRole.isVisible = getGitkiSession().hasRole(Role.ADMIN)
         formGroupView.add(formGroupRole)
 
-        val formGroupPassword =
-            FormGroupInputPassword(formGroupView.newChildId(), newPasswordModel, Model.of("Password"))
+        val formGroupPassword = FormGroupInputPassword(
+            formGroupView.newChildId(),
+            newPasswordModel,
+            StringResourceModel("gitki.user.password")
+        )
         formGroupPassword.setRequired(false)
         formGroupView.add(formGroupPassword)
+
+        formGroupView.forEach { it.add(CssClassAppender(Spacing.MARGIN_BOTTOM_FULL)) }
     }
 
     override fun populateActions(buttonView: RepeatingView) {
@@ -105,8 +114,8 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
 
     override fun onSubmit(target: AjaxRequestTarget?) {
         super.onSubmit(target)
-        var user = this.modelObject
-        user = userService.save(user!!, newPasswordModel.getObject())
+        var user = this.kModelValue
+        user = userService.save(user, newPasswordModel.getObject())
 
         /* Update user in session so changes are reflected e.g. for locale*/
         if (getGitkiSession().user?.equals(user) == true) {

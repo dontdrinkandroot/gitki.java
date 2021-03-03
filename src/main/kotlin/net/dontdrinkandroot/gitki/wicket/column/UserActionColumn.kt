@@ -2,14 +2,16 @@ package net.dontdrinkandroot.gitki.wicket.column
 
 import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.wicket.dropdown.OptionLinkDropdown
+import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage
 import net.dontdrinkandroot.gitki.wicket.page.user.UserEditPage
-import net.dontdrinkandroot.wicket.bootstrap.component.item.LinkItem
+import net.dontdrinkandroot.wicket.behavior.CssClassAppender
+import net.dontdrinkandroot.wicket.bootstrap.component.item.linkItem
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.TextColor
 import net.dontdrinkandroot.wicket.model.model
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn
 import org.apache.wicket.markup.repeater.Item
-import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.model.StringResourceModel
@@ -17,21 +19,24 @@ import org.apache.wicket.model.StringResourceModel
 class UserActionColumn : AbstractColumn<User, String>(Model.of("")) {
 
     override fun populateItem(cellItem: Item<ICellPopulator<User>>, componentId: String, rowModel: IModel<User>) {
-        cellItem.add(object : OptionLinkDropdown(componentId) {
-            override fun populateItems(itemView: RepeatingView) {
-                val editItem: LinkItem<*> =
-                    object : LinkItem<User>(
-                        itemView.newChildId(),
-                        rowModel,
-                        StringResourceModel("gitki.edit"),
-                        prependIconModel = FontAwesome5IconClass.EDIT.createIcon().apply { fixedWidth = true }.model()
-                    ) {
-                        override fun onClick() {
-                            this.setResponsePage(UserEditPage(this.model))
-                        }
-                    }
-                itemView.add(editItem)
-            }
+        cellItem.add(OptionLinkDropdown(componentId) { itemView ->
+            itemView.add(linkItem(
+                itemView.newChildId(),
+                rowModel,
+                labelModel = StringResourceModel("gitki.edit"),
+                prependIconModel = FontAwesome5IconClass.EDIT.createIcon().apply { fixedWidth = true }.model()
+            ) {
+                setResponsePage(UserEditPage(model))
+            })
+            itemView.add(linkItem(
+                itemView.newChildId(),
+                rowModel,
+                labelModel = StringResourceModel("gitki.remove"),
+                prependIconModel = FontAwesome5IconClass.TRASH.createIcon().apply { fixedWidth = true }.model(),
+                linkBehaviors = listOf(CssClassAppender(TextColor.DANGER))
+            ) {
+                setResponsePage(UserListPage())
+            })
         })
 
         //        Button<User> editButton = new Button<User>(componentId, rowModel)

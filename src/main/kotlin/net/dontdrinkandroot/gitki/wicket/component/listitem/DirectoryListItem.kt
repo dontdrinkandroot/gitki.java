@@ -10,16 +10,16 @@ import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
-import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
-import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
+import net.dontdrinkandroot.wicket.kmodel.kModel
+import net.dontdrinkandroot.wicket.markup.html.link.BookmarkablePageLink
 import net.dontdrinkandroot.wicket.model.model
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
 import org.apache.wicket.markup.html.basic.Label
-import org.apache.wicket.markup.html.link.BookmarkablePageLink
 import org.apache.wicket.markup.html.panel.GenericPanel
 import org.apache.wicket.model.IModel
+import org.apache.wicket.model.Model
 import java.nio.file.attribute.BasicFileAttributes
 
 class DirectoryListItem(id: String, model: IModel<DirectoryPath>) : GenericPanel<DirectoryPath>(id, model) {
@@ -28,34 +28,39 @@ class DirectoryListItem(id: String, model: IModel<DirectoryPath>) : GenericPanel
 
     override fun onInitialize() {
         super.onInitialize()
-        val actionsDropDownButton = DirectoryActionsDropdownButton(
-            "actions",
-            this.model,
-            buttonStyleModel = ButtonStyle.OUTLINE_SECONDARY.model(),
-            buttonSizeModel = ButtonSize.SMALL.model(),
-            prependIconModel = FontAwesome4IconClass.FOLDER.createIcon().apply { fixedWidth = true }.model()
+
+        this.add(
+            DirectoryActionsDropdownButton(
+                "actions",
+                this.model,
+                buttonStyleModel = Model(null),
+                buttonSizeModel = ButtonSize.SMALL.model(),
+                prependIconModel = FontAwesome5IconClass.ELLIPSIS_V.createIcon().apply { fixedWidth = true }.model()
+            )
         )
-        actionsDropDownButton.setDropdownAlignment(DropdownAlignment.LEFT)
-        this.add(actionsDropDownButton)
-        val link: BookmarkablePageLink<Void> = BookmarkablePageLink(
-            "link",
-            DirectoryPage::class.java,
-            PageParameterUtils.from(this.modelObject)
+
+        this.add(
+            BookmarkablePageLink<Void>(
+                "link",
+                pageClass = DirectoryPage::class.java,
+                pageParameters = PageParameterUtils.from(this.modelObject),
+                bodyModel = AbstractPathNameModel(this.kModel)
+            )
         )
-        link.body = AbstractPathNameModel(this.model)
-        this.add(link)
-        val lastModifiedLabel = Label(
-            "lastmodified",
-            TemporalAccessorStringModel(
-                FileTimeInstantModel(
-                    BasicFileAttributesLastModifiedTimeModel(
-                        attributesModel
+
+        this.add(
+            Label(
+                "lastmodified",
+                TemporalAccessorStringModel(
+                    FileTimeInstantModel(
+                        BasicFileAttributesLastModifiedTimeModel(
+                            attributesModel
+                        )
                     )
                 )
             )
         )
-        this.add(lastModifiedLabel)
+
         this.add(CssClassAppender(GitkiCssClass.DIRECTORY))
     }
-
 }

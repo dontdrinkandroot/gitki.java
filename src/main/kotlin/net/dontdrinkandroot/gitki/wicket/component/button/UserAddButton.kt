@@ -11,8 +11,8 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.Button
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
+import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.model.model
-import org.apache.wicket.model.Model
 
 @Render(Role.ADMIN)
 class UserAddButton(id: String) :
@@ -20,10 +20,14 @@ class UserAddButton(id: String) :
         id,
         buttonStyleModel = ButtonStyle.PRIMARY.model(),
         buttonSizeModel = ButtonSize.LARGE.model(),
-        onClickHandler = { setResponsePage(UserEditPage(Model.of(User()))) }) {
+    ) {
 
     init {
         this.add(CssClassAppender(GitkiCssClass.BTN_ICON))
         this.add(IconBehavior(FontAwesome5IconClass.PLUS.createIcon().apply { fixedWidth = true }))
+    }
+
+    override fun onClick() {
+        setResponsePage(UserEditPage(ValueKModel(User(email = "", firstName = "", lastName = ""))))
     }
 }

@@ -5,11 +5,11 @@ import net.dontdrinkandroot.gitki.service.markdown.MarkdownService
 import net.dontdrinkandroot.gitki.wicket.component.button.EditButton
 import net.dontdrinkandroot.gitki.wicket.component.button.PrintButton
 import net.dontdrinkandroot.gitki.wicket.head.HighlightInitHeaderItem
+import net.dontdrinkandroot.wicket.kmodel.KModel
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.repeater.RepeatingView
-import org.apache.wicket.model.IModel
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.spring.injection.annot.SpringBean
@@ -23,7 +23,7 @@ class MarkdownViewPage : ViewPage {
 
     constructor(parameters: PageParameters) : super(parameters)
 
-    constructor(model: IModel<FilePath>) : super(model)
+    constructor(model: KModel<FilePath>) : super(model)
 
     override fun onInitialize() {
         super.onInitialize()

@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page
 
 import net.dontdrinkandroot.gitki.wicket.head.AppCssHeaderItem
 import net.dontdrinkandroot.wicket.bootstrap.page.BootstrapPage
+import net.dontdrinkandroot.wicket.kmodel.KModel
 import org.apache.wicket.Component
 import org.apache.wicket.markup.head.HeaderItem
 import org.apache.wicket.markup.html.basic.Label
@@ -19,5 +20,5 @@ abstract class ScaffoldPage<T> : BootstrapPage<T> {
     override val bootstrapHeaderItem: HeaderItem
         get() = AppCssHeaderItem()
 
-    protected abstract fun createTitleModel(): IModel<String?>
+    protected abstract fun createTitleModel(): KModel<String>
 }

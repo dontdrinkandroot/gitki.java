@@ -24,6 +24,7 @@ class DirectoryActionsDropdownButton(
     buttonSizeModel: IModel<ButtonSize> = Model(null),
     prependIconModel: IModel<CssClass> = Model(null),
     appendIconModel: IModel<CssClass> = Model(null),
+    dropdownAlignmentModel: IModel<DropdownAlignment?> = Model(null)
 ) : DropdownButton<DirectoryPath>(
     id,
     model,
@@ -31,7 +32,8 @@ class DirectoryActionsDropdownButton(
     buttonStyleModel,
     buttonSizeModel,
     prependIconModel,
-    appendIconModel
+    appendIconModel,
+    dropdownAlignmentModel
 ) {
 
     override fun populateItems(itemView: RepeatingView) {
@@ -39,9 +41,5 @@ class DirectoryActionsDropdownButton(
         itemView.add(CreateDirectoryModalItem(itemView.newChildId(), this.model))
         itemView.add(UploadFilesModalItem(itemView.newChildId(), this.model))
         itemView.add(MoveDirectoryModalItem(itemView.newChildId(), this.model))
-    }
-
-    init {
-        setDropdownAlignment(DropdownAlignment.RIGHT)
     }
 }

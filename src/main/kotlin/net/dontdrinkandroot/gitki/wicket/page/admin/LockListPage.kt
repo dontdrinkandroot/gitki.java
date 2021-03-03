@@ -6,6 +6,7 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.service.lock.LockService
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
+import net.dontdrinkandroot.wicket.kmodel.wrap
 import net.dontdrinkandroot.wicket.model.property
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.list.ListItem
@@ -21,7 +22,7 @@ class LockListPage(parameters: PageParameters) : DecoratorPage<List<LockInfo>>(p
     @SpringBean
     private lateinit var lockService: LockService
 
-    override fun createTitleModel() = StringResourceModel("gitki.locks")
+    override fun createTitleModel() = StringResourceModel("gitki.locks").wrap()
 
     override fun onInitialize() {
         super.onInitialize()

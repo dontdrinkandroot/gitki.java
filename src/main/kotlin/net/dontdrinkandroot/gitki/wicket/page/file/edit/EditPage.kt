@@ -15,6 +15,7 @@ import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
 import net.dontdrinkandroot.wicket.bootstrap.css.TextAlignment
+import net.dontdrinkandroot.wicket.kmodel.KModel
 import net.dontdrinkandroot.wicket.model.ToStringModel
 import net.dontdrinkandroot.wicket.model.property
 import org.apache.wicket.markup.html.basic.Label
@@ -36,7 +37,7 @@ open class EditPage : FilePage {
         lock()
     }
 
-    constructor(model: IModel<FilePath>) : super(model) {
+    constructor(model: KModel<FilePath>) : super(model) {
         pageParameters["action"] = "edit"
         lock()
     }
