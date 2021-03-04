@@ -10,6 +10,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal
 import net.dontdrinkandroot.wicket.kmodel.ValueKModel
+import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.repeater.RepeatingView
@@ -60,7 +61,7 @@ class CreateDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormM
 
     override fun onAfterSubmit(target: AjaxRequestTarget?) {
         super.onAfterSubmit(target)
-        this.setResponsePage(DirectoryPage(ValueKModel(newPath)))
+        this.setResponsePage(DirectoryPage(kModel(newPath)))
     }
 
     private val newPath: DirectoryPath

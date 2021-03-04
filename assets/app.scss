@@ -1,10 +1,21 @@
 $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 
-$enable-caret: false;
+$enable-caret: false !default;
+
+$link-decoration: none !default;
 
 $border-radius: .125rem !default;
 $border-radius-sm: .1rem !default;
 $border-radius-lg: .15rem !default;
+
+$font-size-base: 1rem !default;
+
+$h1-font-size: $font-size-base * 2 !default;
+$h2-font-size: $font-size-base * 1.75 !default;
+$h3-font-size: $font-size-base * 1.5 !default;
+$h4-font-size: $font-size-base * 1.25 !default;
+$h5-font-size: $font-size-base !default;
+$h6-font-size: $font-size-base !default;
 
 @import "~bootstrap/scss/bootstrap";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
@@ -12,8 +23,12 @@ $border-radius-lg: .15rem !default;
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 
+html {
+    font-size: 14px;
+}
+
 body {
-    padding-top: 56px;
+    padding-top: 50px;
 }
 
 nav.navbar {
@@ -34,13 +49,14 @@ nav.navbar {
 .gk-subnav {
 
     border-bottom: solid 1px $gray-300;
+    //@extend .shadow-sm;
 
     .container {
         @extend .d-flex;
 
         .breadcrumb {
             @extend .gk-content;
-            @extend .mb-0;
+            @extend .my-2;
         }
     }
 }

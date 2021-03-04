@@ -3,11 +3,13 @@ package net.dontdrinkandroot.gitki.wicket.page
 import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.service.user.UserService
+import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.RepeatingAjaxForm
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputEmail
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputPassword
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
+import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
 import net.dontdrinkandroot.wicket.kmodel.*
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.repeater.RepeatingView
@@ -21,15 +23,15 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<Void>(parameters)
     @SpringBean
     private lateinit var userService: UserService
 
-    private val firstNameModel: KModel<String?> = ValueKModel(null)
+    private val firstNameModel: KModel<String?> = kModel(null)
 
-    private val lastNameModel: KModel<String?> = ValueKModel(null)
+    private val lastNameModel: KModel<String?> = kModel(null)
 
-    private val emailModel: KModel<String?> = ValueKModel(null)
+    private val emailModel: KModel<String?> = kModel(null)
 
-    private val passwordModel: KModel<String?> = ValueKModel(null)
+    private val passwordModel: KModel<String?> = kModel(null)
 
-    override fun createTitleModel() = ValueKModel("Initial Configuration")
+    override fun createTitleModel() = kModel("Initial Configuration")
 
     init {
         /* This page is only accessible when no admin user has been created */
@@ -76,10 +78,12 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<Void>(parameters)
                 formGroupPassword.setRequired(true)
                 formGroupPassword.addAjaxValidation()
                 formGroupView.add(formGroupPassword)
+
+                formGroupView.forEach { it.add(CssClassAppender(Spacing.MARGIN_BOTTOM_FULL)) }
             }
 
             override fun populateActions(buttonView: RepeatingView) {
-                buttonView.add(SubmitLabelButton(buttonView.newChildId(), ValueKModel("Create")))
+                buttonView.add(SubmitLabelButton(buttonView.newChildId(), kModel("Create")))
             }
 
             override fun onSubmit(target: AjaxRequestTarget?) {

@@ -15,6 +15,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupS
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
 import net.dontdrinkandroot.wicket.kmodel.ValueKModel
+import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
@@ -69,8 +70,8 @@ class CreateFileModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal<
         val fullName = nameModel.getObject().toString() + "." + fileType.extension
         val filePath = this.modelObject!!.appendFileName(fullName)
         when (fileType) {
-            FileType.MARKDOWN -> this.setResponsePage(MarkdownEditPage(ValueKModel(filePath)))
-            FileType.TEXT -> this.setResponsePage(TextEditPage(ValueKModel(filePath)))
+            FileType.MARKDOWN -> this.setResponsePage(MarkdownEditPage(kModel(filePath)))
+            FileType.TEXT -> this.setResponsePage(TextEditPage(kModel(filePath)))
         }
     }
 }

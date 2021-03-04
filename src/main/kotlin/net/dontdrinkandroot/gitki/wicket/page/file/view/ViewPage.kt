@@ -11,8 +11,10 @@ import net.dontdrinkandroot.gitki.wicket.page.file.FilePage
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
+import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.kmodel.KModel
 import net.dontdrinkandroot.wicket.kmodel.ValueKModel
+import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.event.IEvent
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException
@@ -34,9 +36,14 @@ open class ViewPage : FilePage {
     }
 
     override fun populatePrimaryButtons(view: RepeatingView) {
-        super.populatePrimaryButtons(view)
         view.add(DownloadButton(view.newChildId(), this.model))
-        view.add(FileActionsDropdownButton(view.newChildId(), this.model))
+        view.add(
+            FileActionsDropdownButton(
+                view.newChildId(),
+                this.model,
+                dropdownAlignmentModel = kModel(DropdownAlignment.END)
+            )
+        )
     }
 
     override fun onEvent(event: IEvent<*>) {
@@ -44,7 +51,7 @@ open class ViewPage : FilePage {
         val payload = event.payload
         if (payload is FileDeletedEvent) {
             val directoryPath = gitService.findExistingDirectoryPath(payload.filePath)
-            this.setResponsePage(DirectoryPage(ValueKModel(directoryPath)))
+            this.setResponsePage(DirectoryPage(kModel(directoryPath)))
         }
         if (payload is FileMovedEvent) {
             this.setResponsePage(SimpleViewPage::class.java, PageParameterUtils.from(payload.targetPath))

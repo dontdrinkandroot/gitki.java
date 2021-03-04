@@ -2,9 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:extend>
     <div class="container">
+        <div class="gk-page-header">
+            <h1>Pending locks</h1>
+        </div>
+
         <table class="table">
             <tr>
                 <th>Path</th>
+                <th>User</th>
                 <th>Expiry</th>
             </tr>
             <tr wicket:id="locks">

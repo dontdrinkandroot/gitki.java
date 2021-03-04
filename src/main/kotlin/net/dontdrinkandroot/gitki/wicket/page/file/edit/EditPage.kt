@@ -12,13 +12,17 @@ import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
+import net.dontdrinkandroot.wicket.behavior.cssClass
+import net.dontdrinkandroot.wicket.behavior.cssClasses
+import net.dontdrinkandroot.wicket.behavior.outputMarkupId
 import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
 import net.dontdrinkandroot.wicket.bootstrap.css.TextAlignment
 import net.dontdrinkandroot.wicket.kmodel.KModel
+import net.dontdrinkandroot.wicket.markup.html.basic.Label
 import net.dontdrinkandroot.wicket.model.ToStringModel
 import net.dontdrinkandroot.wicket.model.property
-import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException
@@ -31,7 +35,7 @@ open class EditPage : FilePage {
     @SpringBean
     protected lateinit var wikiService: WikiService
 
-    protected lateinit var lockLabel: Label
+    protected lateinit var lockLabel: Label<String>
 
     constructor(parameters: PageParameters) : super(parameters) {
         lock()
@@ -44,7 +48,7 @@ open class EditPage : FilePage {
 
     private fun lock() {
         try {
-            val lockInfo = wikiService.lock(this.modelObject, getGitkiSession().user!!)
+            wikiService.lock(this.modelObject, getGitkiSession().user!!)
         } catch (e: LockedException) {
             //TODO: Add message
             throw AbortWithHttpErrorCodeException(423)
@@ -58,11 +62,17 @@ open class EditPage : FilePage {
             ToStringModel(lockInfoModel.property(LockInfo::user)),
             TemporalAccessorStringModel(lockInfoModel.property(LockInfo::expiry))
         )
-        lockLabel = Label("lockInfo", lockLabelModel)
-        lockLabel.outputMarkupId = true
-        lockLabel.add(CssClassAppender(GitkiCssClass.LOCK_INFO))
-        lockLabel.add(IconBehavior(FontAwesome4IconClass.LOCK.createIcon()))
-        lockLabel.add(CssClassAppender(TextAlignment.CENTER))
+        lockLabel = Label(
+            "lockInfo",
+            lockLabelModel,
+            outputMarkupId(),
+            cssClasses(
+                GitkiCssClass.LOCK_INFO,
+                TextAlignment.CENTER,
+                Spacing(Spacing.Property.MARGIN, Spacing.Size.HALF, Spacing.Side.Y)
+            ),
+            IconBehavior(FontAwesome5IconClass.LOCK.createIcon())
+        )
         this.add(lockLabel)
     }
 }

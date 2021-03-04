@@ -7,6 +7,7 @@ import net.dontdrinkandroot.gitki.wicket.security.Render
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.item.BookmarkablePageLinkItem
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
 import net.dontdrinkandroot.wicket.model.model
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.StringResourceModel
@@ -18,5 +19,5 @@ class EditFileItem(id: String, filePathModel: IModel<FilePath>) :
         labelModel = StringResourceModel("gitki.edit"),
         pageClass = EditPage::class.java,
         pageParameters = PageParameterUtils.from(filePathModel.getObject()).add("action", "edit"),
-        prependIconModel = FontAwesome4IconClass.PENCIL.createIcon().apply { fixedWidth = true }.model()
+        prependIconModel = FontAwesome5IconClass.PEN.createIcon(fixedWidth = true).model()
     )

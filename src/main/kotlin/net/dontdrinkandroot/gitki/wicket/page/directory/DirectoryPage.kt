@@ -65,7 +65,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
             wikiService.resolveIndexFile(this.model.getObject()) ?: return WebMarkupContainer(id).setVisible(false)
         val clazz = requestMappingRegistry.resolveIndexFilePanel(indexFilePath.extension)
             ?: return WebMarkupContainer(id).setVisible(false)
-        val indexFilePathModel: KModel<FilePath> = ValueKModel(indexFilePath)
+        val indexFilePathModel: KModel<FilePath> = kModel(indexFilePath)
 
         return try {
             val constructor = clazz.getDeclaredConstructor(String::class.java, KModel::class.java)
@@ -101,7 +101,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
                     payload.target!!.add(entriesPanel)
                     return
                 }
-                this.setResponsePage(DirectoryPage(ValueKModel(directoryPath)))
+                this.setResponsePage(DirectoryPage(kModel(directoryPath)))
                 return
             }
             is FileMovedEvent -> {
@@ -110,7 +110,7 @@ class DirectoryPage : BrowsePage<DirectoryPath> {
             }
             is DirectoryMovedEvent -> {
                 if (payload.directoryPath.equals(this.modelObject)) {
-                    this.setResponsePage(DirectoryPage(ValueKModel(payload.targetPath)))
+                    this.setResponsePage(DirectoryPage(kModel(payload.targetPath)))
                 } else {
                     payload.target!!.add(entriesPanel)
                 }

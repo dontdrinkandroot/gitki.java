@@ -8,7 +8,7 @@ import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
-import net.dontdrinkandroot.wicket.bootstrap.component.button.button
+import net.dontdrinkandroot.wicket.bootstrap.component.button.buttonLink
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupTextArea
 import net.dontdrinkandroot.wicket.kmodel.KModel
@@ -141,7 +141,7 @@ class MarkdownEditPage : EditPage {
         editForm.add(saveButton)
 
         editForm.add(
-            button<Void>("cancel", bodyModel = StringResourceModel("gitki.cancel")) {
+            buttonLink<Void>("cancel", bodyModel = StringResourceModel("gitki.cancel")) {
                 try {
                     wikiService.unlock(this@MarkdownEditPage.modelObject, getGitkiSession().user!!)
                     this.setResponsePage(

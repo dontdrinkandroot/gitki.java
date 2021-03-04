@@ -6,6 +6,7 @@ import net.dontdrinkandroot.gitki.wicket.component.button.EditButton
 import net.dontdrinkandroot.gitki.wicket.component.button.PrintButton
 import net.dontdrinkandroot.gitki.wicket.head.HighlightInitHeaderItem
 import net.dontdrinkandroot.wicket.kmodel.KModel
+import net.dontdrinkandroot.wicket.kmodel.kModelValue
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.html.basic.Label
@@ -28,7 +29,7 @@ class MarkdownViewPage : ViewPage {
     override fun onInitialize() {
         super.onInitialize()
         try {
-            val renderedMarkdown = markdownService.parseToHtml(gitService.getContentAsString(this.modelObject))
+            val renderedMarkdown = markdownService.parseToHtml(gitService.getContentAsString(this.kModelValue))
             this.add(Label("content", renderedMarkdown).setEscapeModelStrings(false))
         } catch (e: FileNotFoundException) {
             throw AbortWithHttpErrorCodeException(404)

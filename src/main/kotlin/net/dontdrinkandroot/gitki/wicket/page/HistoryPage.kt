@@ -1,17 +1,16 @@
 package net.dontdrinkandroot.gitki.wicket.page
 
-import net.dontdrinkandroot.gitki.wicket.component.card.RevCommitCard
+import net.dontdrinkandroot.gitki.wicket.component.commit.RevCommitPanel
 import net.dontdrinkandroot.gitki.wicket.dataprovider.HistoryDataProvider
 import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.wicket.behavior.cssClass
+import net.dontdrinkandroot.wicket.behavior.outputMarkupId
 import net.dontdrinkandroot.wicket.bootstrap.component.pagination.AjaxPaginationPanel
+import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass
 import net.dontdrinkandroot.wicket.kmodel.wrap
-import org.apache.wicket.ajax.AjaxRequestTarget
-import org.apache.wicket.markup.html.WebMarkupContainer
-import org.apache.wicket.markup.repeater.Item
-import org.apache.wicket.markup.repeater.data.DataView
+import net.dontdrinkandroot.wicket.markup.repeater.data.repeatingDataView
 import org.apache.wicket.model.StringResourceModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
-import org.eclipse.jgit.revwalk.RevCommit
 
 class HistoryPage(parameters: PageParameters) : DecoratorPage<Void>(parameters) {
 
@@ -23,24 +22,17 @@ class HistoryPage(parameters: PageParameters) : DecoratorPage<Void>(parameters) 
 
     override fun onInitialize() {
         super.onInitialize()
-        val commitContainer = WebMarkupContainer("commitContainer")
-        commitContainer.outputMarkupId = true
-        this.add(commitContainer)
-        val commitView: DataView<RevCommit> = object : DataView<RevCommit>("commit", HistoryDataProvider()) {
-            override fun populateItem(item: Item<RevCommit>) {
-                item.add(RevCommitCard("detail", item.model))
-            }
+
+        val commitView = repeatingDataView(
+            "commit",
+            HistoryDataProvider(),
+            25,
+            outputMarkupId(),
+            cssClass(BootstrapCssClass.LIST_GROUP)
+        ) { id, model ->
+            RevCommitPanel(id, model, cssClass(BootstrapCssClass.LIST_GROUP_ITEM))
         }
-        commitView.itemsPerPage = 20
-        commitContainer.add(commitView)
-        val pagination: AjaxPaginationPanel = object : AjaxPaginationPanel("pagination", commitView) {
-            override fun onPageChanged(target: AjaxRequestTarget?) {
-                target?.let {
-                    it.add(this)
-                    it.add(commitContainer)
-                }
-            }
-        }
-        this.add(pagination)
+        add(commitView)
+        add(AjaxPaginationPanel("pagination", commitView))
     }
 }

@@ -34,9 +34,7 @@ class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>
             FileActionsDropdownButton(
                 "actions",
                 this.model,
-                buttonStyleModel = Model(null),
-                buttonSizeModel = ButtonSize.SMALL.model(),
-                prependIconModel = FontAwesome5IconClass.ELLIPSIS_V.createIcon().apply { fixedWidth = true }.model()
+                buttonSizeModel = ButtonSize.SMALL.model()
             )
         )
 

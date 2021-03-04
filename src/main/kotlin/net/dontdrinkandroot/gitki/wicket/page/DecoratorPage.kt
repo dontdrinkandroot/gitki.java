@@ -14,7 +14,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav
 import net.dontdrinkandroot.wicket.bootstrap.css.BackgroundColor
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
-import net.dontdrinkandroot.wicket.markup.html.WebMarkupContainer
+import net.dontdrinkandroot.wicket.markup.html.webMarkupContainer
 import net.dontdrinkandroot.wicket.util.NonStatelessPrintingVisitor
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
@@ -71,6 +71,6 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
     private fun createModal() {
         val modalId = "modal"
         add(ModalRequestBehavior(modalId))
-        add(WebMarkupContainer<Void>(modalId, behaviors = listOf(OutputMarkupIdBehavior())))
+        add(webMarkupContainer(modalId, OutputMarkupIdBehavior()))
     }
 }

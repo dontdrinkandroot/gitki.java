@@ -6,6 +6,7 @@ import net.dontdrinkandroot.gitki.wicket.component.modal.RemoveFileModal
 import net.dontdrinkandroot.gitki.wicket.security.Render
 import net.dontdrinkandroot.wicket.bootstrap.component.item.AjaxLinkItem
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
 import net.dontdrinkandroot.wicket.bootstrap.event.CreateAndOpenModalRequest
 import net.dontdrinkandroot.wicket.model.model
 import org.apache.wicket.ajax.AjaxRequestTarget
@@ -18,7 +19,7 @@ class RemoveFileModalItem(id: String, private val pathModel: IModel<FilePath>) :
     AjaxLinkItem<Void>(
         id,
         labelModel = Model.of("Remove File"),
-        prependIconModel = FontAwesome4IconClass.TRASH_O.createIcon().apply { fixedWidth = true }.model()
+        prependIconModel = FontAwesome5IconClass.TRASH.createIcon(fixedWidth = true).model()
     ) {
 
     override fun onClick(target: AjaxRequestTarget?) {
