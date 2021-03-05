@@ -6,13 +6,11 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.service.lock.LockedException
 import net.dontdrinkandroot.gitki.service.wiki.WikiService
 import net.dontdrinkandroot.gitki.wicket.css.GitkiCssClass
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.model.FilePathLockInfoModel
 import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
-import net.dontdrinkandroot.wicket.behavior.CssClassAppender
-import net.dontdrinkandroot.wicket.behavior.cssClass
 import net.dontdrinkandroot.wicket.behavior.cssClasses
 import net.dontdrinkandroot.wicket.behavior.outputMarkupId
 import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
@@ -48,7 +46,7 @@ open class EditPage : FilePage {
 
     private fun lock() {
         try {
-            wikiService.lock(this.modelObject, getGitkiSession().user!!)
+            wikiService.lock(this.modelObject, getCurrentUser()!!)
         } catch (e: LockedException) {
             //TODO: Add message
             throw AbortWithHttpErrorCodeException(423)

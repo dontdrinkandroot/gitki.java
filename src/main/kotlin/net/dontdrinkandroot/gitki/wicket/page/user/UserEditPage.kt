@@ -4,6 +4,7 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.service.user.UserService
 import net.dontdrinkandroot.gitki.wicket.form.UserEditForm
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
@@ -24,7 +25,7 @@ class UserEditPage : UserPage<User> {
     private lateinit var userService: UserService
 
     constructor(parameters: PageParameters) : super(parameters) {
-        val user = userService.find(getGitkiSession().user!!.id!!)
+        val user = userService.find(getCurrentUser()!!.id!!)
             ?: throw RuntimeException("The user of the session could not be found in the database")
         this.model = Model(user)
     }

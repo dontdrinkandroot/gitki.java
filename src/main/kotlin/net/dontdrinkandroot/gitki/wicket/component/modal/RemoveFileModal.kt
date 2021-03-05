@@ -4,7 +4,7 @@ import net.dontdrinkandroot.gitki.model.FilePath
 import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior
@@ -62,7 +62,7 @@ class RemoveFileModal(id: String, model: IModel<FilePath>) : AjaxFormModal<FileP
         try {
             gitService.removeAndCommit(
                 this@RemoveFileModal.modelObject!!,
-                getGitkiSession().user!!,
+                getCurrentUser()!!,
                 commitMessageModel.getObject()
             )
         } catch (e: IOException) {

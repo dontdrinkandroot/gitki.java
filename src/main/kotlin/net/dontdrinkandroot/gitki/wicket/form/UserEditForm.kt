@@ -5,6 +5,7 @@ import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.service.user.UserService
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.IsoLanguageChoiceRenderer
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.ZoneIdChoiceRenderer
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
@@ -118,7 +119,7 @@ open class UserEditForm(id: String, model: IModel<User>) : RepeatingAjaxForm<Use
         user = userService.save(user, newPasswordModel.getObject())
 
         /* Update user in session so changes are reflected e.g. for locale*/
-        if (getGitkiSession().user?.equals(user) == true) {
+        if (getCurrentUser()?.equals(user) == true) {
             getGitkiSession().signIn(user)
         }
         this.session.success(this.getString("gitki.user.saved"))

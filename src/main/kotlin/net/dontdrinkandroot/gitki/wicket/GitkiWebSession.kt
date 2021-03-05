@@ -16,6 +16,8 @@ import java.util.*
 
 fun getGitkiSession() = Session.get() as GitkiWebSession
 
+fun getCurrentUser() = getGitkiSession().user
+
 class GitkiWebSession(request: Request?) : SecureWebSession(request) {
 
     @SpringBean

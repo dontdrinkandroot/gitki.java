@@ -5,7 +5,7 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.AbstractPathAbsoluteStringChoiceRenderer
 import net.dontdrinkandroot.gitki.wicket.event.DirectoryMovedEvent
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior
@@ -100,7 +100,7 @@ class MoveDirectoryModal(id: String, model: IModel<DirectoryPath>) : AjaxFormMod
             gitService.moveAndCommit(
                 this@MoveDirectoryModal.modelObject!!,
                 targetPath,
-                getGitkiSession().user!!,
+                getCurrentUser()!!,
                 commitMessageModel.getObject()
             )
         } catch (e: IOException) {

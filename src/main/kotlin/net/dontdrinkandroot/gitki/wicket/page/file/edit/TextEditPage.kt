@@ -2,7 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page.file.edit
 
 import net.dontdrinkandroot.gitki.model.FilePath
 import net.dontdrinkandroot.gitki.service.lock.LockedException
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.model.AbstractPathNameModel
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
@@ -58,7 +58,7 @@ class TextEditPage : EditPage {
                     wikiService
                         .saveAndUnlock(
                             this@TextEditPage.modelObject,
-                            getGitkiSession().user!!,
+                            getCurrentUser()!!,
                             commitMessageModel.getObject(),
                             contentModel.getObject()
                         )

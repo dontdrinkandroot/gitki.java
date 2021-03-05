@@ -2,6 +2,7 @@ package net.dontdrinkandroot.gitki.wicket.page
 
 import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage
 import net.dontdrinkandroot.gitki.service.user.UserService
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.getGitkiSession
 import net.dontdrinkandroot.gitki.wicket.head.AppCssHeaderItem
 import net.dontdrinkandroot.wicket.bootstrap.page.SignInPage
@@ -30,7 +31,7 @@ open class SignInPage(parameters: PageParameters) : SignInPage(parameters) {
     override fun createUsernameLabelModel(): IModel<String> = Model.of("Email")
 
     override val signedIn: Boolean
-        get() = null != getGitkiSession().user
+        get() = null != getCurrentUser()
 
     override fun signIn(username: String, password: String): Boolean = getGitkiSession()
         .signIn(username, password)

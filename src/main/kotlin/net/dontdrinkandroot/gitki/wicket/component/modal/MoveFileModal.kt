@@ -6,7 +6,7 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.wicket.choicerenderer.AbstractPathAbsoluteStringChoiceRenderer
 import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ButtonBehavior
@@ -101,7 +101,7 @@ class MoveFileModal(id: String, model: IModel<FilePath>) : AjaxFormModal<FilePat
             gitService.moveAndCommit(
                 this@MoveFileModal.modelObject!!,
                 targetPath,
-                getGitkiSession().user!!,
+                getCurrentUser()!!,
                 commitMessageModel.getObject()
             )
         } catch (e: IOException) {

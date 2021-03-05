@@ -3,7 +3,7 @@ package net.dontdrinkandroot.gitki.wicket.component.modal
 import net.dontdrinkandroot.gitki.model.DirectoryPath
 import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.service.git.GitService
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.behavior.OnClickScriptBehavior
@@ -81,7 +81,7 @@ class UploadFilesModal(id: String, model: IModel<DirectoryPath>) : AjaxFormModal
         }
 
         try {
-            gitService.commit(getGitkiSession().user!!, commitMessageModel.getObject())
+            gitService.commit(getCurrentUser()!!, commitMessageModel.getObject())
         } catch (e: GitAPIException) {
             throw WicketRuntimeException(e)
         }

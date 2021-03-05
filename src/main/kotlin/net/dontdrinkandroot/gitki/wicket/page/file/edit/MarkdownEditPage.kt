@@ -4,7 +4,7 @@ import net.dontdrinkandroot.gitki.model.FilePath
 import net.dontdrinkandroot.gitki.service.lock.LockMissingException
 import net.dontdrinkandroot.gitki.service.lock.LockedException
 import net.dontdrinkandroot.gitki.service.markdown.MarkdownService
-import net.dontdrinkandroot.gitki.wicket.getGitkiSession
+import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.component.button.AjaxSubmitButton
@@ -92,7 +92,7 @@ class MarkdownEditPage : EditPage {
                         wikiService
                             .saveAndUnlock(
                                 this@MarkdownEditPage.modelObject,
-                                getGitkiSession().user!!,
+                                getCurrentUser()!!,
                                 commitMessageModel.getObject(),
                                 contentModel.getObject()
                             )
@@ -121,7 +121,7 @@ class MarkdownEditPage : EditPage {
                         wikiService
                             .save(
                                 this@MarkdownEditPage.modelObject,
-                                getGitkiSession().user!!,
+                                getCurrentUser()!!,
                                 commitMessageModel.getObject(),
                                 contentModel.getObject()
                             )
@@ -143,7 +143,7 @@ class MarkdownEditPage : EditPage {
         editForm.add(
             buttonLink<Void>("cancel", bodyModel = StringResourceModel("gitki.cancel")) {
                 try {
-                    wikiService.unlock(this@MarkdownEditPage.modelObject, getGitkiSession().user!!)
+                    wikiService.unlock(this@MarkdownEditPage.modelObject, getCurrentUser()!!)
                     this.setResponsePage(
                         SimpleViewPage::class.java,
                         PageParameterUtils.from(this@MarkdownEditPage.modelObject)
