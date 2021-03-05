@@ -14,7 +14,6 @@ import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupI
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupSelect
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.repeater.RepeatingView

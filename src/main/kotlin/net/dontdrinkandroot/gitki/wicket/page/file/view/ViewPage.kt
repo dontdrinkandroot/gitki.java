@@ -8,12 +8,10 @@ import net.dontdrinkandroot.gitki.wicket.event.FileDeletedEvent
 import net.dontdrinkandroot.gitki.wicket.event.FileMovedEvent
 import net.dontdrinkandroot.gitki.wicket.page.directory.DirectoryPage
 import net.dontdrinkandroot.gitki.wicket.page.file.FilePage
-import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.kmodel.KModel
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.event.IEvent
 import org.apache.wicket.markup.repeater.RepeatingView
@@ -41,7 +39,7 @@ open class ViewPage : FilePage {
             FileActionsDropdownButton(
                 view.newChildId(),
                 this.model,
-                dropdownAlignmentModel = kModel(DropdownAlignment.END)
+                dropdownAlignment = DropdownAlignment.END
             )
         )
     }

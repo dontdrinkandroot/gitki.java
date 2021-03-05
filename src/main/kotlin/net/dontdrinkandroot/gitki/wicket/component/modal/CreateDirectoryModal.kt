@@ -9,7 +9,6 @@ import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.bootstrap.component.button.SubmitLabelButton
 import net.dontdrinkandroot.wicket.bootstrap.component.form.formgroup.FormGroupInputText
 import net.dontdrinkandroot.wicket.bootstrap.component.modal.AjaxFormModal
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.WicketRuntimeException
 import org.apache.wicket.ajax.AjaxRequestTarget

@@ -4,7 +4,6 @@ import net.dontdrinkandroot.gitki.model.Role
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.bootstrap.component.button.buttonLink
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.model.Model
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException

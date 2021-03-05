@@ -17,7 +17,6 @@ import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome4IconClass
 import net.dontdrinkandroot.wicket.kmodel.KModel
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.Component
 import org.apache.wicket.WicketRuntimeException

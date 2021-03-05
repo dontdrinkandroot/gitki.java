@@ -3,7 +3,6 @@ package net.dontdrinkandroot.gitki.wicket.page.test
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage
 import net.dontdrinkandroot.wicket.bootstrap.component.button.ajaxButtonLink
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
 

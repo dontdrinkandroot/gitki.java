@@ -8,9 +8,10 @@ import net.dontdrinkandroot.gitki.wicket.component.item.SignInPageLinkItem
 import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.behavior.OutputMarkupIdBehavior
+import net.dontdrinkandroot.wicket.behavior.cssClass
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior
-import net.dontdrinkandroot.wicket.bootstrap.component.navbar.Navbar
-import net.dontdrinkandroot.wicket.bootstrap.component.navbar.RepeatingNavbarNav
+import net.dontdrinkandroot.wicket.bootstrap.component.navbar.navbar
+import net.dontdrinkandroot.wicket.bootstrap.component.navbar.navbarNav
 import net.dontdrinkandroot.wicket.bootstrap.css.BackgroundColor
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
@@ -30,22 +31,20 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
 
     override fun onInitialize() {
         super.onInitialize()
-        add(Navbar(
-            "navbar",
-            positionModel = Model(NavbarPosition.FIXED_TOP),
-            behaviors = listOf(CssClassAppender(BackgroundColor.WHITE)),
-            createBrandHandler = { id -> BrandLink(id) }
-        ) { collapseItemView ->
-
-            collapseItemView.add(RepeatingNavbarNav<Void>(
-                collapseItemView.newChildId(),
-                behaviors = listOf(CssClassAppender(Spacing.MARGIN_END_AUTO))
-            ) { itemView -> populateNavbarLeftItems(itemView) })
-
-            collapseItemView.add(RepeatingNavbarNav<Void>(collapseItemView.newChildId()) { itemView ->
-                populateNavbarRightItems(itemView)
+        add(
+            navbar(
+                "navbar",
+                positionModel = Model(NavbarPosition.FIXED_TOP),
+                createBrandHandler = { id -> BrandLink(id) },
+                behaviors = arrayOf(CssClassAppender(BackgroundColor.WHITE))
+            ) {
+                navbarNav(cssClass(Spacing.MARGIN_END_AUTO)) {
+                    populateNavbarLeftItems(this)
+                }
+                navbarNav {
+                    populateNavbarRightItems(this)
+                }
             })
-        })
         add(FlashMessagePanel("flashMessages"))
         createModal()
     }

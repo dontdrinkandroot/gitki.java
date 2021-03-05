@@ -10,31 +10,30 @@ import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
 import net.dontdrinkandroot.wicket.css.CssClass
-import net.dontdrinkandroot.wicket.kmodel.kModel
-import net.dontdrinkandroot.wicket.model.model
+import net.dontdrinkandroot.wicket.kmodel.model
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
+import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass as Fa5IconClass
 
 @Enable(Role.COMMITTER)
 class FileActionsDropdownButton(
     id: String, model: IModel<FilePath>,
     buttonStyleModel: IModel<ButtonStyle> = Model(null),
-    buttonSizeModel: IModel<ButtonSize> = Model(null),
-    prependIconModel: IModel<CssClass> = kModel(FontAwesome5IconClass.ELLIPSIS_V.createIcon(fixedWidth = true)),
+    buttonSize: ButtonSize? = null,
+    prependIconModel: IModel<CssClass> = model(Fa5IconClass.ELLIPSIS_V.createIcon(fixedWidth = true)),
     appendIconModel: IModel<CssClass> = Model(null),
-    dropdownAlignmentModel: IModel<DropdownAlignment?> = Model(null)
+    dropdownAlignment: DropdownAlignment? = null
 ) : DropdownButton<FilePath>(
     id,
     model,
     null,
     buttonStyleModel,
-    buttonSizeModel,
+    Model(buttonSize),
     prependIconModel,
     appendIconModel,
-    dropdownAlignmentModel
+    Model(dropdownAlignment)
 ) {
 
     override fun populateItems(itemView: RepeatingView) {

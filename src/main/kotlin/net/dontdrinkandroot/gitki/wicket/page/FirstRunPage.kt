@@ -46,7 +46,7 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<Void>(parameters)
                 val formGroupFirstName = FormGroupInputText(
                     formGroupView.newChildId(),
                     firstNameModel,
-                    ValueKModel("First name")
+                    WritableValueKModel("First name")
                 )
                 formGroupFirstName.setRequired(true)
                 formGroupFirstName.addAjaxValidation()
@@ -55,7 +55,7 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<Void>(parameters)
                 val formGroupLastName = FormGroupInputText(
                     formGroupView.newChildId(),
                     lastNameModel,
-                    ValueKModel("Last name")
+                    WritableValueKModel("Last name")
                 )
                 formGroupLastName.setRequired(true)
                 formGroupLastName.addAjaxValidation()
@@ -64,7 +64,7 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<Void>(parameters)
                 val formGroupEmail = FormGroupInputEmail(
                     formGroupView.newChildId(),
                     emailModel,
-                    ValueKModel("Email")
+                    WritableValueKModel("Email")
                 )
                 formGroupEmail.setRequired(true)
                 formGroupEmail.addAjaxValidation()
@@ -73,7 +73,7 @@ class FirstRunPage(parameters: PageParameters) : DecoratorPage<Void>(parameters)
                 val formGroupPassword = FormGroupInputPassword(
                     formGroupView.newChildId(),
                     passwordModel,
-                    ValueKModel("Password")
+                    WritableValueKModel("Password")
                 )
                 formGroupPassword.setRequired(true)
                 formGroupPassword.addAjaxValidation()

@@ -12,8 +12,8 @@ import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
 import net.dontdrinkandroot.wicket.kmodel.kModel
+import net.dontdrinkandroot.wicket.kmodel.model
 import net.dontdrinkandroot.wicket.markup.html.link.BookmarkablePageLink
-import net.dontdrinkandroot.wicket.model.model
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
 import org.apache.wicket.markup.html.basic.Label
@@ -34,8 +34,8 @@ class DirectoryListItem(id: String, model: IModel<DirectoryPath>) : GenericPanel
                 "actions",
                 this.model,
                 buttonStyleModel = Model(null),
-                buttonSizeModel = ButtonSize.SMALL.model(),
-                prependIconModel = FontAwesome5IconClass.ELLIPSIS_V.createIcon().apply { fixedWidth = true }.model()
+                buttonSizeModel = model(ButtonSize.SMALL),
+                prependIconModel = model(FontAwesome5IconClass.ELLIPSIS_V.createIcon(fixedWidth = true))
             )
         )
 

@@ -40,7 +40,7 @@ class PathBreadcrumb<T : GitkiPath>(id: String, model: KModel<T>) : GenericPanel
                     else -> BookmarkablePageLinkItem<Void>(
                         id,
                         labelModel = Model.of(path.name),
-                        pageClass = DirectoryPage::class.java,
+                        pageClass = DirectoryPage::class,
                         pageParameters = PageParameterUtils.from(path)
                     ).apply { add(CssClassAppender(BootstrapCssClass.BREADCRUMB_ITEM)) }
                 }
@@ -49,7 +49,7 @@ class PathBreadcrumb<T : GitkiPath>(id: String, model: KModel<T>) : GenericPanel
                 return BookmarkablePageLinkItem<Void>(
                     id,
                     labelModel = Model.of(path.name),
-                    pageClass = ViewPage::class.java,
+                    pageClass = ViewPage::class,
                     pageParameters = PageParameterUtils.from(path as FilePath)
                 ).apply { add(CssClassAppender(BootstrapCssClass.BREADCRUMB_ITEM)) }
             }

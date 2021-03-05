@@ -11,5 +11,5 @@ class ConfigurationPageItem(id: String) :
     BookmarkablePageLinkItem<Void>(
         id,
         labelModel = StringResourceModel("gitki.configuration"),
-        pageClass = ConfigurationPage::class.java
+        pageClass = ConfigurationPage::class
     )

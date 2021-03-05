@@ -11,17 +11,16 @@ import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
-import net.dontdrinkandroot.wicket.model.model
+import net.dontdrinkandroot.wicket.kmodel.model
 import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.model.IModel
 
 @Render(Role.ADMIN)
 class UserAddButton(
     id: String,
-    buttonStyleModel: IModel<ButtonStyle> = ButtonStyle.PRIMARY.model(),
-    buttonSizeModel: IModel<ButtonSize> = ButtonSize.LARGE.model(),
+    buttonStyleModel: IModel<ButtonStyle> = model(ButtonStyle.PRIMARY),
+    buttonSizeModel: IModel<ButtonSize> = model(ButtonSize.LARGE),
 ) : Link<Void>(id) {
 
     init {

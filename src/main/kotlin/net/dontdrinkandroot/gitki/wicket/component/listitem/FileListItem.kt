@@ -11,17 +11,14 @@ import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
-import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import net.dontdrinkandroot.wicket.markup.html.link.BookmarkablePageLink
-import net.dontdrinkandroot.wicket.model.model
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesSizeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.panel.GenericPanel
 import org.apache.wicket.model.IModel
-import org.apache.wicket.model.Model
 
 class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>(id, model) {
 
@@ -34,7 +31,7 @@ class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>
             FileActionsDropdownButton(
                 "actions",
                 this.model,
-                buttonSizeModel = ButtonSize.SMALL.model()
+                buttonSize = ButtonSize.SMALL
             )
         )
 

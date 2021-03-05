@@ -4,6 +4,7 @@ import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.bootstrap.behavior.DropdownToggleBehavior
 import net.dontdrinkandroot.wicket.bootstrap.behavior.IconBehavior
 import net.dontdrinkandroot.wicket.bootstrap.component.dropdown.DropdownMenu
+import net.dontdrinkandroot.wicket.bootstrap.component.item.ItemView
 import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
@@ -27,7 +28,7 @@ class OptionLinkDropdown(
             )
         )
         this.add(object : DropdownMenu("dropdownMenu", Model(DropdownAlignment.END)) {
-            override fun populateItems(itemView: RepeatingView) {
+            override fun populateItems(itemView: ItemView) {
                 populateItemsHandler(itemView)
             }
         })

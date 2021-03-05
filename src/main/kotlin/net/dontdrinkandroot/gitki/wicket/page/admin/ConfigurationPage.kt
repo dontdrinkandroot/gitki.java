@@ -5,7 +5,6 @@ import net.dontdrinkandroot.gitki.service.configuration.ConfigurationService
 import net.dontdrinkandroot.gitki.service.git.GitService
 import net.dontdrinkandroot.gitki.wicket.page.DecoratorPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.request.mapper.parameter.PageParameters

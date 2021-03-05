@@ -9,7 +9,6 @@ import net.dontdrinkandroot.gitki.wicket.page.user.UserPage
 import net.dontdrinkandroot.gitki.wicket.security.Instantiate
 import net.dontdrinkandroot.wicket.bootstrap.behavior.TableBehavior
 import net.dontdrinkandroot.wicket.bootstrap.css.TableStyle
-import net.dontdrinkandroot.wicket.kmodel.ValueKModel
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
