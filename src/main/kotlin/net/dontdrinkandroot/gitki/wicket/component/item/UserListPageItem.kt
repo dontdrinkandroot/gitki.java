@@ -11,5 +11,5 @@ class UserListPageItem(id: String) :
     BookmarkablePageLinkItem<Any>(
         id,
         labelModel = StringResourceModel("gitki.users"),
-        pageClass = UserListPage::class
+        pageClass = UserListPage::class.java
     )

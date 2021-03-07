@@ -16,7 +16,7 @@ class EditFileItem(id: String, filePathModel: IModel<FilePath>) :
     BookmarkablePageLinkItem<Void>(
         id,
         labelModel = StringResourceModel("gitki.edit"),
-        pageClass = EditPage::class,
+        pageClass = EditPage::class.java,
         pageParameters = PageParameterUtils.from(filePathModel.getObject()).add("action", "edit"),
         prependIconModel = model(FontAwesome5IconClass.PEN.createIcon(fixedWidth = true))
     )

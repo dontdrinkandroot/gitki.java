@@ -17,7 +17,7 @@ class AdminDropdownItem(id: String) :
     override fun populateItems(itemView: ItemView) {
         itemView.add(UserListPageItem(itemView.newChildId()))
         itemView.add(ConfigurationPageItem(itemView.newChildId()))
-        itemView.pageLink(localize("gitki.locks"), LockListPage::class)
-        itemView.pageLink("Errors", ErrorTestPage::class)
+        itemView.pageLink(localize("gitki.locks"), LockListPage::class.java)
+        itemView.pageLink("Errors", ErrorTestPage::class.java)
     }
 }

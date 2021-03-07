@@ -8,7 +8,7 @@ import net.dontdrinkandroot.wicket.bootstrap.component.item.ItemView
 import net.dontdrinkandroot.wicket.bootstrap.css.BootstrapCssClass
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
-import net.dontdrinkandroot.wicket.markup.html.webMarkupContainer
+import net.dontdrinkandroot.wicket.markup.html.markupContainer
 import org.apache.wicket.markup.html.panel.Panel
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.Model
@@ -20,12 +20,10 @@ class OptionLinkDropdown(
 
     init {
         this.add(CssClassAppender(BootstrapCssClass.DROPDOWN))
-        this.add(
-            webMarkupContainer(
-                "link",
-                DropdownToggleBehavior(),
-                IconBehavior(FontAwesome5IconClass.ELLIPSIS_V.createIcon(fixedWidth = true))
-            )
+        markupContainer(
+            "link",
+            DropdownToggleBehavior(),
+            IconBehavior(FontAwesome5IconClass.ELLIPSIS_V.createIcon(fixedWidth = true))
         )
         this.add(object : DropdownMenu("dropdownMenu", Model(DropdownAlignment.END)) {
             override fun populateItems(itemView: ItemView) {

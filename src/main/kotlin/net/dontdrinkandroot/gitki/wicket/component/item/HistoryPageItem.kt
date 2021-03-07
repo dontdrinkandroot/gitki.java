@@ -8,5 +8,5 @@ class HistoryPageItem(id: String) :
     BookmarkablePageLinkItem<Void>(
         id,
         labelModel = StringResourceModel("gitki.history"),
-        pageClass = HistoryPage::class
+        pageClass = HistoryPage::class.java
     )

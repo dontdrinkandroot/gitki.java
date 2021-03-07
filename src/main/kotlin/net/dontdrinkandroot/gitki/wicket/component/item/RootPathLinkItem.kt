@@ -12,6 +12,6 @@ class RootPathLinkItem(id: String) : BookmarkablePageLinkItem<Any>(
     id,
     labelModel = Model.of(""),
     prependIconModel = model(FontAwesome4IconClass.HOME.createIcon()),
-    pageClass = DirectoryPage::class,
+    pageClass = DirectoryPage::class.java,
     pageParameters = PageParameterUtils.from(DirectoryPath())
 )

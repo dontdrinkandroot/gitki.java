@@ -17,7 +17,7 @@ class UserDropdownItem(id: String) : RepeatingDropdownItem<Any>(id, labelModel =
             BookmarkablePageLinkItem<Void>(
                 itemView.newChildId(),
                 labelModel = StringResourceModel("gitki.profile"),
-                pageClass = UserEditPage::class
+                pageClass = UserEditPage::class.java
             )
         )
         itemView.add(SignoutItem(itemView.newChildId()))

@@ -13,7 +13,7 @@ import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass
 import net.dontdrinkandroot.wicket.kmodel.kModel
 import net.dontdrinkandroot.wicket.kmodel.model
-import net.dontdrinkandroot.wicket.markup.html.link.BookmarkablePageLink
+import net.dontdrinkandroot.wicket.markup.html.link.pageLink
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
 import org.apache.wicket.markup.html.basic.Label
@@ -39,13 +39,11 @@ class DirectoryListItem(id: String, model: IModel<DirectoryPath>) : GenericPanel
             )
         )
 
-        this.add(
-            BookmarkablePageLink<Void>(
-                "link",
-                pageClass = DirectoryPage::class.java,
-                pageParameters = PageParameterUtils.from(this.modelObject),
-                bodyModel = AbstractPathNameModel(this.kModel)
-            )
+        pageLink(
+            "link",
+            pageClass = DirectoryPage::class.java,
+            pageParameters = PageParameterUtils.from(this.modelObject),
+            label = AbstractPathNameModel(this.kModel)
         )
 
         this.add(

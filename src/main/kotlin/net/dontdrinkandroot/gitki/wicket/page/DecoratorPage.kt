@@ -9,14 +9,14 @@ import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem
 import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.behavior.OutputMarkupIdBehavior
-import net.dontdrinkandroot.wicket.behavior.cssClass
+import net.dontdrinkandroot.wicket.behavior.appendCssClass
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.navbar
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.navbarNav
 import net.dontdrinkandroot.wicket.bootstrap.css.BackgroundColor
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition
 import net.dontdrinkandroot.wicket.bootstrap.css.Spacing
-import net.dontdrinkandroot.wicket.markup.html.webMarkupContainer
+import net.dontdrinkandroot.wicket.markup.html.markupContainer
 import net.dontdrinkandroot.wicket.util.NonStatelessPrintingVisitor
 import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
@@ -39,7 +39,7 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
                 createBrandHandler = { id -> BrandLink(id) },
                 behaviors = arrayOf(CssClassAppender(BackgroundColor.WHITE))
             ) {
-                navbarNav(cssClass(Spacing.MARGIN_END_AUTO)) {
+                navbarNav(appendCssClass(Spacing.MARGIN_END_AUTO)) {
                     populateNavbarLeftItems(this)
                 }
                 navbarNav {
@@ -71,6 +71,6 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
     private fun createModal() {
         val modalId = "modal"
         add(ModalRequestBehavior(modalId))
-        add(webMarkupContainer(modalId, OutputMarkupIdBehavior()))
+        add(markupContainer(modalId, OutputMarkupIdBehavior()))
     }
 }
