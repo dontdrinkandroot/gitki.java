@@ -10,6 +10,6 @@ import org.apache.wicket.model.StringResourceModel
 class UserListPageItem(id: String) :
     BookmarkablePageLinkItem<Any>(
         id,
-        labelModel = StringResourceModel("gitki.users"),
+        label = StringResourceModel("gitki.users"),
         pageClass = UserListPage::class.java
     )

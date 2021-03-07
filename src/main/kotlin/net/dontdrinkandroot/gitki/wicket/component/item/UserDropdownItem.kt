@@ -16,7 +16,7 @@ class UserDropdownItem(id: String) : RepeatingDropdownItem<Any>(id, labelModel =
         itemView.add(
             BookmarkablePageLinkItem<Void>(
                 itemView.newChildId(),
-                labelModel = StringResourceModel("gitki.profile"),
+                label = StringResourceModel("gitki.profile"),
                 pageClass = UserEditPage::class.java
             )
         )

@@ -71,6 +71,6 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
     private fun createModal() {
         val modalId = "modal"
         add(ModalRequestBehavior(modalId))
-        add(markupContainer(modalId, OutputMarkupIdBehavior()))
+        markupContainer(modalId, OutputMarkupIdBehavior())
     }
 }

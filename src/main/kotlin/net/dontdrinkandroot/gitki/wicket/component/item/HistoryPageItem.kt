@@ -7,6 +7,6 @@ import org.apache.wicket.model.StringResourceModel
 class HistoryPageItem(id: String) :
     BookmarkablePageLinkItem<Void>(
         id,
-        labelModel = StringResourceModel("gitki.history"),
+        label = StringResourceModel("gitki.history"),
         pageClass = HistoryPage::class.java
     )

@@ -4,39 +4,33 @@ import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.wicket.dropdown.OptionLinkDropdown
 import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage
 import net.dontdrinkandroot.gitki.wicket.page.user.UserEditPage
-import net.dontdrinkandroot.wicket.behavior.CssClassAppender
-import net.dontdrinkandroot.wicket.bootstrap.component.item.linkItem
+import net.dontdrinkandroot.wicket.behavior.appendCssClass
+import net.dontdrinkandroot.wicket.bootstrap.behavior.icon
+import net.dontdrinkandroot.wicket.bootstrap.component.item.link
 import net.dontdrinkandroot.wicket.bootstrap.css.TextColor
-import net.dontdrinkandroot.wicket.kmodel.model
+import net.dontdrinkandroot.wicket.model.localize
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn
 import org.apache.wicket.markup.repeater.Item
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
-import org.apache.wicket.model.StringResourceModel
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass as Fa5Icon
 
 class UserActionColumn : AbstractColumn<User, String>(Model.of("")) {
 
     override fun populateItem(cellItem: Item<ICellPopulator<User>>, componentId: String, rowModel: IModel<User>) {
-        cellItem.add(OptionLinkDropdown(componentId) { itemView ->
-            itemView.add(linkItem(
-                itemView.newChildId(),
-                rowModel,
-                label = StringResourceModel("gitki.edit"),
-                prependIcon = model(Fa5Icon.EDIT.createIcon(fixedWidth = true))
-            ) {
+        cellItem.add(OptionLinkDropdown(componentId) {
+            link(localize("gitki.edit"), rowModel, icon(Fa5Icon.EDIT.createIcon(fixedWidth = true))) {
                 setResponsePage(UserEditPage(model))
-            })
-            itemView.add(linkItem(
-                itemView.newChildId(),
+            }
+            link(
+                localize("gitki.remove"),
                 rowModel,
-                label = StringResourceModel("gitki.remove"),
-                prependIcon = model(Fa5Icon.TRASH.createIcon(fixedWidth = true)),
-                linkBehaviors = arrayOf(CssClassAppender(TextColor.DANGER))
+                icon(Fa5Icon.TRASH.createIcon(fixedWidth = true)),
+                appendCssClass(TextColor.DANGER)
             ) {
                 setResponsePage(UserListPage())
-            })
+            }
         })
 
         //        Button<User> editButton = new Button<User>(componentId, rowModel)
