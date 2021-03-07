@@ -6,16 +6,9 @@ import org.apache.wicket.model.IModel
 
 class FileTypeChoiceRenderer : IChoiceRenderer<FileType> {
 
-    override fun getDisplayValue(fileType: FileType): Any {
-        val name = fileType.name
-        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase()
-    }
+    override fun getDisplayValue(fileType: FileType): String = fileType.name.capitalize()
 
-    override fun getIdValue(fileType: FileType, index: Int): String {
-        return fileType.name
-    }
+    override fun getIdValue(fileType: FileType, index: Int): String = fileType.name
 
-    override fun getObject(id: String, choices: IModel<out MutableList<out FileType>?>): FileType {
-        return FileType.valueOf(id)
-    }
+    override fun getObject(id: String, choices: IModel<out MutableList<out FileType>>) = FileType.valueOf(id)
 }
