@@ -1,7 +1,7 @@
 package net.dontdrinkandroot.gitki.wicket.component.feedback
 
 import net.dontdrinkandroot.gitki.wicket.css.GitkiCssClass
-import net.dontdrinkandroot.wicket.behavior.CssClassAppender
+import net.dontdrinkandroot.wicket.behavior.addCssClass
 import net.dontdrinkandroot.wicket.bootstrap.component.feedback.FencedFeedbackPanel
 import org.apache.wicket.ajax.AjaxRequestHandler
 import org.apache.wicket.event.IEvent
@@ -9,6 +9,11 @@ import org.apache.wicket.markup.head.IHeaderResponse
 import org.apache.wicket.markup.head.OnLoadHeaderItem
 
 class FlashMessagePanel(id: String) : FencedFeedbackPanel(id) {
+
+    init {
+        this.outputMarkupId = true
+        addCssClass(GitkiCssClass.FLASH_MESSAGES)
+    }
 
     override fun onEvent(event: IEvent<*>) {
         super.onEvent(event)
@@ -28,9 +33,4 @@ class FlashMessagePanel(id: String) : FencedFeedbackPanel(id) {
             "$('#%s').delay(2000).slideUp(1000);",
             this.markupId
         )
-
-    init {
-        this.outputMarkupId = true
-        this.add(CssClassAppender(GitkiCssClass.FLASH_MESSAGES))
-    }
 }

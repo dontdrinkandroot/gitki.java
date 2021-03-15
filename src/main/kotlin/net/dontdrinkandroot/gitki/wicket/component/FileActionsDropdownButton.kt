@@ -7,12 +7,12 @@ import net.dontdrinkandroot.gitki.wicket.component.item.MoveFileModalItem
 import net.dontdrinkandroot.gitki.wicket.component.item.RemoveFileModalItem
 import net.dontdrinkandroot.gitki.wicket.security.Enable
 import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton
+import net.dontdrinkandroot.wicket.bootstrap.component.item.ItemView
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.css.CssClass
 import net.dontdrinkandroot.wicket.kmodel.model
-import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 import net.dontdrinkandroot.wicket.bootstrap.css.FontAwesome5IconClass as Fa5IconClass
@@ -36,7 +36,7 @@ class FileActionsDropdownButton(
     Model(dropdownAlignment)
 ) {
 
-    override fun populateItems(itemView: RepeatingView) {
+    override fun populateItems(itemView: ItemView) {
         itemView.add(EditFileItem(itemView.newChildId(), this.model))
         itemView.add(MoveFileModalItem(itemView.newChildId(), this.model))
         itemView.add(RemoveFileModalItem(itemView.newChildId(), this.model))

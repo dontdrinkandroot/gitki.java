@@ -8,11 +8,11 @@ import net.dontdrinkandroot.gitki.wicket.component.item.MoveDirectoryModalItem
 import net.dontdrinkandroot.gitki.wicket.component.item.UploadFilesModalItem
 import net.dontdrinkandroot.gitki.wicket.security.Enable
 import net.dontdrinkandroot.wicket.bootstrap.component.button.DropdownButton
+import net.dontdrinkandroot.wicket.bootstrap.component.item.ItemView
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonStyle
 import net.dontdrinkandroot.wicket.bootstrap.css.DropdownAlignment
 import net.dontdrinkandroot.wicket.css.CssClass
-import org.apache.wicket.markup.repeater.RepeatingView
 import org.apache.wicket.model.IModel
 import org.apache.wicket.model.Model
 
@@ -36,7 +36,7 @@ class DirectoryActionsDropdownButton(
     dropdownAlignmentModel
 ) {
 
-    override fun populateItems(itemView: RepeatingView) {
+    override fun populateItems(itemView: ItemView) {
         itemView.add(CreateFileModalItem(itemView.newChildId(), this.model))
         itemView.add(CreateDirectoryModalItem(itemView.newChildId(), this.model))
         itemView.add(UploadFilesModalItem(itemView.newChildId(), this.model))

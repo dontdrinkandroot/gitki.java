@@ -9,14 +9,14 @@ import net.dontdrinkandroot.gitki.wicket.model.FileSizeStringModel
 import net.dontdrinkandroot.gitki.wicket.model.TemporalAccessorStringModel
 import net.dontdrinkandroot.gitki.wicket.page.file.view.SimpleViewPage
 import net.dontdrinkandroot.gitki.wicket.util.PageParameterUtils
-import net.dontdrinkandroot.wicket.behavior.CssClassAppender
+import net.dontdrinkandroot.wicket.behavior.addCssClass
 import net.dontdrinkandroot.wicket.bootstrap.css.ButtonSize
 import net.dontdrinkandroot.wicket.kmodel.kModel
-import net.dontdrinkandroot.wicket.markup.html.link.pageLink
+import net.dontdrinkandroot.wicket.markup.html.basic.addLabel
+import net.dontdrinkandroot.wicket.markup.html.link.addPageLink
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesLastModifiedTimeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.BasicFileAttributesSizeModel
 import net.dontdrinkandroot.wicket.model.nio.file.attribute.FileTimeInstantModel
-import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.panel.GenericPanel
 import org.apache.wicket.model.IModel
 
@@ -34,29 +34,24 @@ class FileListItem(id: String, model: IModel<FilePath>) : GenericPanel<FilePath>
                 buttonSize = ButtonSize.SMALL
             )
         )
-
-        pageLink(
+        addPageLink(
             "link",
             pageClass = SimpleViewPage::class.java,
             pageParameters = PageParameterUtils.from(this.modelObject),
             label = AbstractPathNameModel(this.kModel)
         )
-
-        this.add(Label("size", FileSizeStringModel(BasicFileAttributesSizeModel(attributesModel))))
-
-        this.add(
-            Label(
-                "lastmodified",
-                TemporalAccessorStringModel(
-                    FileTimeInstantModel(
-                        BasicFileAttributesLastModifiedTimeModel(
-                            attributesModel
-                        )
+        addLabel("size", FileSizeStringModel(BasicFileAttributesSizeModel(attributesModel)))
+        addLabel(
+            "lastmodified",
+            TemporalAccessorStringModel(
+                FileTimeInstantModel(
+                    BasicFileAttributesLastModifiedTimeModel(
+                        attributesModel
                     )
                 )
             )
         )
 
-        this.add(CssClassAppender(GitkiCssClass.FILE))
+        addCssClass(GitkiCssClass.FILE)
     }
 }

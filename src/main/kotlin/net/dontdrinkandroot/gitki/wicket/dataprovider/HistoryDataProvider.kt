@@ -19,25 +19,19 @@ class HistoryDataProvider : IDataProvider<RevCommit> {
         Injector.get().inject(this)
     }
 
-    override fun iterator(first: Long, count: Long): Iterator<RevCommit> {
-        return try {
-            gitService.getRevisionIterator(first, count)
-        } catch (e: GitAPIException) {
-            throw WicketRuntimeException(e)
-        }
+    override fun iterator(first: Long, count: Long): Iterator<RevCommit> = try {
+        gitService.getRevisionIterator(first, count)
+    } catch (e: GitAPIException) {
+        throw WicketRuntimeException(e)
     }
 
-    override fun size(): Long {
-        return try {
-            gitService.revisionCount
-        } catch (e: GitAPIException) {
-            throw WicketRuntimeException(e)
-        }
+    override fun size(): Long = try {
+        gitService.revisionCount
+    } catch (e: GitAPIException) {
+        throw WicketRuntimeException(e)
     }
 
-    override fun model(revCommit: RevCommit): IModel<RevCommit> {
-        return Model.of(revCommit)
-    }
+    override fun model(revCommit: RevCommit): IModel<RevCommit> = Model(revCommit)
 
     override fun detach() {}
 }

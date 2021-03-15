@@ -20,19 +20,13 @@ class UserDataProvider : SortableDataProvider<User, String>() {
 
     override fun iterator(first: Long, count: Long): Iterator<User> {
         var sort = this.sort
-        if (null == sort) {
-            sort = SortParam("id", true)
-        }
-        return userService.find(first, count, sort.property!!, sort.isAscending)
+        if (null == sort) sort = SortParam("id", true)
+        return userService.find(first, count, sort.property, sort.isAscending)
     }
 
-    override fun size(): Long {
-        return userService.findCount()
-    }
+    override fun size(): Long = userService.findCount()
 
-    override fun model(user: User): IModel<User> {
-        return Model.of(user)
-    }
+    override fun model(user: User): IModel<User> = Model(user)
 
     override fun detach() {}
 }

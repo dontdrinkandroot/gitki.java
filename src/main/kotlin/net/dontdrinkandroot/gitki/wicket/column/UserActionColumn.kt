@@ -4,9 +4,9 @@ import net.dontdrinkandroot.gitki.model.User
 import net.dontdrinkandroot.gitki.wicket.dropdown.OptionLinkDropdown
 import net.dontdrinkandroot.gitki.wicket.page.admin.UserListPage
 import net.dontdrinkandroot.gitki.wicket.page.user.UserEditPage
-import net.dontdrinkandroot.wicket.behavior.appendCssClass
+import net.dontdrinkandroot.wicket.behavior.cssClass
 import net.dontdrinkandroot.wicket.bootstrap.behavior.icon
-import net.dontdrinkandroot.wicket.bootstrap.component.item.link
+import net.dontdrinkandroot.wicket.bootstrap.component.item.addLink
 import net.dontdrinkandroot.wicket.bootstrap.css.TextColor
 import net.dontdrinkandroot.wicket.model.localize
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator
@@ -20,14 +20,14 @@ class UserActionColumn : AbstractColumn<User, String>(Model.of("")) {
 
     override fun populateItem(cellItem: Item<ICellPopulator<User>>, componentId: String, rowModel: IModel<User>) {
         cellItem.add(OptionLinkDropdown(componentId) {
-            link(localize("gitki.edit"), rowModel, icon(Fa5Icon.EDIT.createIcon(fixedWidth = true))) {
+            addLink(localize("gitki.edit"), rowModel, icon(Fa5Icon.EDIT.createIcon(fixedWidth = true))) {
                 setResponsePage(UserEditPage(model))
             }
-            link(
+            addLink(
                 localize("gitki.remove"),
                 rowModel,
                 icon(Fa5Icon.TRASH.createIcon(fixedWidth = true)),
-                appendCssClass(TextColor.DANGER)
+                cssClass(TextColor.DANGER)
             ) {
                 setResponsePage(UserListPage())
             }

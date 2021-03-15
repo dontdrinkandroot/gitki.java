@@ -7,7 +7,6 @@ import org.commonmark.node.Node
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class DefaultMarkdownService : MarkdownService {
@@ -17,7 +16,7 @@ class DefaultMarkdownService : MarkdownService {
     private val renderer: HtmlRenderer
 
     init {
-        val extensions = Arrays.asList(TablesExtension.create(), StrikethroughExtension.create())
+        val extensions = listOf(TablesExtension.create(), StrikethroughExtension.create())
         parser = Parser.builder().extensions(extensions).build()
         renderer = HtmlRenderer.builder()
             .extensions(extensions)

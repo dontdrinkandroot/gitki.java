@@ -6,7 +6,7 @@ import net.dontdrinkandroot.gitki.wicket.page.admin.LockListPage
 import net.dontdrinkandroot.gitki.wicket.security.Render
 import net.dontdrinkandroot.wicket.bootstrap.component.item.ItemView
 import net.dontdrinkandroot.wicket.bootstrap.component.item.RepeatingDropdownItem
-import net.dontdrinkandroot.wicket.bootstrap.component.item.pageLink
+import net.dontdrinkandroot.wicket.bootstrap.component.item.addPageLink
 import net.dontdrinkandroot.wicket.model.localize
 import org.apache.wicket.model.StringResourceModel
 
@@ -17,7 +17,7 @@ class AdminDropdownItem(id: String) :
     override fun populateItems(itemView: ItemView) {
         itemView.add(UserListPageItem(itemView.newChildId()))
         itemView.add(ConfigurationPageItem(itemView.newChildId()))
-        itemView.pageLink(localize("gitki.locks"), LockListPage::class.java)
-        itemView.pageLink("Errors", ErrorTestPage::class.java)
+        itemView.addPageLink(localize("gitki.locks"), LockListPage::class.java)
+        itemView.addPageLink("Errors", ErrorTestPage::class.java)
     }
 }

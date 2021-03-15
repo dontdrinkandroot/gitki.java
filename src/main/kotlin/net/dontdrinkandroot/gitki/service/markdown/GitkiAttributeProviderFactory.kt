@@ -6,7 +6,5 @@ import org.commonmark.renderer.html.AttributeProviderFactory
 
 class GitkiAttributeProviderFactory : AttributeProviderFactory {
 
-    override fun create(context: AttributeProviderContext): AttributeProvider {
-        return TableAttributeProvider()
-    }
+    override fun create(context: AttributeProviderContext): AttributeProvider = TableAttributeProvider()
 }

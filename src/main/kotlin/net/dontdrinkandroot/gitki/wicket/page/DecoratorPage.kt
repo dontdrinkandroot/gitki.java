@@ -9,9 +9,9 @@ import net.dontdrinkandroot.gitki.wicket.component.item.UserDropdownItem
 import net.dontdrinkandroot.gitki.wicket.getCurrentUser
 import net.dontdrinkandroot.wicket.behavior.CssClassAppender
 import net.dontdrinkandroot.wicket.behavior.OutputMarkupIdBehavior
-import net.dontdrinkandroot.wicket.behavior.appendCssClass
+import net.dontdrinkandroot.wicket.behavior.cssClass
 import net.dontdrinkandroot.wicket.bootstrap.behavior.ModalRequestBehavior
-import net.dontdrinkandroot.wicket.bootstrap.component.navbar.navbar
+import net.dontdrinkandroot.wicket.bootstrap.component.navbar.addNavbar
 import net.dontdrinkandroot.wicket.bootstrap.component.navbar.navbarNav
 import net.dontdrinkandroot.wicket.bootstrap.css.BackgroundColor
 import net.dontdrinkandroot.wicket.bootstrap.css.NavbarPosition
@@ -32,20 +32,19 @@ abstract class DecoratorPage<T> : ScaffoldPage<T> {
 
     override fun onInitialize() {
         super.onInitialize()
-        add(
-            navbar(
-                "navbar",
-                positionModel = Model(NavbarPosition.FIXED_TOP),
-                createBrandHandler = { id -> BrandLink(id) },
-                behaviors = arrayOf(CssClassAppender(BackgroundColor.WHITE))
-            ) {
-                navbarNav(appendCssClass(Spacing.MARGIN_END_AUTO)) {
-                    populateNavbarLeftItems(this)
-                }
-                navbarNav {
-                    populateNavbarRightItems(this)
-                }
-            })
+        addNavbar(
+            "navbar",
+            positionModel = Model(NavbarPosition.FIXED_TOP),
+            createBrandHandler = { id -> BrandLink(id) },
+            behaviors = arrayOf(CssClassAppender(BackgroundColor.WHITE))
+        ) {
+            navbarNav(cssClass(Spacing.MARGIN_END_AUTO)) {
+                populateNavbarLeftItems(this)
+            }
+            navbarNav {
+                populateNavbarRightItems(this)
+            }
+        }
         add(FlashMessagePanel("flashMessages"))
         createModal()
     }
